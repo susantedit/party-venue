@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Block commits that include .env files or Firebase service account JSON
+STAGED=$(git diff --cached --name-only)
+
+if echo "$STAGED" | grep -qE '\.env$|\.env\.[^.]+$|service-account.*\.json$|firebase-adminsdk.*\.json$'; then
+  echo "ERROR: Attempted to commit sensitive files (.env or Firebase service account JSON)."
+  echo "Remove these files from your commit and add them to .gitignore."
+  exit 1
