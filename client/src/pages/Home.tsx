@@ -177,6 +177,47 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── VIDEOS ── */}
+      <section className="bg-[#0a0a0a] border-b border-gold/10 py-16 px-4">
+        <div className="mx-auto max-w-7xl">
+          <motion.div {...enter}>
+            <SectionHeader script="See It Live" title="Our Kitchen in Action" />
+          </motion.div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="relative w-full overflow-hidden border border-gold/15" style={{ aspectRatio: '16/9' }}>
+              <video
+                src={vegVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
+                aria-label="Vegetarian food preparation"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+              <span className="absolute bottom-4 left-4 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
+                Vegetarian Delights
+              </span>
+            </div>
+            <div className="relative w-full overflow-hidden border border-gold/15" style={{ aspectRatio: '16/9' }}>
+              <video
+                src={meatVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
+                aria-label="Non-vegetarian food preparation"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+              <span className="absolute bottom-4 left-4 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
+                Non-Vegetarian Specials
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── STATS ── */}
       <section className="bg-[#0a0a0a] border-y border-gold/10 py-16">
         <div className="mx-auto max-w-6xl px-4">
@@ -208,15 +249,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── BOOK EARLY CTA (video background) ── */}
-      <section className="relative overflow-hidden py-28">
-        <div className="absolute inset-0 flex pointer-events-none" aria-hidden="true">
-          <video src={vegVideo} autoPlay loop muted playsInline className="w-1/2 h-full object-cover opacity-55" />
-          <video src={meatVideo} autoPlay loop muted playsInline className="w-1/2 h-full object-cover opacity-55" />
-        </div>
-        {/* top/bottom fade only — centre stays visible */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-transparent to-[#0a0a0a]" />
-        <div className="absolute inset-0 bg-[#0a0a0a]/30" />
+      {/* ── BOOK EARLY CTA ── */}
+      <section className="relative overflow-hidden py-28 bg-[#0a0a0a] border-t border-gold/10">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_50%,rgba(201,168,76,0.05)_0%,transparent_70%)]" />
 
         <div className="relative z-10 mx-auto max-w-3xl px-4 text-center">
           <div className="flex items-center justify-center gap-3 mb-2">

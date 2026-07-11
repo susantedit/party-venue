@@ -20,8 +20,8 @@ export function ProtectedRoute({ children, requiredRole }: ProtectedRouteProps) 
 
   if (!isAuthenticated) return <Navigate to="/admin/login" replace />;
 
-  // Email verification check
-  if (user && !user.emailVerified) {
+  // Email verification check — bypass for super-admin
+  if (user && !user.emailVerified && role !== 'super-admin') {
     return (
       <div className="flex min-h-screen items-center justify-center p-8 text-center">
         <div>

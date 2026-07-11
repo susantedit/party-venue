@@ -51,7 +51,7 @@ export function ReviewsSection() {
           <p className="font-sans text-zinc-400 italic mb-8">
             Read verified reviews from our customers on Google Maps.
           </p>
-          <a href="https://www.google.com/maps/place/Shree+Ganesh+Party+Venue+And+Catering+Service/@27.6568609,85.4192105,17z"
+          <a href="https://www.google.com/maps?ll=27.658006,85.416876&z=15&t=m&hl=en&gl=NP&mapclient=embed&cid=9132187741546059157"
             target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 font-serif tracking-[0.12em] uppercase text-xs px-8 py-3.5 bg-gold hover:bg-gold/90 text-zinc-950 font-semibold transition-all duration-150"
             style={{ borderRadius: '2px' }}>
@@ -146,7 +146,7 @@ export function ReviewsSection() {
 
         {/* CTA */}
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="https://www.google.com/maps/place/Shree+Ganesh+Party+Venue+And+Catering+Service/@27.6568609,85.4192105,17z"
+          <a href="https://www.google.com/maps?ll=27.658006,85.416876&z=15&t=m&hl=en&gl=NP&mapclient=embed&cid=9132187741546059157"
             target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 font-serif tracking-[0.12em] uppercase text-xs px-7 py-3 border border-gold/40 hover:border-gold text-gold hover:bg-gold/5 transition-all duration-150"
             style={{ borderRadius: '2px' }}>
@@ -158,7 +158,7 @@ export function ReviewsSection() {
             </svg>
             View All Google Reviews
           </a>
-          <a href="https://www.google.com/maps/place/Shree+Ganesh+Party+Venue+And+Catering+Service/@27.6568609,85.4192105,17z"
+          <a href="https://www.google.com/maps?ll=27.658006,85.416876&z=15&t=m&hl=en&gl=NP&mapclient=embed&cid=9132187741546059157"
             target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 font-serif tracking-[0.12em] uppercase text-xs px-7 py-3 bg-gold hover:bg-gold/90 text-zinc-950 font-semibold transition-all duration-150"
             style={{ borderRadius: '2px' }}>
