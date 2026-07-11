@@ -3,7 +3,7 @@ services:
     name: shree-ganesh-api
     runtime: node
     rootDir: server
-    buildCommand: npm install --include=dev && npm run build
+    buildCommand: npm ci --include=dev && npm run build
     startCommand: node dist/server.js
     healthCheckPath: /api/v1/health
     envVars:
