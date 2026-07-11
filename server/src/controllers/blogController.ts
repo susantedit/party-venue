@@ -17,7 +17,7 @@ export async function listBlogs(req: Request, res: Response, next: NextFunction)
 
 export async function getBlogBySlug(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    const blog = await blogService.getBlogBySlug(req.params.slug);
+    const blog = await blogService.getBlogBySlug(String(req.params.slug));
     sendSuccess(res, blog);
   } catch (err) { next(err); }
 }
@@ -32,14 +32,14 @@ export async function createBlog(req: Request, res: Response, next: NextFunction
 
 export async function updateBlog(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    const blog = await blogService.updateBlog(req.params.id, req.body);
+    const blog = await blogService.updateBlog(String(req.params.id), req.body);
     sendSuccess(res, blog, 'Blog updated');
   } catch (err) { next(err); }
 }
 
 export async function deleteBlog(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    await blogService.deleteBlog(req.params.id, req.user?.uid ?? 'unknown');
+    await blogService.deleteBlog(String(req.params.id), req.user?.uid ?? 'unknown');
     sendSuccess(res, null, 'Blog deleted');
   } catch (err) { next(err); }
 }

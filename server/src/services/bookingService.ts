@@ -1,4 +1,4 @@
-import { BookingModel, BOOKING_STATUSES, BookingStatus } from '../models/Booking';
+import { BookingModel, BookingStatus } from '../models/Booking';
 import { AvailabilityModel } from '../models/Availability';
 import { generateBookingId } from '../utils/generateBookingId';
 import { logAuditEvent } from '../utils/auditLog';

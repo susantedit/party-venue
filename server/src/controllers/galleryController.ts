@@ -29,7 +29,7 @@ export async function uploadImage(req: Request, res: Response, next: NextFunctio
 
 export async function deleteImage(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    await galleryService.deleteImage(req.params.id, req.user?.uid ?? 'unknown');
+    await galleryService.deleteImage(String(req.params.id), req.user?.uid ?? 'unknown');
     sendSuccess(res, null, 'Image deleted');
   } catch (err) { next(err); }
 }

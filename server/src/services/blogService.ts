@@ -3,7 +3,7 @@ import { slugify } from '../utils/slugify';
 import { logAuditEvent } from '../utils/auditLog';
 import { AppError } from '../utils/AppError';
 
-export async function createBlog(data: any, adminUid: string) {
+export async function createBlog(data: any, _adminUid: string) {
   const slug = data.slug || slugify(data.title);
   const blog = await BlogModel.create({ ...data, slug });
   return blog;

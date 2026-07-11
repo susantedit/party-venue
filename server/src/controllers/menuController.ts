@@ -20,14 +20,14 @@ export async function createMenuItem(req: Request, res: Response, next: NextFunc
 
 export async function updateMenuItem(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    const item = await menuService.updateMenuItem(req.params.id, req.body);
+    const item = await menuService.updateMenuItem(String(req.params.id), req.body);
     sendSuccess(res, item, 'Menu item updated');
   } catch (err) { next(err); }
 }
 
 export async function deleteMenuItem(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    await menuService.deleteMenuItem(req.params.id, req.user?.uid ?? 'unknown');
+    await menuService.deleteMenuItem(String(req.params.id), req.user?.uid ?? 'unknown');
     sendSuccess(res, null, 'Menu item deleted');
   } catch (err) { next(err); }
 }

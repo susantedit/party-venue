@@ -6,7 +6,7 @@ import { AppError } from '../utils/AppError';
 
 // GET /api/v1/notifications
 // Returns the 20 most recent notifications, newest first (Requirement 4.3)
-export async function getNotifications(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function getNotifications(_req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const notifications = await NotificationModel.find({})
       .sort({ createdAt: -1 })
@@ -20,7 +20,7 @@ export async function getNotifications(req: Request, res: Response, next: NextFu
 
 // PATCH /api/v1/notifications/read-all
 // Marks all notifications as read (Requirement 4.4)
-export async function markAllRead(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function markAllRead(_req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     await NotificationModel.updateMany({}, { $set: { isRead: true } });
     sendSuccess(res, null, 'All notifications marked as read');

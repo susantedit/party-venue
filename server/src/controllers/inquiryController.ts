@@ -24,14 +24,14 @@ export async function listInquiries(req: Request, res: Response, next: NextFunct
 
 export async function updateInquiryStatus(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    const inquiry = await inquiryService.updateInquiryStatus(req.params.id, req.body.status, req.user?.uid ?? 'unknown');
+    const inquiry = await inquiryService.updateInquiryStatus(String(req.params.id), req.body.status, req.user?.uid ?? 'unknown');
     sendSuccess(res, inquiry, 'Inquiry updated');
   } catch (err) { next(err); }
 }
 
 export async function deleteInquiry(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    await inquiryService.deleteInquiry(req.params.id, req.user?.uid ?? 'unknown');
+    await inquiryService.deleteInquiry(String(req.params.id), req.user?.uid ?? 'unknown');
     sendSuccess(res, null, 'Inquiry deleted');
   } catch (err) { next(err); }
 }

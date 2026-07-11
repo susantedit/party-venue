@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { createInquiry, listInquiries, updateInquiryStatus, deleteInquiry } from '../controllers/inquiryController';
 import { authenticate } from '../middleware/authMiddleware';
 import { authorize } from '../middleware/roleMiddleware';
-import { inquiryLimiter, globalLimiter } from '../middleware/rateLimiter';
+import { inquiryLimiter } from '../middleware/rateLimiter';
 
 const router = Router();
 const adminOnly = [authenticate, authorize(['super-admin', 'admin'])];

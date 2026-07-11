@@ -29,7 +29,7 @@ export async function listInquiries(query: { page?: number; limit?: number; stat
   return { docs, total, page, limit, pages: Math.ceil(total / limit) };
 }
 
-export async function updateInquiryStatus(id: string, status: string, adminUid: string) {
+export async function updateInquiryStatus(id: string, status: string, _adminUid: string) {
   const inquiry = await InquiryModel.findByIdAndUpdate(id, { status }, { new: true });
   if (!inquiry) throw new AppError(404, 'Inquiry not found');
   return inquiry;

@@ -4,7 +4,7 @@ import { slugify } from '../utils/slugify';
 import { logAuditEvent } from '../utils/auditLog';
 import { AppError } from '../utils/AppError';
 
-export async function createPackage(data: any, adminUid: string) {
+export async function createPackage(data: any, _adminUid: string) {
   const slug = data.slug || slugify(data.name);
   const existing = await PackageModel.findOne({ slug });
   if (existing) throw new AppError(409, 'A package with this name already exists');

@@ -21,14 +21,14 @@ export async function createTestimonial(req: Request, res: Response, next: NextF
 
 export async function updateTestimonial(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    const t = await testimonialService.updateTestimonial(req.params.id, req.body);
+    const t = await testimonialService.updateTestimonial(String(req.params.id), req.body);
     sendSuccess(res, t, 'Testimonial updated');
   } catch (err) { next(err); }
 }
 
 export async function deleteTestimonial(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    await testimonialService.deleteTestimonial(req.params.id, req.user?.uid ?? 'unknown');
+    await testimonialService.deleteTestimonial(String(req.params.id), req.user?.uid ?? 'unknown');
     sendSuccess(res, null, 'Testimonial deleted');
   } catch (err) { next(err); }
 }

@@ -21,6 +21,7 @@
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "noImplicitAny": true,
+    "ignoreDeprecations": "5.0",
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]

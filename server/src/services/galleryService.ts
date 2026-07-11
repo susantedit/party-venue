@@ -8,8 +8,7 @@ export async function uploadImage(
   file: Express.Multer.File,
   category: string,
   meta: { title?: string; altText?: string; featured?: boolean },
-  adminUid: string,
-) {
+  _adminUid: string,) {
   if (!(GALLERY_CATEGORIES as readonly string[]).includes(category)) {
     throw new AppError(400, `Invalid category. Allowed: ${GALLERY_CATEGORIES.join(', ')}`);
   }

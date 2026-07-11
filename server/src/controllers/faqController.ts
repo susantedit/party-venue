@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import { FAQModel } from '../models/FAQ';
 import { faqSchema } from '../validators/faqSchema';
-import { sendSuccess, sendPaginated } from '../utils/apiResponse';
+import { sendSuccess } from '../utils/apiResponse';
 import { logAuditEvent } from '../utils/auditLog';
 import { AppError } from '../utils/AppError';
 
 /** GET /api/v1/faqs — public, published only, sorted by order */
-export async function listFAQs(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function listFAQs(_req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const faqs = await FAQModel.find({ isPublished: true }).sort({ order: 1, createdAt: 1 }).lean();
     sendSuccess(res, faqs);
@@ -14,7 +14,7 @@ export async function listFAQs(req: Request, res: Response, next: NextFunction):
 }
 
 /** GET /api/v1/faqs/all — admin, all FAQs */
-export async function listAllFAQs(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function listAllFAQs(_req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const faqs = await FAQModel.find().sort({ order: 1, createdAt: 1 }).lean();
     sendSuccess(res, faqs);
@@ -46,7 +46,7 @@ export async function deleteFAQ(req: Request, res: Response, next: NextFunction)
   try {
     const faq = await FAQModel.findByIdAndDelete(req.params.id);
     if (!faq) throw new AppError(404, 'FAQ not found');
-    logAuditEvent('faq.deleted', req.user?.uid, 'FAQ', req.params.id);
+    logAuditEvent('faq.deleted', req.user?.uid, 'FAQ', String(req.params.id));
     sendSuccess(res, null, 'FAQ deleted');
   } catch (err) { next(err); }
 }

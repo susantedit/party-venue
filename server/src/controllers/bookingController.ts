@@ -34,7 +34,7 @@ export async function listBookings(req: Request, res: Response, next: NextFuncti
 
 export async function getBookingById(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    const booking = await bookingService.getBookingById(req.params.id);
+    const booking = await bookingService.getBookingById(String(req.params.id));
     sendSuccess(res, booking);
   } catch (err) {
     next(err);
@@ -45,7 +45,7 @@ export async function updateBookingStatus(req: Request, res: Response, next: Nex
   try {
     const { status } = req.body;
     const booking = await bookingService.updateBookingStatus(
-      req.params.id,
+      String(req.params.id),
       status,
       req.user?.uid ?? 'unknown',
     );
@@ -57,7 +57,7 @@ export async function updateBookingStatus(req: Request, res: Response, next: Nex
 
 export async function deleteBooking(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    await bookingService.deleteBooking(req.params.id, req.user?.uid ?? 'unknown');
+    await bookingService.deleteBooking(String(req.params.id), req.user?.uid ?? 'unknown');
     sendSuccess(res, null, 'Booking deleted');
   } catch (err) {
     next(err);

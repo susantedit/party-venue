@@ -2,8 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { adminAuth } from '../config/firebase';
 import { UserModel } from '../models/User';
 import { z } from 'zod';
-import { sendSuccess, sendError } from '../utils/apiResponse';
-
+import { sendSuccess } from '../utils/apiResponse';
 const setRoleSchema = z.object({
   uid: z.string().min(1),
   role: z.enum(['super-admin', 'admin', 'editor']),

@@ -5,15 +5,13 @@ import { AppError } from '../utils/AppError';
 
 const router = Router();
 
-// The verified Place ID for Shree Ganesh Party Venue & Catering Service
 const PLACE_ID = env.GOOGLE_PLACE_ID || 'ChIJ3d8nIs8RmzkVlZUH3V3MvH4';
 
 /**
  * GET /api/v1/google-reviews
  * Public proxy — keeps the API key server-side only.
- * Returns: { rating, userRatingsTotal, reviews[], placeUrl }
  */
-router.get('/', async (_req: Request, res: Response, next: Function) => {
+router.get('/', async (_req: Request, res: Response, next: Function): Promise<void> => {
   try {
     if (!env.GOOGLE_PLACES_API_KEY) {
       throw new AppError(503, 'Google Reviews are not configured on this server.');
@@ -53,7 +51,7 @@ router.get('/', async (_req: Request, res: Response, next: Function) => {
 
     const { rating, user_ratings_total, reviews = [] } = json.result;
 
-    return sendSuccess(res, {
+    sendSuccess(res, {
       rating: rating ?? 0,
       userRatingsTotal: user_ratings_total ?? 0,
       reviews: reviews.slice(0, 5).map((r) => ({
