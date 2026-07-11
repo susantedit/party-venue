@@ -5,6 +5,7 @@ export type EventType =
 
 export type BookingStatus = 'pending' | 'contacted' | 'confirmed' | 'completed' | 'cancelled';
 export type BookingSource = 'website' | 'whatsapp' | 'phone' | 'referral';
+export type BookingShift = 'Morning' | 'Evening' | 'Whole_Day';
 
 export interface StatusHistory {
   status: BookingStatus;
@@ -20,6 +21,7 @@ export interface Booking {
   phone: string;
   eventType: EventType;
   eventDate: string;
+  shift: BookingShift;
   guestCount: number;
   packageId?: string;
   cateringRequired: boolean;

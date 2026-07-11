@@ -7,6 +7,9 @@ const EVENT_TYPES = [
 
 const BOOKING_STATUSES = ['pending', 'contacted', 'confirmed', 'completed', 'cancelled'] as const;
 const BOOKING_SOURCES = ['website', 'whatsapp', 'phone', 'referral'] as const;
+const BOOKING_SHIFTS = ['Morning', 'Evening', 'Whole_Day'] as const;
+
+export type BookingShift = typeof BOOKING_SHIFTS[number];
 
 export type EventType = typeof EVENT_TYPES[number];
 export type BookingStatus = typeof BOOKING_STATUSES[number];
@@ -25,6 +28,7 @@ export interface IBooking extends Document {
   phone: string;
   eventType: EventType;
   eventDate: Date;
+  shift: BookingShift;
   guestCount: number;
   packageId?: Types.ObjectId;
   cateringRequired: boolean;
@@ -55,6 +59,7 @@ const BookingSchema = new Schema<IBooking>(
     phone: { type: String, required: true, trim: true },
     eventType: { type: String, required: true, enum: EVENT_TYPES },
     eventDate: { type: Date, required: true },
+    shift: { type: String, required: true, enum: BOOKING_SHIFTS, default: 'Whole_Day' },
     guestCount: { type: Number, required: true, min: 1 },
     packageId: { type: Schema.Types.ObjectId, ref: 'Package' },
     cateringRequired: { type: Boolean, default: false },
@@ -73,9 +78,18 @@ BookingSchema.index({ eventDate: 1 });
 BookingSchema.index({ status: 1 });
 BookingSchema.index({ createdAt: -1 });
 BookingSchema.index({ customerName: 'text', phone: 'text' });
+// Prevent double-booking same shift on same date
+BookingSchema.index(
+  { eventDate: 1, shift: 1 },
+  {
+    unique: true,
+    partialFilterExpression: { status: { $in: ['pending', 'confirmed'] } },
+    name: 'unique_event_slot',
+  },
+);
 
 export const BookingModel =
   (mongoose.models.Booking as mongoose.Model<IBooking>) ||
   mongoose.model<IBooking>('Booking', BookingSchema);
 
-export { EVENT_TYPES, BOOKING_STATUSES };
+export { EVENT_TYPES, BOOKING_STATUSES, BOOKING_SHIFTS };

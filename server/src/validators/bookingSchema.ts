@@ -18,6 +18,7 @@ export const bookingSchema = z
       },
       { message: 'eventDate must be a valid future date' },
     ),
+    shift: z.enum(['Morning', 'Evening', 'Whole_Day']).default('Whole_Day'),
     guestCount: z.number().int().min(1, 'Guest count must be at least 1'),
     packageId: z.string().optional(),
     cateringRequired: z.boolean().optional(),

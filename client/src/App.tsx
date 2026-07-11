@@ -19,8 +19,6 @@ const Services = lazy(() => import('./pages/Services'));
 const Gallery = lazy(() => import('./pages/Gallery'));
 const Packages = lazy(() => import('./pages/Packages'));
 const MenuPage = lazy(() => import('./pages/MenuPage'));
-const Blog = lazy(() => import('./pages/Blog'));
-const BlogDetail = lazy(() => import('./pages/BlogDetail'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Booking = lazy(() => import('./pages/Booking'));
 const NotFound = lazy(() => import('./pages/NotFound'));
@@ -76,8 +74,6 @@ function AppRoutes() {
               <Route path="/gallery" element={<PublicLayout><Gallery /></PublicLayout>} />
               <Route path="/packages" element={<PublicLayout><Packages /></PublicLayout>} />
               <Route path="/menu" element={<PublicLayout><MenuPage /></PublicLayout>} />
-              <Route path="/blog" element={<PublicLayout><Blog /></PublicLayout>} />
-              <Route path="/blog/:slug" element={<PublicLayout><BlogDetail /></PublicLayout>} />
               <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
               <Route path="/booking" element={<PublicLayout><Booking /></PublicLayout>} />
 

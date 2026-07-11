@@ -6,7 +6,16 @@ import { SkeletonLoader } from '@/components/shared/SkeletonLoader';
 import { Lightbox } from '@/components/shared/Lightbox';
 import { GALLERY_CATEGORIES } from '@/constants';
 import type { GalleryImage } from '@/types';
-import { PageHeader } from '@/components/ui/PageHeader';
+
+const CATEGORY_LABELS: Record<string, string> = {
+  all: 'All',
+  wedding: 'Wedding',
+  reception: 'Reception',
+  birthday: 'Birthday',
+  catering: 'Catering',
+  decoration: 'Decoration',
+  venue: 'Venue',
+};
 
 export default function Gallery() {
   const [activeCategory, setActiveCategory] = useState<string>('all');
@@ -16,16 +25,23 @@ export default function Gallery() {
     queryKey: ['gallery', activeCategory],
     queryFn: () =>
       axiosInstance
-        .get('/api/v1/gallery', { params: activeCategory !== 'all' ? { category: activeCategory } : {} })
+        .get('/api/v1/gallery', {
+          params: activeCategory !== 'all' ? { category: activeCategory } : {},
+        })
         .then((r) => r.data.data as GalleryImage[]),
   });
 
-  const lightboxImages = images.map((img) => ({ src: img.imageUrl, alt: img.altText ?? img.category }));
+  const lightboxImages = images.map((img) => ({
+    src: img.imageUrl,
+    alt: img.altText ?? img.category,
+  }));
+
+  const tabs = ['all', ...GALLERY_CATEGORIES];
 
   return (
     <>
       <SEOHead
-        title="Event Gallery"
+        title="Event Gallery — Shree Ganesh Party Venue"
         description="Browse photos from weddings, receptions, birthdays, and more at Shree Ganesh Party Venue, Bhaktapur."
         canonicalUrl="https://shreeganeshsharma.com/gallery"
       />
@@ -40,64 +56,91 @@ export default function Gallery() {
         />
       )}
 
-      <div className="bg-zinc-950 pt-24 pb-16 px-4">
-        <div className="relative z-10 mx-auto max-w-7xl">
-          <PageHeader
-            title="Event Gallery"
-            description="Relive the magic of past celebrations."
-            breadcrumb="Gallery"
-          />
+      <div className="bg-[#0a0a0a] pt-28 pb-20 px-4">
+        <div className="mx-auto max-w-7xl">
 
-          {/* Category filters */}
-          <div className="mb-8 flex flex-wrap gap-2">
-            <button
-              onClick={() => setActiveCategory('all')}
-              className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
-                activeCategory === 'all' ? 'bg-gold-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              All
-            </button>
-            {GALLERY_CATEGORIES.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`rounded-full px-4 py-1.5 text-sm font-medium capitalize transition ${
-                  activeCategory === cat ? 'bg-gold-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+          {/* Section header */}
+          <div className="text-center mb-14">
+            <div className="flex items-center justify-center gap-3 mb-1">
+              <span className="block h-px w-14 bg-gradient-to-r from-transparent to-gold/60" />
+              <span className="font-script text-gold text-2xl leading-none">Moments Captured</span>
+              <span className="block h-px w-14 bg-gradient-to-l from-transparent to-gold/60" />
+            </div>
+            <h1 className="font-serif text-4xl sm:text-5xl font-bold text-white tracking-widest uppercase mt-2">
+              Event Gallery
+            </h1>
+            <p className="mt-4 font-sans text-lg italic text-zinc-400 max-w-xl mx-auto">
+              A glimpse inside the weddings, ceremonies, and grand celebrations hosted at Shree Ganesh.
+            </p>
+          </div>
+
+          {/* Category filter tabs */}
+          <div className="overflow-x-auto pb-1 mb-8 -mx-4 px-4">
+            <div className="flex gap-px border border-gold/10 min-w-max">
+              {tabs.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`font-serif text-[10px] sm:text-xs tracking-[0.12em] uppercase px-5 py-3 whitespace-nowrap transition-all duration-150 ${
+                    activeCategory === cat
+                      ? 'bg-gold text-zinc-950 font-semibold'
+                      : 'bg-[rgba(255,255,255,0.02)] text-zinc-400 hover:text-white hover:bg-[rgba(201,168,76,0.05)]'
+                  }`}
+                >
+                  {CATEGORY_LABELS[cat] ?? cat}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Masonry grid */}
           {isLoading ? (
-            <div className="columns-2 gap-3 sm:columns-3 lg:columns-4">
+            <div className="columns-2 gap-1 sm:columns-3 lg:columns-4">
               {Array.from({ length: 12 }).map((_, i) => (
-                <SkeletonLoader key={i} className={`mb-3 w-full rounded-xl ${i % 3 === 0 ? 'h-60' : 'h-40'}`} />
+                <SkeletonLoader
+                  key={i}
+                  className={`mb-1 w-full ${i % 3 === 0 ? 'h-64' : 'h-44'}`}
+                />
               ))}
             </div>
           ) : images.length === 0 ? (
-            <div className="py-16 text-center text-gray-400">No images found for this category.</div>
+            <div className="py-20 text-center border border-gold/10">
+              <p className="font-sans text-zinc-500 italic">No images found for this category.</p>
+            </div>
           ) : (
-            <div className="columns-2 gap-3 sm:columns-3 lg:columns-4">
+            <div className="columns-2 gap-1 sm:columns-3 lg:columns-4">
               {images.map((img, idx) => (
-                <div
+                <button
                   key={img._id}
-                  className="mb-3 cursor-pointer overflow-hidden rounded-xl"
+                  className="mb-1 w-full relative block overflow-hidden border border-gold/[0.06] group cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
                   onClick={() => setLightboxIndex(idx)}
+                  aria-label={`View ${img.altText ?? img.category} photo`}
                 >
                   <img
                     src={img.imageUrl}
-                    alt={img.altText ?? img.category}
+                    alt={img.altText ?? `${img.category} at Shree Ganesh Party Venue`}
                     loading="lazy"
-                    className="w-full object-cover transition duration-300 hover:scale-105"
+                    decoding="async"
+                    className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                </div>
+                  {/* hover overlay */}
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-end p-3 pointer-events-none">
+                    <span className="text-[10px] font-sans font-semibold uppercase tracking-widest text-white capitalize">
+                      {img.category}
+                    </span>
+                  </div>
+                </button>
               ))}
             </div>
           )}
+
+          {/* Image count */}
+          {!isLoading && images.length > 0 && (
+            <p className="mt-4 text-xs font-sans text-zinc-600 text-right">
+              {images.length} photo{images.length !== 1 ? 's' : ''} shown
+            </p>
+          )}
+
         </div>
       </div>
     </>

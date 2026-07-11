@@ -1,45 +1,36 @@
 import { Link } from 'react-router-dom';
-import { Home } from 'lucide-react';
-import { BUSINESS_PHONE, BUSINESS_EMAIL, BUSINESS_ADDRESS } from '@/constants';
+import { BUSINESS_PHONE, BUSINESS_EMAIL, BUSINESS_ADDRESS, WHATSAPP_NUMBER } from '@/constants';
+
+const quickLinks: [string, string][] = [
+  ['/', 'Home'], ['/about', 'About'], ['/services', 'Services'],
+  ['/gallery', 'Gallery'], ['/packages', 'Packages'], ['/menu', 'Menu'],
+  ['/contact', 'Contact'],
+];
 
 export default function Footer() {
   return (
-    <footer className="bg-zinc-950 border-t border-white/5 text-white">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+    <footer className="bg-[#070707] border-t border-gold/10 text-white">
+      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+
           {/* Brand */}
           <div>
-            <Link
-              to="/"
-              aria-label="Go to home page"
-              className="inline-flex items-center gap-2 font-serif text-xl font-bold text-gold transition-colors duration-120 ease-out hover:text-gold/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold min-h-[44px]"
-            >
-              <Home className="h-5 w-5" aria-hidden="true" />
-              Shree Ganesh
-            </Link>
-            <p className="mt-2 text-sm text-zinc-400 leading-relaxed">
-              Premium party venue & catering service in Bhaktapur, Nepal. Creating unforgettable celebrations.
+            <div className="mb-4">
+              <span className="font-serif text-lg font-bold tracking-[0.15em] text-white uppercase block">Shree Ganesh</span>
+              <span className="font-script text-gold text-sm leading-none">Party Venue & Catering</span>
+            </div>
+            <p className="font-sans text-sm text-zinc-500 leading-relaxed">
+              Premium event venue & catering service in Bhaktapur, Nepal. Creating unforgettable celebrations since 2014.
             </p>
           </div>
 
-          {/* Quick links */}
+          {/* Quick Links */}
           <div>
-            <h4 className="mb-3 text-sm font-semibold uppercase tracking-wider text-zinc-300">Quick Links</h4>
-            <ul className="space-y-2 text-sm text-zinc-400">
-              {([
-                ['/', 'Home'],
-                ['/about', 'About'],
-                ['/services', 'Services'],
-                ['/gallery', 'Gallery'],
-                ['/packages', 'Packages'],
-                ['/menu', 'Menu'],
-                ['/blog', 'Blog'],
-              ] as [string, string][]).map(([to, label]) => (
+            <h4 className="font-serif text-xs tracking-[0.2em] uppercase text-zinc-400 mb-5">Quick Links</h4>
+            <ul className="space-y-2.5">
+              {quickLinks.map(([to, label]) => (
                 <li key={to}>
-                  <Link 
-                    to={to} 
-                    className="hover:text-gold transition-colors duration-120 ease-out focus:outline-none focus:text-gold"
-                  >
+                  <Link to={to} className="font-sans text-sm text-zinc-500 hover:text-gold transition-colors duration-150">
                     {label}
                   </Link>
                 </li>
@@ -49,29 +40,48 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="mb-3 text-sm font-semibold uppercase tracking-wider text-zinc-300">Contact</h4>
-            <ul className="space-y-2 text-sm text-zinc-400">
-              <li>{BUSINESS_PHONE}</li>
-              <li>{BUSINESS_EMAIL}</li>
+            <h4 className="font-serif text-xs tracking-[0.2em] uppercase text-zinc-400 mb-5">Contact</h4>
+            <ul className="space-y-3 font-sans text-sm text-zinc-500">
+              <li>
+                <a href="tel:+9779851337076" className="hover:text-gold transition-colors">{BUSINESS_PHONE}</a>
+              </li>
+              <li>
+                <a href={`mailto:${BUSINESS_EMAIL}`} className="hover:text-gold transition-colors">{BUSINESS_EMAIL}</a>
+              </li>
               <li>{BUSINESS_ADDRESS}</li>
+              <li>
+                <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-[#25D366] hover:opacity-80 transition-opacity">
+                  💬 WhatsApp Us
+                </a>
+              </li>
             </ul>
           </div>
 
-          {/* CTA */}
+          {/* Book CTA */}
           <div>
-            <h4 className="mb-3 text-sm font-semibold uppercase tracking-wider text-zinc-300">Book Your Event</h4>
-            <p className="mb-4 text-sm text-zinc-400">Ready to create an unforgettable celebration?</p>
-            <Link
-              to="/booking"
-              className="inline-block rounded-lg bg-gold hover:bg-gold/90 text-zinc-950 px-5 py-2.5 text-sm font-semibold shadow-md transition-all duration-120 ease-out focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-zinc-950"
-            >
+            <h4 className="font-serif text-xs tracking-[0.2em] uppercase text-zinc-400 mb-5">Book Your Event</h4>
+            <p className="font-sans text-sm text-zinc-500 mb-5 leading-relaxed">
+              Dates fill fast. Secure yours today — no payment required now.
+            </p>
+            <Link to="/booking"
+              className="inline-block font-serif tracking-[0.14em] uppercase text-xs px-6 py-3 bg-gold hover:bg-gold/90 text-zinc-950 font-semibold transition-all duration-150 shadow-[0_0_16px_rgba(201,168,76,0.15)]"
+              style={{ borderRadius: '2px' }}>
               Book Now
             </Link>
           </div>
         </div>
 
-        <div className="mt-8 border-t border-white/5 pt-6 text-center text-xs text-zinc-500">
-          © {new Date().getFullYear()} Shree Ganesh Party Venue & Catering Service. All rights reserved.
+        {/* Bottom bar */}
+        <div className="mt-12 border-t border-gold/[0.08] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="font-sans text-xs text-zinc-600">
+            © {new Date().getFullYear()} Shree Ganesh Party Venue & Catering Service. All rights reserved.
+          </p>
+          <a href="https://www.google.com/maps/place/Shree+Ganesh+Party+Venue+And+Catering+Service/@27.6568609,85.4192105,17z"
+            target="_blank" rel="noopener noreferrer"
+            className="font-sans text-xs text-zinc-600 hover:text-gold transition-colors">
+            📍 Suryabinayak-6, Bhaktapur, Nepal
+          </a>
         </div>
       </div>
     </footer>

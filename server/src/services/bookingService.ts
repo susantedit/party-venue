@@ -18,9 +18,37 @@ const ALLOWED_TRANSITIONS: Record<BookingStatus, BookingStatus[]> = {
 
 export async function createBooking(data: any, userId?: string) {
   const bookingId = await generateBookingId();
+  const shift = data.shift ?? 'Whole_Day';
+
+  // Check for shift conflict before creating
+  const eventDate = new Date(data.eventDate);
+  eventDate.setHours(0, 0, 0, 0);
+  const nextDay = new Date(eventDate);
+  nextDay.setDate(nextDay.getDate() + 1);
+
+  const conflictingShifts =
+    shift === 'Whole_Day'
+      ? ['Morning', 'Evening', 'Whole_Day']
+      : [shift, 'Whole_Day'];
+
+  const conflict = await BookingModel.findOne({
+    eventDate: { $gte: eventDate, $lt: nextDay },
+    shift: { $in: conflictingShifts },
+    status: { $in: ['pending', 'confirmed'] },
+  }).lean();
+
+  if (conflict) {
+    throw new AppError(
+      409,
+      shift === 'Whole_Day'
+        ? 'This date is already booked. No slots available.'
+        : `The ${shift} shift (or Whole Day) is already booked for this date.`,
+    );
+  }
 
   const booking = await BookingModel.create({
     ...data,
+    shift,
     bookingId,
     status: 'pending',
     source: 'website',
@@ -28,8 +56,6 @@ export async function createBooking(data: any, userId?: string) {
   });
 
   // Mark date as reserved in availability
-  const eventDate = new Date(data.eventDate);
-  eventDate.setHours(0, 0, 0, 0);
   await AvailabilityModel.findOneAndUpdate(
     { date: eventDate },
     { date: eventDate, status: 'reserved', bookingId: booking._id },

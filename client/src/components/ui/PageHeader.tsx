@@ -7,16 +7,17 @@ interface PageHeaderProps {
   title: string;
   description?: string;
   breadcrumb?: string;
+  scriptLabel?: string; // Great Vibes accent line above title
   className?: string;
 }
 
-export function PageHeader({ title, description, breadcrumb, className }: PageHeaderProps) {
+export function PageHeader({ title, description, breadcrumb, scriptLabel, className }: PageHeaderProps) {
   return (
     <SectionReveal className={cn('mb-10', className)}>
-      <nav aria-label="Breadcrumb" className="mb-4 flex items-center gap-1.5 text-sm text-zinc-500">
+      <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-1.5 text-sm text-zinc-500">
         <Link
           to="/"
-          className="inline-flex items-center gap-1.5 rounded-md px-1 py-1 text-zinc-400 transition-colors duration-120 ease-out hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold min-h-[44px]"
+          className="inline-flex items-center gap-1.5 rounded-sm px-1 py-1 text-zinc-400 transition-colors duration-120 ease-out hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold min-h-[44px]"
           aria-label="Go to home page"
         >
           <Home className="h-4 w-4" aria-hidden="true" />
@@ -29,9 +30,23 @@ export function PageHeader({ title, description, breadcrumb, className }: PageHe
           </>
         )}
       </nav>
-      <h1 className="font-serif text-4xl font-bold text-white tracking-tight">{title}</h1>
+
+      {/* Decorative gold rule */}
+      <div className="flex items-center justify-start gap-3 mb-2">
+        <span className="block h-px w-10 bg-gold/50" aria-hidden="true" />
+        {scriptLabel && (
+          <span className="font-script text-gold text-xl leading-none">{scriptLabel}</span>
+        )}
+      </div>
+
+      <h1 className="font-serif text-4xl sm:text-5xl font-bold text-white tracking-widest uppercase">
+        {title}
+      </h1>
+
       {description && (
-        <p className="mt-3 max-w-2xl text-lg text-zinc-400">{description}</p>
+        <p className="mt-3 max-w-2xl text-lg text-zinc-400 font-sans italic leading-relaxed">
+          {description}
+        </p>
       )}
     </SectionReveal>
   );

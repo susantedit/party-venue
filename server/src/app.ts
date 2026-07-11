@@ -23,6 +23,7 @@ import notificationRoutes from './routes/notificationRoutes';
 import uploadRoutes from './routes/uploadRoutes';
 import sitemapRoutes from './routes/sitemapRoutes';
 import faqRoutes from './routes/faqRoutes';
+import googleReviewsRoutes from './routes/googleReviewsRoutes';
 
 // Error handler
 import { globalErrorHandler } from './middleware/errorMiddleware';
@@ -99,6 +100,7 @@ app.use('/api/v1/dashboard', dashboardRoutes);
 app.use('/api/v1/notifications', notificationRoutes);
 app.use('/api/v1/upload', uploadRoutes);
 app.use('/api/v1/faqs', faqRoutes);
+app.use('/api/v1/google-reviews', googleReviewsRoutes);
 
 // ─── 404 ──────────────────────────────────────────────────────────────────────
 app.use((_req, res) => {

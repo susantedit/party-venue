@@ -16,6 +16,8 @@ const envSchema = z.object({
   FIREBASE_CLIENT_EMAIL: z.string().email('FIREBASE_CLIENT_EMAIL must be valid'),
   FIREBASE_PRIVATE_KEY: z.string().min(1, 'FIREBASE_PRIVATE_KEY is required'),
   ADMIN_WHATSAPP_NUMBER: z.string().regex(/^977\d{9,10}$/, 'ADMIN_WHATSAPP_NUMBER must match ^977\\d{9,10}$').optional(),
+  GOOGLE_PLACES_API_KEY: z.string().optional(),
+  GOOGLE_PLACE_ID: z.string().optional(),
 });
 
 export const env = envSchema.parse(process.env);
@@ -25,3 +27,7 @@ if (!env.ADMIN_WHATSAPP_NUMBER) {
 }
 
 export type Env = z.infer<typeof envSchema>;
+
+if (!env.GOOGLE_PLACES_API_KEY) {
+  console.warn('[env] GOOGLE_PLACES_API_KEY is not set — Google Reviews proxy will be disabled');
+}

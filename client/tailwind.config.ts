@@ -19,17 +19,17 @@ const config: Config = {
     extend: {
       colors: {
         gold: {
-          DEFAULT: '#C9A227',
-          50: '#FDF8E8',
-          100: '#F9EFC4',
-          200: '#F2DC89',
-          300: '#E8C64D',
-          400: '#D9AF2C',
-          500: '#C9A227',
-          600: '#A8841F',
-          700: '#7E6317',
-          800: '#55420F',
-          900: '#2C2108',
+          DEFAULT: '#c9a84c',
+          50: '#fdf8e8',
+          100: '#f9efc4',
+          200: '#f2dc89',
+          300: '#e8c96d',
+          400: '#d9b84f',
+          500: '#c9a84c',
+          600: '#a88a3a',
+          700: '#7e6828',
+          800: '#55451a',
+          900: '#2c230d',
         },
         charcoal: {
           DEFAULT: '#111827',
@@ -73,13 +73,14 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['DM Sans', 'sans-serif'],
-        serif: ['Playfair Display', 'serif'],
+        sans: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        serif: ['Cinzel', 'serif'],
+        script: ['"Great Vibes"', 'cursive'],
       },
       borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
+        lg: '4px',
+        md: '3px',
+        sm: '2px',
       },
       keyframes: {
         'accordion-down': {
