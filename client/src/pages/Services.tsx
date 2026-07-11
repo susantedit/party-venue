@@ -21,7 +21,7 @@ const services: { icon: LucideIcon; title: string; desc: string; features: strin
   {
     icon: Cake,
     title: 'Birthday Parties',
-    desc: 'From children's first birthdays to milestone celebrations — custom themes, cakes, and entertainment tailored to your vision.',
+    desc: "From children's first birthdays to milestone celebrations — custom themes, cakes, and entertainment tailored to your vision.",
     features: ['Custom themes', 'Birthday cakes', 'Entertainment', 'All age groups'],
   },
   {
