@@ -20,12 +20,7 @@
     "noImplicitReturns": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "noImplicitAny": true,
-    "ignoreDeprecations": "5.0",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
+    "noImplicitAny": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "**/__tests__/**"]
