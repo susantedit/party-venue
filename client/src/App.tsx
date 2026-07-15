@@ -21,6 +21,8 @@ const Packages = lazy(() => import('./pages/Packages'));
 const MenuPage = lazy(() => import('./pages/MenuPage'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Booking = lazy(() => import('./pages/Booking'));
+const Location = lazy(() => import('./pages/Location'));
+const FAQPage = lazy(() => import('./pages/FAQPage'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 // SEO landing pages
@@ -76,9 +78,13 @@ function AppRoutes() {
               <Route path="/menu" element={<PublicLayout><MenuPage /></PublicLayout>} />
               <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
               <Route path="/booking" element={<PublicLayout><Booking /></PublicLayout>} />
+              <Route path="/location" element={<PublicLayout><Location /></PublicLayout>} />
+              <Route path="/faq" element={<PublicLayout><FAQPage /></PublicLayout>} />
 
               {/* SEO landing pages */}
+              <Route path="/wedding-venue-bhaktapur" element={<PublicLayout><WeddingVenue /></PublicLayout>} />
               <Route path="/wedding-venue-in-bhaktapur" element={<PublicLayout><WeddingVenue /></PublicLayout>} />
+              <Route path="/catering-service-bhaktapur" element={<PublicLayout><CateringPage /></PublicLayout>} />
               <Route path="/catering-service-in-bhaktapur" element={<PublicLayout><CateringPage /></PublicLayout>} />
 
               {/* Admin login (no layout) */}

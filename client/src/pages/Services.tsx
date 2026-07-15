@@ -4,13 +4,14 @@ import {
   Car, Music, Camera, type LucideIcon,
 } from 'lucide-react';
 import { SEOHead } from '@/components/shared/SEOHead';
+import { SITE_URL } from '@/constants';
 
 const services: { icon: LucideIcon; title: string; desc: string; features: string[] }[] = [
   {
     icon: Heart,
     title: 'Wedding Venue',
-    desc: 'Grand halls for up to 1,000 guests with elegant décor, premium sound, and dedicated bridal suites. Every detail handled so you can focus on your moment.',
-    features: ['Up to 1,000 guests', 'Bridal changing room', 'Custom floral décor', 'Sound & lighting'],
+    desc: 'Wedding and reception venue planning for Bhaktapur couples with verified guest capacity and full event coordination.',
+    features: ['Verified capacity 700-800', 'Wedding setups', 'Reception setups', 'Bhaktapur location'],
   },
   {
     icon: PartyPopper,
@@ -21,7 +22,7 @@ const services: { icon: LucideIcon; title: string; desc: string; features: strin
   {
     icon: Cake,
     title: 'Birthday Parties',
-    desc: "From children's first birthdays to milestone celebrations — custom themes, cakes, and entertainment tailored to your vision.",
+    desc: "From children's first birthdays to milestone celebrations — custom themes, catering, and event coordination tailored to your vision.",
     features: ['Custom themes', 'Birthday cakes', 'Entertainment', 'All age groups'],
   },
   {
@@ -45,8 +46,8 @@ const services: { icon: LucideIcon; title: string; desc: string; features: strin
   {
     icon: ChefHat,
     title: 'Catering Services',
-    desc: 'Nepali, Newari, Indian, Chinese, and BBQ cuisines for events of any size — from intimate dinners to large banquets. Off-site available.',
-    features: ['17+ menu categories', 'Custom menus', 'Dietary options', 'Off-site catering'],
+    desc: 'Nepali, Newari, Indian, Chinese, and BBQ catering for weddings, receptions, birthdays, and corporate events in Bhaktapur.',
+    features: ['Multi-cuisine menus', 'Custom menus', 'Event catering', 'Off-site available'],
   },
   {
     icon: Flower2,
@@ -57,19 +58,19 @@ const services: { icon: LucideIcon; title: string; desc: string; features: strin
 ];
 
 const amenities = [
-  { icon: Car, label: '100+ Car Parking', desc: 'Secure basement parking for large gatherings' },
-  { icon: Music, label: 'DJ & Sound System', desc: 'Professional audio setup for every event' },
-  { icon: Camera, label: 'Bridal Suite', desc: 'Private changing room with dedicated bathroom' },
-  { icon: Sparkles, label: 'Backup Generator', desc: 'Uninterrupted power throughout your event' },
+  { icon: Car, label: 'Bhaktapur Access', desc: 'Near Suryabinayak Ganesh Mandir' },
+  { icon: Music, label: 'Booking Support', desc: 'Phone, WhatsApp, and web enquiries' },
+  { icon: Camera, label: 'Real Venue Photos', desc: 'Gallery images for planning and trust' },
+  { icon: Sparkles, label: 'Catering Available', desc: 'Food service for weddings and events' },
 ];
 
 export default function Services() {
   return (
     <>
       <SEOHead
-        title="Our Services — Shree Ganesh Party Venue"
-        description="Wedding venues, catering, decoration, Bratabandha, Pasni, corporate events and more at Shree Ganesh Party Venue, Bhaktapur."
-        canonicalUrl="https://shreeganeshsharma.com/services"
+        title="Party Venue Services in Bhaktapur | Shree Ganesh Party Venue"
+        description="Wedding venue, reception venue, birthday parties, Bratabandha, Pasni, corporate events, decoration, and catering in Bhaktapur near Suryabinayak Ganesh Mandir."
+        canonicalUrl={`${SITE_URL}/services`}
       />
 
       <div className="bg-[#0a0a0a] pt-28 pb-20 px-4">

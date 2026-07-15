@@ -2,6 +2,7 @@ import { useSearchParams } from 'react-router-dom';
 import { SEOHead } from '@/components/shared/SEOHead';
 import BookingForm from '@/components/forms/BookingForm';
 import { FAQSection } from '@/components/sections/FAQSection';
+import { SITE_URL } from '@/constants';
 
 export default function Booking() {
   const [searchParams] = useSearchParams();
@@ -12,7 +13,7 @@ export default function Booking() {
       <SEOHead
         title="Book Your Event"
         description="Book Shree Ganesh Party Venue online. No payment required. We confirm only after mutual discussion."
-        canonicalUrl="https://shreeganeshsharma.com/booking"
+        canonicalUrl={`${SITE_URL}/booking`}
       />
       <div className="bg-[#0a0a0a] pt-28 pb-20 px-4">
         <div className="mx-auto max-w-2xl">

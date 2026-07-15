@@ -6,6 +6,7 @@ import { SEOHead } from '@/components/shared/SEOHead';
 import { SkeletonLoader } from '@/components/shared/SkeletonLoader';
 import type { Blog, PaginatedApiResponse } from '@/types';
 import { PageHeader } from '@/components/ui/PageHeader';
+import { SITE_URL } from '@/constants';
 
 export default function BlogList() {
   const [page, setPage] = useState(1);
@@ -30,7 +31,7 @@ export default function BlogList() {
       <SEOHead
         title="Blog"
         description="Event planning tips, venue guides, and celebration inspiration from Shree Ganesh Party Venue, Bhaktapur."
-        canonicalUrl="https://shreeganeshsharma.com/blog"
+        canonicalUrl={`${SITE_URL}/blog`}
       />
       <div className="bg-zinc-950 pt-24 pb-16 px-4">
         <div className="relative z-10 mx-auto max-w-6xl">

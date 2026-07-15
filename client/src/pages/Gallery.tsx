@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import axiosInstance from '@/lib/axiosInstance';
 import { SEOHead } from '@/components/shared/SEOHead';
 import { SkeletonLoader } from '@/components/shared/SkeletonLoader';
+import { SITE_URL } from '@/constants';
 import { Lightbox } from '@/components/shared/Lightbox';
 import { GALLERY_CATEGORIES } from '@/constants';
 import type { GalleryImage } from '@/types';
@@ -43,7 +44,7 @@ export default function Gallery() {
       <SEOHead
         title="Event Gallery — Shree Ganesh Party Venue"
         description="Browse photos from weddings, receptions, birthdays, and more at Shree Ganesh Party Venue, Bhaktapur."
-        canonicalUrl="https://shreeganeshsharma.com/gallery"
+        canonicalUrl={`${SITE_URL}/gallery`}
       />
 
       {lightboxIndex !== null && (

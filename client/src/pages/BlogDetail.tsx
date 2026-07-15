@@ -4,6 +4,7 @@ import DOMPurify from 'dompurify';
 import axiosInstance from '@/lib/axiosInstance';
 import { SEOHead } from '@/components/shared/SEOHead';
 import { SkeletonLoader } from '@/components/shared/SkeletonLoader';
+import { SITE_URL } from '@/constants';
 import type { Blog } from '@/types';
 import { HomeLink } from '@/components/ui/HomeLink';
 
@@ -40,7 +41,7 @@ export default function BlogDetail() {
         title={blog.seoTitle ?? blog.title}
         description={blog.seoDescription ?? blog.excerpt}
         ogImage={blog.featuredImage}
-        canonicalUrl={`https://shreeganeshsharma.com/blog/${blog.slug}`}
+        canonicalUrl={`${SITE_URL}/blog/${blog.slug}`}
       />
       <div className="bg-zinc-950 pt-24 pb-16 px-4">
         <div className="relative z-10 mx-auto max-w-3xl">

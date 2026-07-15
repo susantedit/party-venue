@@ -10,8 +10,8 @@ interface SEOHeadProps {
 }
 
 export function SEOHead({ title, description, ogImage, canonicalUrl, noIndex, schema }: SEOHeadProps) {
-  const fullTitle = title.includes('Shree Ganesh') ? title : `${title} | Shree Ganesh Party Venue`;
-  const defaultDesc = 'Premium event venue and catering service in Bhaktapur, Nepal. Book your wedding, reception, birthday, and corporate events.';
+  const fullTitle = title.includes('Shree Ganesh') ? title : `${title} | Shree Ganesh Party Venue And Catering Service`;
+  const defaultDesc = 'Shree Ganesh Party Venue And Catering Service in Bhaktapur, Nepal. Weddings, receptions, birthdays, Bratabandha, Pasni, corporate events, and catering.';
 
   return (
     <Helmet>
@@ -24,6 +24,7 @@ export function SEOHead({ title, description, ogImage, canonicalUrl, noIndex, sc
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description ?? defaultDesc} />
       <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="Shree Ganesh Party Venue And Catering Service" />
       {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
       {ogImage && <meta property="og:image" content={ogImage} />}
 

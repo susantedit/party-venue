@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import axiosInstance from '@/lib/axiosInstance';
 import { SEOHead } from '@/components/shared/SEOHead';
 import { SkeletonLoader } from '@/components/shared/SkeletonLoader';
-import { EVENT_TYPES } from '@/constants';
+import { BUSINESS_PHONE, EVENT_TYPES, SITE_URL } from '@/constants';
 import type { Package } from '@/types';
 
 function calculateCost(pkg: Package, guests: number) {
@@ -50,7 +50,7 @@ export default function Packages() {
       <SEOHead
         title="Event Packages & Pricing"
         description="View Silver, Gold, Platinum, and Custom event packages at Shree Ganesh Party Venue. Transparent pricing for every budget."
-        canonicalUrl="https://shreeganeshsharma.com/packages"
+        canonicalUrl={`${SITE_URL}/packages`}
       />
       <div className="bg-[#0a0a0a] pt-28 pb-20 px-4">
         <div className="relative z-10 mx-auto max-w-6xl">
@@ -110,10 +110,10 @@ export default function Packages() {
             <p className="font-sans text-zinc-400 mb-5">
               Rates vary based on guest count and season. Get in touch <strong className="text-white">directly via phone</strong> to secure exclusive discounts and tailored pricing.
             </p>
-            <a href="tel:+9779851337076"
+            <a href="tel:+9779860117006"
               className="inline-block font-serif tracking-[0.14em] uppercase text-xs px-8 py-3 bg-gold hover:bg-gold/90 text-zinc-950 font-semibold transition-all duration-150 shadow-[0_0_16px_rgba(201,168,76,0.2)]"
               style={{ borderRadius: '2px' }}>
-              📞 Call for Discount — +977 9851337076
+              📞 Call for Discount — {BUSINESS_PHONE}
             </a>
           </div>
 

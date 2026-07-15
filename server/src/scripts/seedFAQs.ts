@@ -1,74 +1,211 @@
+/**
+ * Seed script: inserts the official FAQ content for Shree Ganesh Party Venue.
+ * Safe to re-run — skips any question that already exists (matched by question text).
+ *
+ * Run with:
+ *   npx tsx src/scripts/seedFAQs.ts
+ */
 import 'dotenv/config';
 import mongoose from 'mongoose';
 import { FAQModel } from '../models/FAQ';
-import { env } from '../config/env';
 
-const DEFAULT_FAQS = [
+const MONGO_URI = process.env.MONGODB_URI!;
+
+const FAQS: { question: string; answer: string; order: number }[] = [
   {
-    question: 'What types of events can be hosted at Shree Ganesh Party Venue & Catering Service?',
-    answer: 'We host weddings, receptions, engagements, birthdays, anniversaries, corporate gatherings, family functions, cultural programs, and other special celebrations. Contact us to discuss your event requirements.',
     order: 1,
+    question: 'What is the guest capacity at Shree Ganesh Party Venue?',
+    answer:
+      'Shree Ganesh Party Venue can comfortably accommodate events ranging from 50 to 1,000 guests, making it suitable for intimate gatherings as well as large weddings, receptions, and corporate events.',
   },
   {
-    question: 'Do you provide catering services?',
-    answer: 'Yes. We provide catering services for a variety of event types. Menu options and package details can be customized based on guest count, preferences, and event requirements.',
     order: 2,
+    question: 'What is the price range at Shree Ganesh Party Venue?',
+    answer:
+      'Our standard menu package starts from NPR 1,200 per plate (VAT included). Prices may vary depending on your event requirements, menu selection, and additional services.',
   },
   {
-    question: 'Can I book both the venue and catering together?',
-    answer: 'Yes. Customers can choose venue-only services, catering-only services, or a complete event package that includes both venue and catering arrangements.',
     order: 3,
+    question: 'Where is Shree Ganesh Party Venue located?',
+    answer:
+      'Shree Ganesh Party Venue is conveniently located at Ganesthan, Suryabinayak, Bhaktapur, Nepal, with easy access from Kathmandu, Lalitpur, and surrounding areas.',
   },
   {
-    question: 'Do you offer decoration services?',
-    answer: 'Decoration services can be arranged depending on the event type and package selected. Please contact our team for customization options and pricing.',
     order: 4,
+    question: 'Is parking available at Shree Ganesh Party Venue?',
+    answer:
+      'Yes. We provide ample parking facilities, including parking for up to 100 cars and parking for up to 200 motorcycles.',
   },
   {
-    question: 'How early should I book my event?',
-    answer: 'We recommend booking as early as possible, especially during wedding and festival seasons, to ensure availability of your preferred date.',
     order: 5,
+    question: 'What facilities are available at Shree Ganesh Party Venue?',
+    answer:
+      'Our venue offers: a spacious banquet hall, catering services, car parking, bike parking, outside alcohol allowed, professional event management support, wedding and reception setup, and birthday and celebration arrangements.',
   },
   {
-    question: 'Is parking available for guests?',
-    answer: 'Parking availability may vary depending on the event size and date. Please contact our team for the latest parking arrangements and guest access information.',
     order: 6,
+    question: 'What types of halls are available?',
+    answer:
+      'We offer a versatile banquet hall suitable for weddings, receptions, engagements, birthdays, corporate events, seminars, and private celebrations.',
   },
   {
-    question: 'Can I schedule a venue visit before booking?',
-    answer: 'Yes. We encourage customers to visit the venue before confirming a booking. Please contact us to arrange a suitable visiting time.',
     order: 7,
+    question: 'Are menu packages available?',
+    answer:
+      'Yes. We currently offer menu packages starting from NPR 1,200 per plate, and customized packages are available to suit your preferences and budget.',
   },
   {
-    question: 'Do you provide customized event packages?',
-    answer: 'Yes. Packages can be customized based on guest count, food preferences, decoration requirements, and event type.',
     order: 8,
+    question: 'What menu packages do you offer?',
+    answer:
+      'Our standard package starts from NPR 1,200 per plate. We can also customize the menu based on your guest count, cuisine preferences, and event type.',
   },
   {
-    question: 'How can I request a quotation?',
-    answer: 'You can submit a booking inquiry through the website, call us directly, or contact us through WhatsApp to receive a customized quotation.',
     order: 9,
+    question: 'Can I customize the decoration for my event?',
+    answer:
+      'Yes. Decoration can be customized according to your event theme, color preferences, and budget. Please contact us to discuss your requirements.',
   },
   {
-    question: 'What information should I provide when booking?',
-    answer: 'Please provide your event type, preferred date, estimated guest count, contact information, and any special requirements so we can prepare an appropriate proposal.',
     order: 10,
+    question: 'Is Shree Ganesh Party Venue suitable for weddings?',
+    answer:
+      'Yes. Our venue is designed for weddings of various sizes and includes catering, seating arrangements, decoration options, and ample parking.',
+  },
+  {
+    order: 11,
+    question: 'Do you host engagement ceremonies?',
+    answer:
+      'Yes. We regularly host engagement ceremonies, ring ceremonies, and family celebrations with customizable packages.',
+  },
+  {
+    order: 12,
+    question: 'Can I book the venue for birthday parties?',
+    answer:
+      'Absolutely. We host birthday parties for children and adults, offering flexible seating arrangements and customized food packages.',
+  },
+  {
+    order: 13,
+    question: 'Is the venue available for corporate events?',
+    answer:
+      'Yes. We welcome seminars, conferences, office parties, training sessions, product launches, and other corporate events.',
+  },
+  {
+    order: 14,
+    question: 'How far is Shree Ganesh Party Venue from Kathmandu?',
+    answer:
+      'The venue is located in Suryabinayak, Bhaktapur. You can see the exact location on our website map. It is easily accessible from Kathmandu, Lalitpur, and nearby municipalities.',
+  },
+  {
+    order: 15,
+    question: 'How early should I book the venue?',
+    answer:
+      'We recommend booking at least 2–6 weeks in advance for weddings during the peak season. Early booking helps secure your preferred date.',
+  },
+  {
+    order: 16,
+    question: 'Can I visit the venue before booking?',
+    answer:
+      'Yes. We encourage customers to schedule a venue visit to explore the hall, facilities, parking, and event setup options before confirming a booking.',
+  },
+  {
+    order: 17,
+    question: 'Do you provide catering services?',
+    answer:
+      'Yes. We offer professional catering services with customizable menus for weddings, receptions, birthday parties, and corporate events.',
+  },
+  {
+    order: 18,
+    question: 'Can I customize the food menu?',
+    answer:
+      'Yes. Our catering team can customize the menu based on your preferences, dietary requirements, cuisine selection, and budget.',
+  },
+  {
+    order: 19,
+    question: 'Do you offer vegetarian and non-vegetarian menu options?',
+    answer:
+      'Yes. We provide both vegetarian and non-vegetarian menu options. Customized combinations are also available.',
+  },
+  {
+    order: 20,
+    question: 'Is outside catering allowed?',
+    answer:
+      'Please contact us directly to discuss outside catering arrangements and venue policies.',
+  },
+  {
+    order: 21,
+    question: 'Is outside alcohol allowed?',
+    answer:
+      'Outside alcohol is allowed at Shree Ganesh Party Venue. For serving alcohol inside the venue, prior permission is required.',
+  },
+  {
+    order: 22,
+    question: 'Does the venue have backup power?',
+    answer:
+      'Yes. We have generator and backup power availability to ensure your event runs smoothly without interruptions.',
+  },
+  {
+    order: 23,
+    question: 'Do you provide event decoration services?',
+    answer:
+      'Yes. Decoration services can be arranged and customized according to your event theme and preferences.',
+  },
+  {
+    order: 24,
+    question: 'Can I book the venue online?',
+    answer:
+      'You can contact us through our website or by phone to check availability and begin the booking process.',
+  },
+  {
+    order: 25,
+    question: 'How can I check date availability?',
+    answer:
+      'Simply contact our team with your preferred event date, expected guest count, and event type. We will confirm availability and provide package details.',
+  },
+  {
+    order: 26,
+    question: 'Why choose Shree Ganesh Party Venue in Bhaktapur?',
+    answer:
+      'Shree Ganesh Party Venue is a popular choice for weddings and celebrations because of its convenient Bhaktapur location, capacity for up to 1,000 guests, spacious parking, customizable catering packages, and flexible event arrangements.',
+  },
+  {
+    order: 27,
+    question: 'How can I contact Shree Ganesh Party Venue?',
+    answer:
+      'You can contact our team through the phone number, contact form on our website, or visit the venue directly to discuss your event requirements, pricing, and available dates.',
   },
 ];
 
 async function seed() {
-  await mongoose.connect(env.MONGODB_URI);
-  const existing = await FAQModel.countDocuments();
-  if (existing > 0) {
-    console.log(`[seed] ${existing} FAQs already exist — skipping.`);
-  } else {
-    await FAQModel.insertMany(DEFAULT_FAQS.map(f => ({ ...f, isPublished: true })));
-    console.log(`[seed] Inserted ${DEFAULT_FAQS.length} default FAQs.`);
+  if (!MONGO_URI) {
+    console.error('✗ MONGODB_URI is not set in .env');
+    process.exit(1);
   }
+
+  await mongoose.connect(MONGO_URI);
+  console.log('✓ Connected to MongoDB');
+
+  let inserted = 0;
+  let skipped = 0;
+
+  for (const faq of FAQS) {
+    const exists = await FAQModel.exists({ question: faq.question });
+    if (exists) {
+      console.log(`  — skipped (already exists): "${faq.question.substring(0, 60)}…"`);
+      skipped++;
+    } else {
+      await FAQModel.create({ ...faq, isPublished: true });
+      console.log(`  ✓ inserted: "${faq.question.substring(0, 60)}…"`);
+      inserted++;
+    }
+  }
+
+  console.log(`\n✓ Done. Inserted: ${inserted}, Skipped: ${skipped}`);
   await mongoose.disconnect();
+  process.exit(0);
 }
 
-seed().catch(err => {
-  console.error(err);
+seed().catch((err) => {
+  console.error('✗ Seed failed:', err.message);
   process.exit(1);
 });

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BUSINESS_PHONE, BUSINESS_EMAIL, BUSINESS_ADDRESS, WHATSAPP_NUMBER } from '@/constants';
+import { BUSINESS_PHONE, BUSINESS_EMAIL, BUSINESS_ADDRESS, WHATSAPP_NUMBER, MAP_URL } from '@/constants';
 
 const quickLinks: [string, string][] = [
   ['/', 'Home'], ['/about', 'About'], ['/services', 'Services'],
@@ -20,7 +20,7 @@ export default function Footer() {
               <span className="font-script text-gold text-sm leading-none">Party Venue & Catering</span>
             </div>
             <p className="font-sans text-sm text-zinc-500 leading-relaxed">
-              Premium event venue & catering service in Bhaktapur, Nepal. Creating unforgettable celebrations since 2014.
+              Premium event venue and catering service in Bhaktapur, Nepal. Weddings, receptions, birthdays, Bratabandha, Pasni, corporate events, and catering.
             </p>
           </div>
 
@@ -43,7 +43,7 @@ export default function Footer() {
             <h4 className="font-serif text-xs tracking-[0.2em] uppercase text-zinc-400 mb-5">Contact</h4>
             <ul className="space-y-3 font-sans text-sm text-zinc-500">
               <li>
-                <a href="tel:+9779851337076" className="hover:text-gold transition-colors">{BUSINESS_PHONE}</a>
+                <a href="tel:+9779860117006" className="hover:text-gold transition-colors">{BUSINESS_PHONE}</a>
               </li>
               <li>
                 <a href={`mailto:${BUSINESS_EMAIL}`} className="hover:text-gold transition-colors">{BUSINESS_EMAIL}</a>
@@ -77,10 +77,10 @@ export default function Footer() {
           <p className="font-sans text-xs text-zinc-600">
             © {new Date().getFullYear()} Shree Ganesh Party Venue & Catering Service. All rights reserved.
           </p>
-          <a href="https://www.google.com/maps/place/Shree+Ganesh+Party+Venue+And+Catering+Service/@27.6568609,85.4192105,17z"
+          <a href={MAP_URL}
             target="_blank" rel="noopener noreferrer"
             className="font-sans text-xs text-zinc-600 hover:text-gold transition-colors">
-            📍 Suryabinayak-6, Bhaktapur, Nepal
+            📍 Near Suryabinayak Ganesh Mandir, Bhaktapur 44800, Nepal
           </a>
         </div>
       </div>

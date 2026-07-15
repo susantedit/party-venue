@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axiosInstance from '@/lib/axiosInstance';
 import { SEOHead } from '@/components/shared/SEOHead';
-import { BUSINESS_PHONE, BUSINESS_EMAIL, BUSINESS_ADDRESS } from '@/constants';
+import { BUSINESS_PHONE, BUSINESS_EMAIL, BUSINESS_ADDRESS, WHATSAPP_NUMBER, SITE_URL } from '@/constants';
 import { FAQSection } from '@/components/sections/FAQSection';
 
 function SectionHeader({ script, title, subtitle }: { script: string; title: string; subtitle?: string }) {
@@ -60,7 +60,7 @@ export default function Contact() {
 
   return (
     <>
-      <SEOHead title="Contact Us" description="Get in touch with Shree Ganesh Party Venue. Call, email, or send us a message." />
+      <SEOHead title="Contact Shree Ganesh Party Venue And Catering Service" description="Get in touch with Shree Ganesh Party Venue And Catering Service in Bhaktapur. Call, email, WhatsApp, or send us a message." canonicalUrl={`${SITE_URL}/contact`} />
       <div className="bg-[#0a0a0a] pt-28 pb-16 px-4">
         <div className="mx-auto max-w-6xl">
           <SectionHeader script="Get in Touch" title="Contact Us"
@@ -74,7 +74,7 @@ export default function Contact() {
                 <h2 className="font-serif text-2xl font-bold text-white tracking-wider uppercase mb-6">Our Details</h2>
                 <div className="space-y-5 font-sans text-zinc-400">
                   {[
-                    { icon: '📞', label: 'Phone', value: BUSINESS_PHONE, href: 'tel:+9779851337076' },
+                    { icon: '📞', label: 'Phone', value: BUSINESS_PHONE, href: 'tel:+9779860117006' },
                     { icon: '✉️', label: 'Email', value: BUSINESS_EMAIL, href: `mailto:${BUSINESS_EMAIL}` },
                     { icon: '📍', label: 'Address', value: BUSINESS_ADDRESS },
                     { icon: '⏰', label: 'Hours', value: 'Sun – Sat: 9:00 AM – 7:00 PM' },
@@ -94,7 +94,7 @@ export default function Contact() {
                 </div>
               </div>
               <div className="mt-8 pt-6 border-t border-gold/10">
-                <a href="https://wa.me/9779851337076?text=Hi%20Shree%20Ganesh%20Party%20Venue%2C%20I%20have%20an%20enquiry."
+                <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hi%20Shree%20Ganesh%20Party%20Venue%2C%20I%20have%20an%20enquiry.`}
                   target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 font-serif tracking-[0.12em] uppercase text-xs px-6 py-3 bg-[#25D366] hover:bg-[#20bb5a] text-white font-semibold transition-all duration-150"
                   style={{ borderRadius: '2px' }}>

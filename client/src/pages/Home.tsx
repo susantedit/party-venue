@@ -14,19 +14,28 @@ import { SEOHead } from '@/components/shared/SEOHead';
 import type { GalleryImage } from '@/types';
 import meatVideo from '@/assets/imagesandvedioes/meatmaking.mp4';
 import vegVideo from '@/assets/imagesandvedioes/vegies.mp4';
+import { BUSINESS_ADDRESS, BUSINESS_PHONE, SITE_URL } from '@/constants';
 
 const LOCAL_BUSINESS_SCHEMA = {
   '@context': 'https://schema.org',
   '@type': 'EventVenue',
+  '@id': `${SITE_URL}/#venue`,
   name: 'Shree Ganesh Party Venue & Catering Service',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Suryabinayak-6, Ganesthan Chwok',
+    streetAddress: 'Near Suryabinayak Ganesh Mandir',
     addressLocality: 'Bhaktapur',
+    postalCode: '44800',
+    addressRegion: 'Bagmati Province',
     addressCountry: 'NP',
   },
-  telephone: '+977-9851337076',
-  url: 'https://shreeganeshsharma.com',
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 27.6568562,
+    longitude: 85.4217854,
+  },
+  telephone: BUSINESS_PHONE,
+  url: SITE_URL,
 };
 
 const services: { title: string; icon: LucideIcon; desc: string }[] = [
@@ -41,10 +50,9 @@ const services: { title: string; icon: LucideIcon; desc: string }[] = [
 ];
 
 const stats = [
-  { value: '500+', label: 'Events Completed' },
-  { value: '10+', label: 'Years Experience' },
-  { value: '2000+', label: 'Happy Clients' },
-  { value: '1000', label: 'Venue Capacity' },
+  { value: '700-800', label: 'Verified Capacity' },
+  { value: '7', label: 'Verified Event Types' },
+  { value: '4', label: 'Booking Channels' },
 ];
 
 /** Queens-Palace-style 3-layer section header */
@@ -117,9 +125,9 @@ export default function Home() {
   return (
     <>
       <SEOHead
-        title="Shree Ganesh Party Venue & Catering | Bhaktapur, Nepal"
-        description="Premium event venue and catering in Bhaktapur, Nepal. Weddings, receptions, birthdays, Bratabandha, Pasni, corporate events. Book now."
-        canonicalUrl="https://shreeganeshsharma.com"
+        title="Shree Ganesh Party Venue And Catering Service in Bhaktapur, Nepal"
+        description="Shree Ganesh Party Venue And Catering Service near Suryabinayak Ganesh Mandir in Bhaktapur. Weddings, receptions, birthdays, Bratabandha, Pasni, corporate events, and catering."
+        canonicalUrl={SITE_URL}
         schema={LOCAL_BUSINESS_SCHEMA}
       />
 
@@ -138,7 +146,7 @@ export default function Home() {
           <motion.h1 initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 14 }} animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.28, ease: [0.2, 0.8, 0.2, 1] }}
             className="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] text-white tracking-[0.1em] uppercase">
-            Shree Ganesh
+            Shree Ganesh Party Venue
           </motion.h1>
 
           <motion.p initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }} animate={{ opacity: 1, y: 0 }}
@@ -150,7 +158,7 @@ export default function Home() {
           <motion.div className="mt-2 flex justify-center gap-3 mb-8" initial={{ opacity: 0 }} animate={{ opacity: 1 }}
             transition={{ delay: 0.28 }}>
             <span className="block h-px w-16 bg-gradient-to-r from-transparent to-gold/70 self-center" />
-            <span className="text-gold/60 text-xs tracking-[0.3em] uppercase font-sans">Est. 2014</span>
+            <span className="text-gold/60 text-xs tracking-[0.3em] uppercase font-sans">Near Suryabinayak Ganesh Mandir</span>
             <span className="block h-px w-16 bg-gradient-to-l from-transparent to-gold/70 self-center" />
           </motion.div>
 
@@ -221,7 +229,7 @@ export default function Home() {
       {/* ── STATS ── */}
       <section className="bg-[#0a0a0a] border-y border-gold/10 py-16">
         <div className="mx-auto max-w-6xl px-4">
-          <div className="grid grid-cols-2 gap-px sm:grid-cols-4 border border-gold/10">
+          <div className="grid grid-cols-1 gap-px sm:grid-cols-3 border border-gold/10">
             {stats.map((s) => <AnimatedCounter key={s.label} value={s.value} label={s.label} />)}
           </div>
         </div>
@@ -338,14 +346,14 @@ export default function Home() {
             <div className="border border-gold/15 bg-[rgba(255,255,255,0.02)] p-8 flex flex-col justify-between">
               <div>
                 <p className="font-sans text-zinc-300 leading-relaxed mb-6 text-base">
-                  Shree Ganesh Party Venue is located in <strong className="text-white">Suryabinayak-6, Ganesthan Chwok, Bhaktapur</strong> — easily accessible from Kathmandu. Our wide entrance handles heavy event traffic comfortably.
+                  Shree Ganesh Party Venue is located near <strong className="text-white">Suryabinayak Ganesh Mandir in Bhaktapur</strong> and serves customers from Bhaktapur, Suryabinayak, and the wider Kathmandu Valley.
                 </p>
               </div>
               <div className="space-y-3 border-t border-gold/10 pt-6 font-sans text-sm text-zinc-400">
-                <div>📍 <strong className="text-white">Address:</strong> Suryabinayak-6, Bhaktapur (Near Ganesthan Temple)</div>
-                <div>📞 <strong className="text-white">Phone:</strong> +977 9851337076 / 9841358723</div>
+                <div>📍 <strong className="text-white">Address:</strong> {BUSINESS_ADDRESS}</div>
+                <div>📞 <strong className="text-white">Phone:</strong> {BUSINESS_PHONE}</div>
                 <div>✉️ <strong className="text-white">Email:</strong> shreeganeshsharma@gmail.com</div>
-                <div>⏰ <strong className="text-white">Hours:</strong> Sun – Sat: 9:00 AM – 7:00 PM</div>
+                <div>⏰ <strong className="text-white">Hours:</strong> Any time as customers wish</div>
               </div>
             </div>
             <div className="h-[380px] border border-gold/15 overflow-hidden">

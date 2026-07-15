@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { SEOHead } from '@/components/shared/SEOHead';
+import { SITE_URL } from '@/constants';
 
 const values = [
   { title: 'Our Mission', desc: 'To deliver flawless events that exceed expectations, creating memories that last a lifetime for every family we serve.' },
@@ -8,19 +9,19 @@ const values = [
 ];
 
 const highlights = [
-  { num: '500+', label: 'Events Hosted' },
-  { num: '10+', label: 'Years Experience' },
-  { num: '1000', label: 'Guest Capacity' },
-  { num: '3', label: 'Halls Available' },
+  { num: '700-800', label: 'Verified Capacity' },
+  { num: '7', label: 'Verified Event Types' },
+  { num: '4', label: 'Booking Channels' },
+  { num: 'Bhaktapur', label: 'Primary Location' },
 ];
 
 export default function About() {
   return (
     <>
       <SEOHead
-        title="About Us — Shree Ganesh Party Venue"
-        description="Learn about Shree Ganesh Party Venue & Catering Service — Bhaktapur's premier event venue since 2014."
-        canonicalUrl="https://shreeganeshsharma.com/about"
+        title="About Shree Ganesh Party Venue And Catering Service | Bhaktapur"
+        description="Learn about Shree Ganesh Party Venue And Catering Service near Suryabinayak Ganesh Mandir in Bhaktapur. Weddings, receptions, birthdays, Bratabandha, Pasni, corporate events, and catering."
+        canonicalUrl={`${SITE_URL}/about`}
       />
 
       <div className="bg-[#0a0a0a] pt-28 pb-20 px-4">
@@ -35,20 +36,20 @@ export default function About() {
             </div>
             <h1 className="font-serif text-4xl sm:text-5xl font-bold text-white tracking-widest uppercase mt-2">About Us</h1>
             <p className="mt-4 font-sans text-lg italic text-zinc-400 max-w-xl mx-auto">
-              Bhaktapur's trusted partner for unforgettable celebrations since 2014.
+              Shree Ganesh Party Venue And Catering Service near Suryabinayak Ganesh Mandir, Bhaktapur.
             </p>
           </div>
 
           {/* Story paragraphs */}
           <div className="space-y-6 font-sans text-lg text-zinc-400 leading-relaxed mb-16 max-w-3xl mx-auto">
             <p>
-              Shree Ganesh Party Venue & Catering Service has been creating extraordinary celebrations in the heart of Bhaktapur, Nepal for over a decade. From intimate family gatherings to grand weddings with 1,000+ guests, we bring every event vision to life with precision, warmth, and excellence.
+              Shree Ganesh Party Venue And Catering Service is a Bhaktapur event venue and catering service near Suryabinayak Ganesh Mandir. We host weddings, receptions, birthdays, Bratabandha, Pasni, corporate events, and catering bookings.
             </p>
             <p>
-              Our venue spans three beautifully designed halls, a dedicated outdoor terrace, and a full commercial kitchen — giving us the capacity and flexibility to host weddings, receptions, Bratabandha, Pasni, corporate conferences, and birthday celebrations all under one roof.
+              Our verified capacity is 700-800 guests depending on the event setup. Exact package inclusions, seating layout, menu, and décor should be confirmed with the team before booking.
             </p>
             <p>
-              Our culinary team specialises in authentic Nepali, Newari, Indian, Chinese, and BBQ cuisines, ensuring every guest leaves fully satisfied. We believe food is at the heart of every celebration — it's what people remember.
+              We focus on clear communication, practical event planning, and real local visibility so guests can find the venue easily from Bhaktapur and the wider Kathmandu Valley.
             </p>
           </div>
 

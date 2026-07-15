@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom';
 import { SEOHead } from '@/components/shared/SEOHead';
 import { FAQSection } from '@/components/sections/FAQSection';
+import { SITE_URL } from '@/constants';
 
 const BREADCRUMB_SCHEMA = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://shreeganeshsharma.com' },
-    { '@type': 'ListItem', position: 2, name: 'Wedding Venue in Bhaktapur', item: 'https://shreeganeshsharma.com/wedding-venue-in-bhaktapur' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+    { '@type': 'ListItem', position: 2, name: 'Wedding Venue in Bhaktapur', item: `${SITE_URL}/wedding-venue-bhaktapur` },
   ],
 };
 
@@ -16,8 +17,8 @@ export default function WeddingVenuePage() {
     <>
       <SEOHead
         title="Wedding Venue in Bhaktapur, Nepal | Shree Ganesh Party Venue"
-        description="Looking for the best wedding venue in Bhaktapur? Shree Ganesh Party Venue offers elegant halls for up to 1,000 guests, full catering, decoration, and event coordination. Book your wedding today."
-        canonicalUrl="https://shreeganeshsharma.com/wedding-venue-in-bhaktapur"
+        description="Looking for a wedding venue in Bhaktapur? Shree Ganesh Party Venue near Suryabinayak Ganesh Mandir offers verified capacity for 700-800 guests, catering, and event coordination."
+        canonicalUrl={`${SITE_URL}/wedding-venue-bhaktapur`}
         schema={BREADCRUMB_SCHEMA}
       />
       <div className="pt-24 pb-16 px-4">
@@ -36,21 +37,21 @@ export default function WeddingVenuePage() {
 
           <div className="prose prose-lg max-w-none text-gray-600 space-y-4 mb-10">
             <p>
-              Shree Ganesh Party Venue & Catering Service is one of the most sought-after <strong>wedding venues in Bhaktapur, Nepal</strong>. With halls that accommodate up to 1,000 guests, we provide a complete wedding experience — from venue setup and decoration to multi-cuisine catering and professional event coordination.
+              Shree Ganesh Party Venue And Catering Service is a <strong>wedding venue in Bhaktapur, Nepal</strong> near Suryabinayak Ganesh Mandir. The verified capacity is 700-800 guests depending on setup, and we support wedding and reception planning with catering and coordination.
             </p>
             <p>
-              Our wedding packages include floral decoration, stage design, sound and lighting systems, dedicated bridal suites, and a professional catering team. We specialize in both traditional Nepali and Newari wedding ceremonies as well as modern receptions.
+              Our wedding packages can be confirmed by the team for décor, menu selection, seating layout, and booking method. Please verify any setup-specific details before finalising the date.
             </p>
             <p>
-              Located conveniently in Bhaktapur, our venue is easily accessible from Kathmandu, Lalitpur, and surrounding areas. We have hosted over 500 weddings and events since 2014.
+              The venue is convenient for guests coming from Bhaktapur, Suryabinayak, Kathmandu, and Lalitpur. Use the map, phone, or WhatsApp to confirm availability.
             </p>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-3 mb-12">
             {[
-              { label: 'Guest Capacity', value: 'Up to 1,000' },
+              { label: 'Guest Capacity', value: '700-800' },
               { label: 'Event Types', value: 'Wedding & Reception' },
-              { label: 'Experience', value: '10+ Years' },
+              { label: 'Location', value: 'Bhaktapur' },
             ].map(s => (
               <div key={s.label} className="rounded-xl bg-surface p-5 text-center">
                 <p className="font-serif text-2xl font-bold text-gold-600">{s.value}</p>

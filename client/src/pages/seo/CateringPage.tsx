@@ -1,14 +1,15 @@
 import { Link } from 'react-router-dom';
 import { SEOHead } from '@/components/shared/SEOHead';
 import { FAQSection } from '@/components/sections/FAQSection';
+import { SITE_URL } from '@/constants';
 
 export default function CateringPage() {
   return (
     <>
       <SEOHead
         title="Catering Service in Bhaktapur, Nepal | Shree Ganesh Catering"
-        description="Professional catering service in Bhaktapur for weddings, receptions, corporate events and more. Authentic Nepali, Newari, Indian, and Chinese cuisine. Contact us for a custom menu."
-        canonicalUrl="https://shreeganeshsharma.com/catering-service-in-bhaktapur"
+        description="Professional catering service in Bhaktapur near Suryabinayak Ganesh Mandir for weddings, receptions, birthdays, corporate events, and more. Nepali, Newari, Indian, Chinese, and BBQ menus."
+        canonicalUrl={`${SITE_URL}/catering-service-bhaktapur`}
       />
       <div className="pt-24 pb-16 px-4">
         <div className="mx-auto max-w-4xl">
@@ -23,10 +24,10 @@ export default function CateringPage() {
           </p>
           <div className="prose prose-lg max-w-none text-gray-600 space-y-4 mb-10">
             <p>
-              Shree Ganesh Catering Service offers authentic <strong>Nepali, Newari, Indian, Chinese, and BBQ catering</strong> in Bhaktapur and surrounding areas. Whether you need catering for a 50-person birthday party or a 1,000-guest wedding reception, our team delivers consistent quality and presentation.
+              Shree Ganesh Party Venue And Catering Service offers authentic <strong>Nepali, Newari, Indian, Chinese, and BBQ catering</strong> in Bhaktapur and surrounding areas. Event-specific menu choices should be confirmed with the team before booking.
             </p>
             <p>
-              Our menu offerings include traditional Nepali thali sets, Newari samaybaji, Indian buffet selections, Chinese family-style platters, and live BBQ stations. We accommodate dietary preferences and custom menu requests.
+              Menu offerings include traditional Nepali thali sets, Newari samaybaji, Indian buffet selections, Chinese family-style platters, and BBQ options. The exact menu depends on the event type, guest count, and available ingredients.
             </p>
           </div>
           <div className="flex gap-4 mb-12">
