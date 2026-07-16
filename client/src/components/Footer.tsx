@@ -17,13 +17,13 @@ export default function Footer() {
           <div>
             <Link to="/" aria-label="Shree Ganesh Party Venue And Catering Service — go to home page" className="inline-block mb-4">
               <img
-                src="/shreeganeshpartyvenue-without-bg.png"
+                src="/shreeganeshpartyvenue(withbg-of-white).png"
                 alt="Shree Ganesh Party Venue And Catering Service"
-                width={120}
-                height={48}
+                width={160}
+                height={64}
                 loading="lazy"
                 decoding="async"
-                className="h-12 w-auto object-contain"
+                className="h-16 w-auto object-contain"
               />
             </Link>
             <p className="font-sans text-sm text-zinc-500 leading-relaxed">

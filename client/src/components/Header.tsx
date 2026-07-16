@@ -35,13 +35,13 @@ export default function Header() {
           className="flex items-center group min-h-[44px]"
           onClick={() => setMobileOpen(false)}>
           <img
-            src="/shreeganeshpartyvenue-without-bg.png"
+            src="/shreeganeshpartyvenue(withbg-of-white).png"
             alt="Shree Ganesh Party Venue And Catering Service"
-            width={140}
-            height={56}
+            width={180}
+            height={72}
             loading="eager"
             decoding="async"
-            className="h-12 w-auto object-contain transition-opacity duration-150 group-hover:opacity-85"
+            className="h-16 w-auto object-contain transition-opacity duration-150 group-hover:opacity-85"
           />
         </Link>
 

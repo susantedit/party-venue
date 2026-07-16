@@ -10,7 +10,9 @@
     "start": "node dist/server.js",
     "test": "jest --runInBand",
     "test:watch": "jest --watch --runInBand",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "seed:faqs": "tsx src/scripts/seedFAQs.ts",
+    "seed:gallery": "tsx src/scripts/seedGallery.ts"
   },
   "engines": {
     "node": ">=20.0.0 <24.0.0"

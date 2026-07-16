@@ -2,10 +2,15 @@
  * Seed script: inserts the official FAQ content for Shree Ganesh Party Venue.
  * Safe to re-run — skips any question that already exists (matched by question text).
  *
- * Run with:
- *   npx tsx src/scripts/seedFAQs.ts
+ * Run with (from d:\party venue\server):
+ *   npm run seed:faqs
  */
-import 'dotenv/config';
+import dotenv from 'dotenv';
+import path from 'node:path';
+
+// Load .env from the server root regardless of cwd
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+
 import mongoose from 'mongoose';
 import { FAQModel } from '../models/FAQ';
 

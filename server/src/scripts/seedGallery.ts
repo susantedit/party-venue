@@ -4,14 +4,18 @@
  *
  * Safe to re-run — skips any cloudinaryId that already exists in the DB.
  *
- * Run with:
- *   npx tsx src/scripts/seedGallery.ts
+ * Run with (from d:\party venue\server):
+ *   npm run seed:gallery
  *
  * Requires: MONGODB_URI, CLOUDINARY_NAME, CLOUDINARY_KEY, CLOUDINARY_SECRET in .env
  */
-import 'dotenv/config';
-import fs from 'node:fs';
+import dotenv from 'dotenv';
 import path from 'node:path';
+
+// Load .env from the server root regardless of cwd
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+
+import fs from 'node:fs';
 import mongoose from 'mongoose';
 import cloudinaryLib from 'cloudinary';
 import type { UploadApiOptions } from 'cloudinary';
