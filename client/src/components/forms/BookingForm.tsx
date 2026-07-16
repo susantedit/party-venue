@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axiosInstance from '@/lib/axiosInstance';
 import { EVENT_TYPES, BOOKING_SHIFTS } from '@/constants';
+import { trackBookingFormSubmit } from '@/lib/analytics';
 
 type AvailabilityStatus = 'available' | 'reserved' | 'booked' | null;
 type ShiftType = typeof BOOKING_SHIFTS[number];
@@ -99,6 +100,7 @@ export default function BookingForm({ prefilledPackageId }: BookingFormProps) {
         notes: form.notes || undefined,
       });
       setSuccess(`Booking submitted! Your ID: ${res.data.data.bookingId}. We'll contact you within 30 minutes.`);
+      trackBookingFormSubmit('booking_page');
       setForm({ customerName: '', phone: '', email: '', eventType: EVENT_TYPES[0], eventDate: '', shift: 'Whole_Day', guestCount: '', packageId: '', cateringRequired: false, decorationRequired: false, notes: '' });
     } catch (err: unknown) {
       const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
@@ -124,80 +126,85 @@ export default function BookingForm({ prefilledPackageId }: BookingFormProps) {
       <div className="grid gap-4 sm:grid-cols-2">
         {/* Name */}
         <div>
-          <label className={labelCls}>Full Name *</label>
-          <input type="text" value={form.customerName} onChange={(e) => set('customerName', e.target.value)}
-            placeholder="Your full name" className={inputCls} />
-          {errors.customerName && <p className="mt-1 text-xs text-red-400 font-sans">{errors.customerName}</p>}
+          <label htmlFor="bf-name" className={labelCls}>Full Name *</label>
+          <input id="bf-name" type="text" value={form.customerName} onChange={(e) => set('customerName', e.target.value)}
+            placeholder="Your full name" className={inputCls} aria-required="true"
+            aria-describedby={errors.customerName ? 'bf-name-err' : undefined} />
+          {errors.customerName && <p id="bf-name-err" className="mt-1 text-xs text-red-400 font-sans" role="alert">{errors.customerName}</p>}
         </div>
 
         {/* Phone */}
         <div>
-          <label className={labelCls}>Phone *</label>
-          <input type="tel" value={form.phone} onChange={(e) => set('phone', e.target.value)}
-            placeholder="98XXXXXXXX" className={inputCls} />
-          {errors.phone && <p className="mt-1 text-xs text-red-400 font-sans">{errors.phone}</p>}
+          <label htmlFor="bf-phone" className={labelCls}>Phone *</label>
+          <input id="bf-phone" type="tel" value={form.phone} onChange={(e) => set('phone', e.target.value)}
+            placeholder="98XXXXXXXX" className={inputCls} aria-required="true"
+            aria-describedby={errors.phone ? 'bf-phone-err' : undefined} />
+          {errors.phone && <p id="bf-phone-err" className="mt-1 text-xs text-red-400 font-sans" role="alert">{errors.phone}</p>}
         </div>
 
         {/* Email */}
         <div>
-          <label className={labelCls}>Email *</label>
-          <input type="email" value={form.email} onChange={(e) => set('email', e.target.value)}
-            placeholder="you@email.com" className={inputCls} />
-          {errors.email && <p className="mt-1 text-xs text-red-400 font-sans">{errors.email}</p>}
+          <label htmlFor="bf-email" className={labelCls}>Email *</label>
+          <input id="bf-email" type="email" value={form.email} onChange={(e) => set('email', e.target.value)}
+            placeholder="you@email.com" className={inputCls} aria-required="true"
+            aria-describedby={errors.email ? 'bf-email-err' : undefined} />
+          {errors.email && <p id="bf-email-err" className="mt-1 text-xs text-red-400 font-sans" role="alert">{errors.email}</p>}
         </div>
 
         {/* Event Type */}
         <div>
-          <label className={labelCls}>Event Type *</label>
-          <select value={form.eventType} onChange={(e) => set('eventType', e.target.value)} className={inputCls}>
+          <label htmlFor="bf-event-type" className={labelCls}>Event Type *</label>
+          <select id="bf-event-type" value={form.eventType} onChange={(e) => set('eventType', e.target.value)} className={inputCls} aria-required="true">
             {EVENT_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
           </select>
         </div>
 
         {/* Event Date */}
         <div>
-          <label className={labelCls}>Event Date *</label>
-          <input type="date" value={form.eventDate} min={new Date().toISOString().split('T')[0]}
-            onChange={(e) => set('eventDate', e.target.value)} className={inputCls} />
+          <label htmlFor="bf-date" className={labelCls}>Event Date *</label>
+          <input id="bf-date" type="date" value={form.eventDate} min={new Date().toISOString().split('T')[0]}
+            onChange={(e) => set('eventDate', e.target.value)} className={inputCls} aria-required="true"
+            aria-describedby={errors.eventDate ? 'bf-date-err' : 'bf-date-hint'} />
           {form.eventDate && (
-            <p className={`mt-1 text-xs font-sans font-medium ${avail ? statusColor[avail] : 'text-zinc-500'}`}>
+            <p id="bf-date-hint" className={`mt-1 text-xs font-sans font-medium ${avail ? statusColor[avail] : 'text-zinc-500'}`}>
               {availLoading ? 'Checking availability...' : avail ? statusLabel[avail] : ''}
             </p>
           )}
-          {errors.eventDate && <p className="mt-1 text-xs text-red-400 font-sans">{errors.eventDate}</p>}
+          {errors.eventDate && <p id="bf-date-err" className="mt-1 text-xs text-red-400 font-sans" role="alert">{errors.eventDate}</p>}
         </div>
 
         {/* Shift */}
         <div>
-          <label className={labelCls}>Shift *</label>
-          <select value={form.shift} onChange={(e) => set('shift', e.target.value as ShiftType)} className={inputCls}>
+          <label htmlFor="bf-shift" className={labelCls}>Shift *</label>
+          <select id="bf-shift" value={form.shift} onChange={(e) => set('shift', e.target.value as ShiftType)} className={inputCls} aria-required="true" aria-describedby="bf-shift-hint">
             {BOOKING_SHIFTS.map((s) => (
               <option key={s} value={s}>{SHIFT_DESCRIPTIONS[s]}</option>
             ))}
           </select>
-          <p className="mt-1 text-xs font-sans text-zinc-500">
-            Whole Day blocks both Morning & Evening slots.
+          <p id="bf-shift-hint" className="mt-1 text-xs font-sans text-zinc-500">
+            Whole Day blocks both Morning &amp; Evening slots.
           </p>
         </div>
 
         {/* Guest Count */}
         <div>
-          <label className={labelCls}>Number of Guests *</label>
-          <input type="number" min="1" value={form.guestCount}
-            onChange={(e) => set('guestCount', e.target.value)} placeholder="e.g. 200" className={inputCls} />
-          {errors.guestCount && <p className="mt-1 text-xs text-red-400 font-sans">{errors.guestCount}</p>}
+          <label htmlFor="bf-guests" className={labelCls}>Number of Guests *</label>
+          <input id="bf-guests" type="number" min="1" value={form.guestCount}
+            onChange={(e) => set('guestCount', e.target.value)} placeholder="e.g. 200" className={inputCls} aria-required="true"
+            aria-describedby={errors.guestCount ? 'bf-guests-err' : undefined} />
+          {errors.guestCount && <p id="bf-guests-err" className="mt-1 text-xs text-red-400 font-sans" role="alert">{errors.guestCount}</p>}
         </div>
       </div>
 
       {/* Checkboxes */}
       <div className="flex gap-6 font-sans text-sm text-zinc-300">
         <label className="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" checked={form.cateringRequired} onChange={(e) => set('cateringRequired', e.target.checked)}
+          <input id="bf-catering" type="checkbox" checked={form.cateringRequired} onChange={(e) => set('cateringRequired', e.target.checked)}
             className="accent-gold" />
           Catering Required
         </label>
         <label className="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" checked={form.decorationRequired} onChange={(e) => set('decorationRequired', e.target.checked)}
+          <input id="bf-decoration" type="checkbox" checked={form.decorationRequired} onChange={(e) => set('decorationRequired', e.target.checked)}
             className="accent-gold" />
           Decoration Required
         </label>
@@ -205,8 +212,8 @@ export default function BookingForm({ prefilledPackageId }: BookingFormProps) {
 
       {/* Notes */}
       <div>
-        <label className={labelCls}>Additional Notes</label>
-        <textarea value={form.notes} onChange={(e) => set('notes', e.target.value)} rows={3}
+        <label htmlFor="bf-notes" className={labelCls}>Additional Notes</label>
+        <textarea id="bf-notes" value={form.notes} onChange={(e) => set('notes', e.target.value)} rows={3}
           placeholder="Any special requirements, theme preferences, dietary needs..."
           className={inputCls + ' resize-none'} />
       </div>

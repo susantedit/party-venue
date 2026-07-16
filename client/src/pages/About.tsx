@@ -19,8 +19,8 @@ export default function About() {
   return (
     <>
       <SEOHead
-        title="About Shree Ganesh Party Venue And Catering Service | Bhaktapur"
-        description="Learn about Shree Ganesh Party Venue And Catering Service near Suryabinayak Ganesh Mandir in Bhaktapur. Weddings, receptions, birthdays, Bratabandha, Pasni, corporate events, and catering."
+        title="About Shree Ganesh Party Venue And Catering Service"
+        description="Learn about the Bhaktapur event venue near Suryabinayak Ganesh Mandir."
         canonicalUrl={`${SITE_URL}/about`}
       />
 
@@ -67,7 +67,7 @@ export default function About() {
           <div className="grid gap-px sm:grid-cols-3 border border-gold/10 mb-14">
             {values.map((v) => (
               <div key={v.title} className="p-7 bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(201,168,76,0.04)] transition-colors duration-200">
-                <h3 className="font-serif text-base font-bold text-white tracking-wider uppercase mb-3">{v.title}</h3>
+                <h2 className="font-serif text-base font-bold text-white tracking-wider uppercase mb-3">{v.title}</h2>
                 <p className="font-sans text-sm text-zinc-400 leading-relaxed">{v.desc}</p>
               </div>
             ))}
@@ -76,7 +76,7 @@ export default function About() {
           {/* CTA */}
           <div className="border border-gold/15 bg-[rgba(201,168,76,0.03)] p-10 text-center">
             <span className="font-script text-gold text-xl block mb-2">Ready to celebrate?</span>
-            <h2 className="font-serif text-3xl font-bold text-white tracking-widest uppercase mb-4">Let's Create Together</h2>
+            <p className="font-serif text-3xl font-bold text-white tracking-widest uppercase mb-4">Let's Create Together</p>
             <p className="font-sans text-zinc-400 italic mb-8 max-w-md mx-auto">
               Contact our team today and start planning the event of your dreams.
             </p>

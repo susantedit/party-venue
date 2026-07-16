@@ -1,0 +1,20 @@
+{
+  "redirects": [
+    {
+      "source": "/wedding-venue-in-bhaktapur",
+      "destination": "/wedding-venue-bhaktapur",
+      "permanent": true
+    },
+    {
+      "source": "/catering-service-in-bhaktapur",
+      "destination": "/catering-service-bhaktapur",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

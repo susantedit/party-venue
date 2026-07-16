@@ -69,7 +69,7 @@ export default function Services() {
     <>
       <SEOHead
         title="Party Venue Services in Bhaktapur | Shree Ganesh Party Venue"
-        description="Wedding venue, reception venue, birthday parties, Bratabandha, Pasni, corporate events, decoration, and catering in Bhaktapur near Suryabinayak Ganesh Mandir."
+        description="Weddings, receptions, birthdays, Bratabandha, Pasni, corporate events, and catering in Bhaktapur."
         canonicalUrl={`${SITE_URL}/services`}
       />
 
@@ -101,13 +101,23 @@ export default function Services() {
                   <h2 className="font-serif text-lg font-bold text-white tracking-wider uppercase">{s.title}</h2>
                 </div>
                 <p className="font-sans text-sm text-zinc-400 leading-relaxed mb-4">{s.desc}</p>
-                <ul className="grid grid-cols-2 gap-1.5">
+                <ul className="grid grid-cols-2 gap-1.5 mb-4">
                   {s.features.map((f) => (
                     <li key={f} className="flex items-center gap-1.5 text-xs font-sans text-zinc-500">
                       <span className="text-gold shrink-0">✓</span> {f}
                     </li>
                   ))}
                 </ul>
+                {s.title === 'Wedding Venue' && (
+                  <Link to="/wedding-venue-bhaktapur" className="inline-block text-xs font-sans text-gold hover:underline underline-offset-2 mt-1">
+                    View Wedding Venue Details →
+                  </Link>
+                )}
+                {s.title === 'Catering Services' && (
+                  <Link to="/catering-service-bhaktapur" className="inline-block text-xs font-sans text-gold hover:underline underline-offset-2 mt-1">
+                    View Catering Service Details →
+                  </Link>
+                )}
               </div>
             ))}
           </div>
@@ -138,11 +148,18 @@ export default function Services() {
             <p className="font-sans text-zinc-400 italic mb-8">
               Our team takes care of everything — you just show up and celebrate.
             </p>
-            <Link to="/booking"
-              className="inline-block font-serif tracking-[0.14em] uppercase text-xs px-8 py-3.5 bg-gold hover:bg-gold/90 text-zinc-950 font-semibold transition-all duration-150 shadow-[0_0_16px_rgba(201,168,76,0.2)]"
-              style={{ borderRadius: '2px' }}>
-              Book Your Event
-            </Link>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link to="/booking"
+                className="inline-block font-serif tracking-[0.14em] uppercase text-xs px-8 py-3.5 bg-gold hover:bg-gold/90 text-zinc-950 font-semibold transition-all duration-150 shadow-[0_0_16px_rgba(201,168,76,0.2)]"
+                style={{ borderRadius: '2px' }}>
+                Book Your Event
+              </Link>
+              <Link to="/location"
+                className="inline-block font-serif tracking-[0.14em] uppercase text-xs px-8 py-3.5 border border-gold/40 hover:border-gold text-gold hover:bg-gold/5 transition-all duration-150"
+                style={{ borderRadius: '2px' }}>
+                Find Our Venue
+              </Link>
+            </div>
           </div>
 
         </div>

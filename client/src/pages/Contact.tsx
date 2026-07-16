@@ -3,6 +3,7 @@ import axiosInstance from '@/lib/axiosInstance';
 import { SEOHead } from '@/components/shared/SEOHead';
 import { BUSINESS_PHONE, BUSINESS_EMAIL, BUSINESS_ADDRESS, WHATSAPP_NUMBER, SITE_URL } from '@/constants';
 import { FAQSection } from '@/components/sections/FAQSection';
+import { trackContactFormSubmit } from '@/lib/analytics';
 
 function SectionHeader({ script, title, subtitle }: { script: string; title: string; subtitle?: string }) {
   return (
@@ -50,6 +51,7 @@ export default function Contact() {
       await axiosInstance.post('/api/v1/inquiries', form);
       setSuccess(true);
       setForm({ name: '', email: '', phone: '', message: '' });
+      trackContactFormSubmit('contact_page');
     } catch (err: unknown) {
       const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
       setErrors({ submit: msg ?? 'Submission failed. Please try again.' });
@@ -60,7 +62,7 @@ export default function Contact() {
 
   return (
     <>
-      <SEOHead title="Contact Shree Ganesh Party Venue And Catering Service" description="Get in touch with Shree Ganesh Party Venue And Catering Service in Bhaktapur. Call, email, WhatsApp, or send us a message." canonicalUrl={`${SITE_URL}/contact`} />
+      <SEOHead title="Contact Shree Ganesh Party Venue And Catering Service" description="Call, WhatsApp, or send a message to book your event in Bhaktapur." canonicalUrl={`${SITE_URL}/contact`} />
       <div className="bg-[#0a0a0a] pt-28 pb-16 px-4">
         <div className="mx-auto max-w-6xl">
           <SectionHeader script="Get in Touch" title="Contact Us"
@@ -123,19 +125,21 @@ export default function Contact() {
                     { key: 'phone', label: 'Phone Number', type: 'tel', placeholder: '98XXXXXXXX' },
                   ].map(({ key, label, type, placeholder }) => (
                     <div key={key}>
-                      <label className="block mb-1.5 text-xs font-sans font-semibold uppercase tracking-widest text-zinc-500">{label} *</label>
-                      <input type={type} value={(form as Record<string, string>)[key]}
-                        onChange={(e) => set(key, e.target.value)} placeholder={placeholder} className={inputCls} />
-                      {errors[key] && <p className="mt-1 text-xs text-red-400 font-sans">{errors[key]}</p>}
+                      <label htmlFor={`cf-${key}`} className="block mb-1.5 text-xs font-sans font-semibold uppercase tracking-widest text-zinc-500">{label} *</label>
+                      <input id={`cf-${key}`} type={type} value={(form as Record<string, string>)[key]}
+                        onChange={(e) => set(key, e.target.value)} placeholder={placeholder} className={inputCls}
+                        aria-required="true" aria-describedby={errors[key] ? `cf-${key}-err` : undefined} />
+                      {errors[key] && <p id={`cf-${key}-err`} className="mt-1 text-xs text-red-400 font-sans" role="alert">{errors[key]}</p>}
                     </div>
                   ))}
                   <div>
-                    <label className="block mb-1.5 text-xs font-sans font-semibold uppercase tracking-widest text-zinc-500">Message *</label>
-                    <textarea value={form.message} onChange={(e) => set('message', e.target.value)} rows={4}
-                      placeholder="Tell us about your event..." className={inputCls + ' resize-none'} />
-                    {errors.message && <p className="mt-1 text-xs text-red-400 font-sans">{errors.message}</p>}
+                    <label htmlFor="cf-message" className="block mb-1.5 text-xs font-sans font-semibold uppercase tracking-widest text-zinc-500">Message *</label>
+                    <textarea id="cf-message" value={form.message} onChange={(e) => set('message', e.target.value)} rows={4}
+                      placeholder="Tell us about your event..." className={inputCls + ' resize-none'}
+                      aria-required="true" aria-describedby={errors.message ? 'cf-message-err' : undefined} />
+                    {errors.message && <p id="cf-message-err" className="mt-1 text-xs text-red-400 font-sans" role="alert">{errors.message}</p>}
                   </div>
-                  {errors.submit && <p className="text-sm text-red-400 font-sans">{errors.submit}</p>}
+                  {errors.submit && <p className="text-sm text-red-400 font-sans" role="alert">{errors.submit}</p>}
                   <button type="submit" disabled={loading}
                     className="w-full font-serif tracking-[0.14em] uppercase text-xs py-3.5 bg-gold hover:bg-gold/90 text-zinc-950 font-semibold transition-all duration-150 disabled:opacity-50"
                     style={{ borderRadius: '2px' }}>

@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { SEOHead } from '@/components/shared/SEOHead';
 import { Link } from 'react-router-dom';
 import { BUSINESS_PHONE, SITE_URL } from '@/constants';
+import { useEffect } from 'react';
+import { trackMenuView } from '@/lib/analytics';
 
 interface MenuEntry {
   np: string;   // Nepali name
@@ -265,11 +267,15 @@ export default function MenuPage() {
   const [active, setActive] = useState(0);
   const section = SECTIONS[active];
 
+  useEffect(() => {
+    trackMenuView('menu_page');
+  }, []);
+
   return (
     <>
       <SEOHead
-        title="Our Menu — Shree Ganesh Party Venue"
-        description="Complete catering menu: Breakfast, Snacks, Mutton, Chicken, Buff, Pork, Fish, Main Course, Veg Curry, Dal, Non-Veg Dishes, Pickle, Salad, Dessert, Ice Cream and more."
+        title="Our Menu | Shree Ganesh Party Venue And Catering Service"
+        description="Catering items and menu categories for event planning in Bhaktapur."
         canonicalUrl={`${SITE_URL}/menu`}
       />
 

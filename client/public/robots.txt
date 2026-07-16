@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
-Disallow: /admin
 Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
 
-Sitemap: https://shreeganeshsharma.com/sitemap.xml
+Sitemap: https://shreeganeshpartyvenue.com/sitemap.xml

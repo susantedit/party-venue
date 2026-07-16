@@ -13,7 +13,11 @@ import dotenv from 'dotenv';
 import path from 'node:path';
 
 // Load .env from the server root regardless of cwd
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+dotenv.config({ path: path.resolve(process.cwd(), '.env') });
+// Fallback: also try relative to this file (works for both ts-node and compiled js)
+if (!process.env.MONGODB_URI) {
+  dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+}
 
 import fs from 'node:fs';
 import mongoose from 'mongoose';

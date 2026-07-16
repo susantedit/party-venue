@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { SEOHead } from '@/components/shared/SEOHead';
-import { BUSINESS_ADDRESS, BUSINESS_PHONE, MAP_EMBED_URL, SITE_URL, WHATSAPP_NUMBER } from '@/constants';
+import { BUSINESS_ADDRESS, BUSINESS_PHONE, MAP_EMBED_URL, MAP_URL, SITE_URL, WHATSAPP_NUMBER } from '@/constants';
+import { trackDirectionsClick } from '@/lib/analytics';
 
 const BREADCRUMB_SCHEMA = {
   '@context': 'https://schema.org',
@@ -16,7 +17,7 @@ export default function Location() {
     <>
       <SEOHead
         title="Venue Location in Suryabinayak, Bhaktapur | Shree Ganesh Party Venue"
-        description="Find Shree Ganesh Party Venue near Suryabinayak Ganesh Mandir in Bhaktapur. View the map, address, phone number, and directions before booking."
+        description="Find the venue, map, address, phone, and directions before booking."
         canonicalUrl={`${SITE_URL}/location`}
         schema={BREADCRUMB_SCHEMA}
       />
@@ -49,6 +50,15 @@ export default function Location() {
               <div className="mt-8 flex flex-wrap gap-4">
                 <Link to="/contact" className="inline-block font-serif tracking-[0.14em] uppercase text-xs px-6 py-3 bg-gold hover:bg-gold/90 text-zinc-950 font-semibold transition-all duration-150">Contact Us</Link>
                 <Link to="/booking" className="inline-block font-serif tracking-[0.14em] uppercase text-xs px-6 py-3 border border-gold/40 hover:border-gold text-gold hover:bg-gold/5 transition-all duration-150">Book a Visit</Link>
+                <a
+                  href={MAP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackDirectionsClick('location_page')}
+                  className="inline-block font-serif tracking-[0.14em] uppercase text-xs px-6 py-3 border border-gold/40 hover:border-gold text-gold hover:bg-gold/5 transition-all duration-150"
+                >
+                  Get Directions
+                </a>
               </div>
             </div>
 

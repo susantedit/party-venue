@@ -7,6 +7,7 @@ import { SITE_URL } from '@/constants';
 import { Lightbox } from '@/components/shared/Lightbox';
 import { GALLERY_CATEGORIES } from '@/constants';
 import type { GalleryImage } from '@/types';
+import { trackGalleryEngagement } from '@/lib/analytics';
 
 const CATEGORY_LABELS: Record<string, string> = {
   all: 'All',
@@ -42,8 +43,8 @@ export default function Gallery() {
   return (
     <>
       <SEOHead
-        title="Event Gallery — Shree Ganesh Party Venue"
-        description="Browse photos from weddings, receptions, birthdays, and more at Shree Ganesh Party Venue, Bhaktapur."
+        title="Venue Gallery, Food & Event Photos | Shree Ganesh Party Venue"
+        description="Real photos of weddings, receptions, food, and event setups."
         canonicalUrl={`${SITE_URL}/gallery`}
       />
 
@@ -114,7 +115,7 @@ export default function Gallery() {
                 <button
                   key={img._id}
                   className="mb-1 w-full relative block overflow-hidden border border-gold/[0.06] group cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
-                  onClick={() => setLightboxIndex(idx)}
+                  onClick={() => { setLightboxIndex(idx); trackGalleryEngagement('gallery_page'); }}
                   aria-label={`View ${img.altText ?? img.category} photo`}
                 >
                   <img

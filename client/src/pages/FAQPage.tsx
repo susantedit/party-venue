@@ -11,14 +11,61 @@ const BREADCRUMB_SCHEMA = {
   ],
 };
 
+const FAQ_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Where is Shree Ganesh Party Venue located?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Shree Ganesh Party Venue is located at Ganesthan, Suryabinayak, Bhaktapur, Nepal, with easy access from Kathmandu, Lalitpur, and surrounding areas.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is the venue capacity?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'The venue can accommodate events ranging from 50 to 1,000 guests, suitable for intimate gatherings as well as large weddings, receptions, and corporate events.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What event types do you host?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'We host weddings, receptions, birthday parties, Bratabandha, Pasni ceremonies, corporate events, engagements, seminars, and catering-only engagements.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Is parking available?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. We provide parking for up to 100 cars and 200 motorcycles.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is the price range?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Our standard menu package starts from NPR 1,200 per plate (VAT included). Prices vary by event type and menu selection.',
+      },
+    },
+  ],
+};
+
 export default function FAQPage() {
   return (
     <>
       <SEOHead
-        title="FAQ | Shree Ganesh Party Venue And Catering Service"
-        description="Frequently asked questions about booking, capacity, catering, location, parking, and event types at Shree Ganesh Party Venue in Bhaktapur."
+        title="Frequently Asked Questions | Shree Ganesh Party Venue"
+        description="Answers about booking, capacity, catering, location, and event types."
         canonicalUrl={`${SITE_URL}/faq`}
-        schema={BREADCRUMB_SCHEMA}
+        schema={[BREADCRUMB_SCHEMA, FAQ_SCHEMA]}
       />
 
       <div className="bg-[#0a0a0a] pt-28 pb-20 px-4">

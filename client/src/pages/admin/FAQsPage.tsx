@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axiosInstance from '@/lib/axiosInstance';
 import { SEOHead } from '@/components/shared/SEOHead';
-import { HelpCircle, Plus, X } from 'lucide-react';
+import { HelpCircle, Plus, X, ChevronUp, ChevronDown, Eye, EyeOff } from 'lucide-react';
 
 interface FAQ { _id: string; question: string; answer: string; order: number; isPublished: boolean; }
 const empty = { question: '', answer: '', order: 0, isPublished: true };
@@ -49,6 +49,19 @@ export default function AdminFAQsPage() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ['admin-faqs'] }),
   });
 
+  const reorderMutation = useMutation({
+    mutationFn: (items: { id: string; order: number }[]) =>
+      axiosInstance.patch('/api/v1/faqs/reorder', { items }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['admin-faqs'] }),
+  });
+
+  const bulkToggleMutation = useMutation({
+    mutationFn: async (publish: boolean) => {
+      await Promise.all(faqs.map((f: FAQ) => axiosInstance.put(`/api/v1/faqs/${f._id}`, { isPublished: publish })));
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['admin-faqs'] }),
+  });
+
   function resetForm() { setEditing(null); setForm(empty); setShowForm(false); }
 
   function handleEdit(faq: FAQ) {
@@ -57,6 +70,23 @@ export default function AdminFAQsPage() {
     setShowForm(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  function handleMove(idx: number, direction: 'up' | 'down') {
+    const sorted = [...faqs].sort((a, b) => a.order - b.order);
+    const newIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (newIdx < 0 || newIdx >= sorted.length) return;
+
+    // Swap orders
+    const swapped = sorted.map((f, i) => {
+      if (i === idx) return { id: f._id, order: sorted[newIdx].order };
+      if (i === newIdx) return { id: f._id, order: sorted[idx].order };
+      return { id: f._id, order: f.order };
+    });
+    reorderMutation.mutate(swapped);
+  }
+
+  const sortedFaqs = [...faqs].sort((a, b) => a.order - b.order);
+  const publishedCount = faqs.filter(f => f.isPublished).length;
 
   return (
     <>
@@ -69,15 +99,46 @@ export default function AdminFAQsPage() {
             <span className="block h-px w-5 bg-gold/50" />
             <span className="text-[10px] text-gold uppercase tracking-[0.2em] font-semibold">Content</span>
           </div>
-          <div className="flex items-end justify-between">
-            <h1 className="font-serif text-xl font-bold text-white tracking-widest uppercase">FAQs</h1>
-            <button
-              onClick={() => { resetForm(); setShowForm(true); }}
-              className="inline-flex items-center gap-1.5 border border-gold/25 bg-gold/10 px-3 py-1.5 text-xs text-gold font-medium hover:bg-gold/15 transition"
-              style={{ borderRadius: '4px' }}
-            >
-              <Plus className="h-3.5 w-3.5" /> Add FAQ
-            </button>
+          <div className="flex items-end justify-between flex-wrap gap-3">
+            <div>
+              <h1 className="font-serif text-xl font-bold text-white tracking-widest uppercase">FAQs</h1>
+              {!isLoading && (
+                <p className="text-[11px] text-zinc-600 mt-0.5">
+                  {faqs.length} total · {publishedCount} published · {faqs.length - publishedCount} draft
+                </p>
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              {!isLoading && faqs.length > 0 && (
+                <>
+                  <button
+                    onClick={() => bulkToggleMutation.mutate(true)}
+                    disabled={bulkToggleMutation.isPending}
+                    className="inline-flex items-center gap-1.5 border border-emerald-500/20 bg-emerald-500/10 px-3 py-1.5 text-xs text-emerald-400 font-medium hover:bg-emerald-500/20 transition disabled:opacity-40"
+                    style={{ borderRadius: '4px' }}
+                    title="Publish all FAQs"
+                  >
+                    <Eye className="h-3.5 w-3.5" /> Publish All
+                  </button>
+                  <button
+                    onClick={() => bulkToggleMutation.mutate(false)}
+                    disabled={bulkToggleMutation.isPending}
+                    className="inline-flex items-center gap-1.5 border border-zinc-500/20 bg-zinc-500/10 px-3 py-1.5 text-xs text-zinc-500 font-medium hover:bg-zinc-500/20 transition disabled:opacity-40"
+                    style={{ borderRadius: '4px' }}
+                    title="Unpublish all FAQs"
+                  >
+                    <EyeOff className="h-3.5 w-3.5" /> Unpublish All
+                  </button>
+                </>
+              )}
+              <button
+                onClick={() => { resetForm(); setShowForm(true); }}
+                className="inline-flex items-center gap-1.5 border border-gold/25 bg-gold/10 px-3 py-1.5 text-xs text-gold font-medium hover:bg-gold/15 transition"
+                style={{ borderRadius: '4px' }}
+              >
+                <Plus className="h-3.5 w-3.5" /> Add FAQ
+              </button>
+            </div>
           </div>
         </div>
 
@@ -97,33 +158,25 @@ export default function AdminFAQsPage() {
                   <label className={labelClass}>Question *</label>
                   <input
                     value={form.question}
-                    onChange={e => setForm(f => ({ ...f, question: e.target.value }))}
-                    className={inputClass}
-                    placeholder="Enter question…"
-                    style={{ borderRadius: '4px' }}
+                    onChange={e => setForm((f: typeof empty) => ({ ...f, question: e.target.value }))}
+                    className={inputClass} placeholder="Enter question…" style={{ borderRadius: '4px' }}
                   />
                 </div>
                 <div>
                   <label className={labelClass}>Answer *</label>
                   <textarea
                     value={form.answer}
-                    onChange={e => setForm(f => ({ ...f, answer: e.target.value }))}
-                    rows={4}
-                    className={`${inputClass} resize-none`}
-                    placeholder="Enter answer…"
+                    onChange={e => setForm((f: typeof empty) => ({ ...f, answer: e.target.value }))}
+                    rows={4} className={`${inputClass} resize-none`} placeholder="Enter answer…"
                     style={{ borderRadius: '4px' }}
                   />
                 </div>
                 <div className="flex items-end gap-4">
                   <div>
                     <label className={labelClass}>Order</label>
-                    <input
-                      type="number"
-                      value={form.order}
+                    <input type="number" value={form.order}
                       onChange={e => setForm(f => ({ ...f, order: Number(e.target.value) }))}
-                      className={`${inputClass} w-20`}
-                      style={{ borderRadius: '4px' }}
-                    />
+                      className={`${inputClass} w-20`} style={{ borderRadius: '4px' }} />
                   </div>
                   <label className="flex items-center gap-2 cursor-pointer pb-2">
                     <div
@@ -144,13 +197,9 @@ export default function AdminFAQsPage() {
                   >
                     {saveMutation.isPending ? 'Saving…' : editing ? 'Update' : 'Create'}
                   </button>
-                  <button
-                    onClick={resetForm}
+                  <button onClick={resetForm}
                     className="px-4 py-2 border border-white/[0.06] bg-white/[0.02] text-zinc-500 text-xs hover:text-zinc-200 transition"
-                    style={{ borderRadius: '4px' }}
-                  >
-                    Cancel
-                  </button>
+                    style={{ borderRadius: '4px' }}>Cancel</button>
                 </div>
               </div>
             </div>
@@ -164,20 +213,36 @@ export default function AdminFAQsPage() {
           ) : faqs.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20 text-zinc-700">
               <HelpCircle className="h-10 w-10 mb-3" />
-              <p className="text-sm">No FAQs yet</p>
+              <p className="text-sm">No FAQs yet. Add one above or run the seed script.</p>
             </div>
           ) : (
             <div className="space-y-2">
-              {faqs.map((faq, idx) => (
+              {sortedFaqs.map((faq, idx) => (
                 <div
                   key={faq._id}
-                  className="group border border-white/[0.06] bg-[#111111] px-4 py-4 hover:border-white/[0.1] transition flex items-start gap-3"
+                  className={`group border border-white/[0.06] bg-[#111111] px-4 py-4 hover:border-white/[0.1] transition flex items-start gap-3 ${!faq.isPublished ? 'opacity-60' : ''}`}
                   style={{ borderRadius: '4px' }}
                 >
-                  {/* Index */}
-                  <span className="shrink-0 flex h-6 w-6 items-center justify-center border border-white/[0.06] bg-white/[0.03] text-[10px] font-bold text-zinc-600 mt-0.5" style={{ borderRadius: '4px' }}>
-                    {idx + 1}
-                  </span>
+                  {/* Reorder controls */}
+                  <div className="flex flex-col items-center gap-0.5 shrink-0 mt-0.5">
+                    <button
+                      onClick={() => handleMove(idx, 'up')}
+                      disabled={idx === 0 || reorderMutation.isPending}
+                      className="text-zinc-700 hover:text-zinc-300 disabled:opacity-20 transition-colors p-0.5"
+                      title="Move up"
+                    >
+                      <ChevronUp className="h-3.5 w-3.5" />
+                    </button>
+                    <span className="text-[10px] font-bold text-zinc-700">{idx + 1}</span>
+                    <button
+                      onClick={() => handleMove(idx, 'down')}
+                      disabled={idx === sortedFaqs.length - 1 || reorderMutation.isPending}
+                      className="text-zinc-700 hover:text-zinc-300 disabled:opacity-20 transition-colors p-0.5"
+                      title="Move down"
+                    >
+                      <ChevronDown className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
 
                   {/* Content */}
                   <div className="flex-1 min-w-0">

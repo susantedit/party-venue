@@ -20,7 +20,7 @@ const LOCAL_BUSINESS_SCHEMA = {
   '@context': 'https://schema.org',
   '@type': 'EventVenue',
   '@id': `${SITE_URL}/#venue`,
-  name: 'Shree Ganesh Party Venue & Catering Service',
+  name: 'Shree Ganesh Party Venue And Catering Service',
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Near Suryabinayak Ganesh Mandir',
@@ -36,6 +36,24 @@ const LOCAL_BUSINESS_SCHEMA = {
   },
   telephone: BUSINESS_PHONE,
   url: SITE_URL,
+  areaServed: ['Bhaktapur', 'Suryabinayak', 'Kathmandu Valley', 'Kathmandu', 'Lalitpur'],
+  hasMap: 'https://www.google.com/maps/place/Shree+Ganesh+Party+Venue+And+Catering+Service/@27.6568496,85.4216766',
+};
+
+const WEBSITE_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE_URL}/#website`,
+  url: `${SITE_URL}/`,
+  name: 'Shree Ganesh Party Venue And Catering Service',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: `${SITE_URL}/blog?query={search_term_string}`,
+    },
+    'query-input': 'required name=search_term_string',
+  },
 };
 
 const services: { title: string; icon: LucideIcon; desc: string }[] = [
@@ -126,9 +144,9 @@ export default function Home() {
     <>
       <SEOHead
         title="Shree Ganesh Party Venue And Catering Service in Bhaktapur, Nepal"
-        description="Shree Ganesh Party Venue And Catering Service near Suryabinayak Ganesh Mandir in Bhaktapur. Weddings, receptions, birthdays, Bratabandha, Pasni, corporate events, and catering."
+        description="Party palace, wedding venue, reception venue, birthday party and catering in Bhaktapur near Suryabinayak Ganesh Mandir."
         canonicalUrl={SITE_URL}
-        schema={LOCAL_BUSINESS_SCHEMA}
+        schema={[LOCAL_BUSINESS_SCHEMA, WEBSITE_SCHEMA]}
       />
 
       {/* ── HERO ── */}
@@ -195,10 +213,11 @@ export default function Home() {
             <div className="relative w-full overflow-hidden border border-gold/15" style={{ aspectRatio: '16/9' }}>
               <video
                 src={vegVideo}
-                autoPlay
+                autoPlay={!shouldReduceMotion}
                 loop
                 muted
                 playsInline
+                preload="none"
                 className="absolute inset-0 w-full h-full object-cover"
                 aria-label="Vegetarian food preparation"
               />
@@ -210,10 +229,11 @@ export default function Home() {
             <div className="relative w-full overflow-hidden border border-gold/15" style={{ aspectRatio: '16/9' }}>
               <video
                 src={meatVideo}
-                autoPlay
+                autoPlay={!shouldReduceMotion}
                 loop
                 muted
                 playsInline
+                preload="none"
                 className="absolute inset-0 w-full h-full object-cover"
                 aria-label="Non-vegetarian food preparation"
               />
@@ -253,6 +273,18 @@ export default function Home() {
                 <p className="text-sm font-sans text-zinc-500 leading-relaxed">{s.desc}</p>
               </motion.div>
             ))}
+          </div>
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <Link to="/wedding-venue-bhaktapur"
+              className="font-serif tracking-[0.14em] uppercase text-xs px-6 py-3 border border-gold/40 hover:border-gold text-gold hover:bg-gold/5 transition-all duration-150"
+              style={{ borderRadius: '2px' }}>
+              Wedding Venue in Bhaktapur
+            </Link>
+            <Link to="/catering-service-bhaktapur"
+              className="font-serif tracking-[0.14em] uppercase text-xs px-6 py-3 border border-gold/40 hover:border-gold text-gold hover:bg-gold/5 transition-all duration-150"
+              style={{ borderRadius: '2px' }}>
+              Catering Service in Bhaktapur
+            </Link>
           </div>
         </div>
       </section>
@@ -354,6 +386,13 @@ export default function Home() {
                 <div>📞 <strong className="text-white">Phone:</strong> {BUSINESS_PHONE}</div>
                 <div>✉️ <strong className="text-white">Email:</strong> shreeganeshsharma@gmail.com</div>
                 <div>⏰ <strong className="text-white">Hours:</strong> Any time as customers wish</div>
+              </div>
+              <div className="mt-6">
+                <Link to="/location"
+                  className="inline-block font-serif tracking-[0.14em] uppercase text-xs px-6 py-3 border border-gold/40 hover:border-gold text-gold hover:bg-gold/5 transition-all duration-150"
+                  style={{ borderRadius: '2px' }}>
+                  View Full Location &amp; Directions
+                </Link>
               </div>
             </div>
             <div className="h-[380px] border border-gold/15 overflow-hidden">

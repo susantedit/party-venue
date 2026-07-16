@@ -64,3 +64,19 @@ export async function blockDate(dateStr: string, firebaseUid: string): Promise<v
 
   logAuditEvent('availability.blocked', firebaseUid, 'Availability', dateStr);
 }
+
+export async function unblockDate(dateStr: string, firebaseUid: string): Promise<void> {
+  const date = new Date(dateStr);
+  if (isNaN(date.getTime())) throw new AppError(400, 'Invalid date format');
+
+  const queryDate = startOfDay(date);
+
+  // Only allow unblocking manually-blocked dates (reserved), not confirmed bookings
+  const avail = await AvailabilityModel.findOne({ date: queryDate }).lean();
+  if (avail && avail.status === 'booked') {
+    throw new AppError(400, 'Cannot unblock a confirmed booking. Cancel the booking instead.');
+  }
+
+  await AvailabilityModel.deleteOne({ date: queryDate });
+  logAuditEvent('availability.unblocked', firebaseUid, 'Availability', dateStr);
+}

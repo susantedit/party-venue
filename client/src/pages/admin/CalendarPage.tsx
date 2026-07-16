@@ -16,8 +16,8 @@ const STATUS_CONFIG: Record<DayStatus, { dot: string; cell: string; label: strin
   },
   reserved: {
     dot:   'bg-amber-400',
-    cell:  'text-amber-400 bg-amber-500/10 border-amber-500/15 cursor-default',
-    label: 'Reserved',
+    cell:  'text-amber-400 bg-amber-500/10 border-amber-500/15 hover:bg-amber-500/20 cursor-pointer',
+    label: 'Reserved (blocked)',
   },
   booked: {
     dot:   'bg-red-400',
@@ -42,6 +42,11 @@ export default function AdminCalendarPage() {
 
   const blockMutation = useMutation({
     mutationFn: (date: string) => axiosInstance.post('/api/v1/availability/block', { date }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['calendar-bookings'] }),
+  });
+
+  const unblockMutation = useMutation({
+    mutationFn: (date: string) => axiosInstance.post('/api/v1/availability/unblock', { date }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['calendar-bookings'] }),
   });
 
@@ -111,7 +116,7 @@ export default function AdminCalendarPage() {
               </span>
             ))}
             <span className="flex items-center gap-1.5 text-xs text-zinc-600 ml-auto">
-              Click available date to block
+              Click available to block · Click reserved to unblock
             </span>
           </div>
 
@@ -144,11 +149,18 @@ export default function AdminCalendarPage() {
                 return (
                   <button
                     key={day}
-                    title={booking ? `${booking.customerName} — ${booking.eventType}` : status === 'available' ? 'Click to block' : undefined}
-                    disabled={status !== 'available' || past}
+                    title={
+                      booking ? `${booking.customerName} — ${booking.eventType}` :
+                      status === 'available' ? 'Click to block this date' :
+                      status === 'reserved' ? 'Click to unblock this date' : undefined
+                    }
+                    disabled={status === 'booked' || past}
                     onClick={() => {
-                      if (status === 'available' && !past && confirm(`Block ${dateStr}?`)) {
+                      if (past || status === 'booked') return;
+                      if (status === 'available' && confirm(`Block ${dateStr}?`)) {
                         blockMutation.mutate(dateStr);
+                      } else if (status === 'reserved' && confirm(`Unblock ${dateStr}?`)) {
+                        unblockMutation.mutate(dateStr);
                       }
                     }}
                     className={`

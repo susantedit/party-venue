@@ -29,8 +29,8 @@ export default function BlogList() {
   return (
     <>
       <SEOHead
-        title="Blog"
-        description="Event planning tips, venue guides, and celebration inspiration from Shree Ganesh Party Venue, Bhaktapur."
+        title="Blog & Tips | Shree Ganesh Party Venue And Catering Service"
+        description="Local event-planning advice and venue selection guidance."
         canonicalUrl={`${SITE_URL}/blog`}
       />
       <div className="bg-zinc-950 pt-24 pb-16 px-4">

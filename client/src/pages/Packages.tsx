@@ -6,6 +6,8 @@ import { SEOHead } from '@/components/shared/SEOHead';
 import { SkeletonLoader } from '@/components/shared/SkeletonLoader';
 import { BUSINESS_PHONE, EVENT_TYPES, SITE_URL } from '@/constants';
 import type { Package } from '@/types';
+import { useEffect } from 'react';
+import { trackPackageView } from '@/lib/analytics';
 
 function calculateCost(pkg: Package, guests: number) {
   const perHead = pkg.price / pkg.capacity;
@@ -36,6 +38,10 @@ export default function Packages() {
     queryFn: () => axiosInstance.get('/api/v1/packages').then((r) => r.data.data as Package[]),
   });
 
+  useEffect(() => {
+    trackPackageView('packages_page');
+  }, []);
+
   const [calcPkg, setCalcPkg] = useState('');
   const [calcGuests, setCalcGuests] = useState('');
   const [calcEvent, setCalcEvent] = useState<typeof EVENT_TYPES[number]>(EVENT_TYPES[0]);
@@ -48,8 +54,8 @@ export default function Packages() {
   return (
     <>
       <SEOHead
-        title="Event Packages & Pricing"
-        description="View Silver, Gold, Platinum, and Custom event packages at Shree Ganesh Party Venue. Transparent pricing for every budget."
+        title="Event Packages & Pricing | Shree Ganesh Party Venue"
+        description="Transparent package exploration for weddings and events."
         canonicalUrl={`${SITE_URL}/packages`}
       />
       <div className="bg-[#0a0a0a] pt-28 pb-20 px-4">
@@ -74,7 +80,7 @@ export default function Packages() {
                       Popular
                     </span>
                   )}
-                  <h3 className="font-serif text-lg font-bold text-white tracking-wider uppercase capitalize mb-1">{pkg.name}</h3>
+                  <h2 className="font-serif text-lg font-bold text-white tracking-wider uppercase capitalize mb-1">{pkg.name}</h2>
                   <p className="text-xs font-sans text-zinc-500 uppercase tracking-widest capitalize mb-4">{pkg.category} Package</p>
                   <p className="font-serif text-3xl font-bold text-gold mb-1">
                     NPR {pkg.price.toLocaleString()}
