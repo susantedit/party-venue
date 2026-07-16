@@ -50,7 +50,13 @@ app.use(
         styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
         fontSrc: ["'self'", 'https://fonts.gstatic.com'],
         imgSrc: ["'self'", 'data:', 'https://res.cloudinary.com'],
-        connectSrc: ["'self'", env.FRONTEND_URL],
+        connectSrc: [
+          "'self'",
+          env.FRONTEND_URL,
+          'https://party-venue-zeta.vercel.app',
+          'https://shreeganeshpartyvenue.com',
+          'https://*.vercel.app',
+        ],
         frameSrc: ["'none'"],
       },
     },
@@ -64,8 +70,26 @@ app.use(
 );
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
+// Support multiple allowed origins: the configured FRONTEND_URL plus known
+// production domains. Uses a function origin so credentials: true works safely.
+const ALLOWED_ORIGINS = new Set([
+  env.FRONTEND_URL,
+  'https://party-venue-zeta.vercel.app',
+  'https://shreeganeshpartyvenue.com',
+  'https://www.shreeganeshpartyvenue.com',
+  // Vercel preview deploy pattern — match any branch of this project
+]);
+
 app.use(cors({
-  origin: env.FRONTEND_URL,
+  origin: (origin, callback) => {
+    // Allow requests with no Origin header (server-to-server, Postman, etc.)
+    if (!origin) return callback(null, true);
+    // Allow any vercel.app preview deploy for this project
+    if (origin.endsWith('.vercel.app') || ALLOWED_ORIGINS.has(origin)) {
+      return callback(null, true);
+    }
+    callback(new Error(`CORS: origin '${origin}' not allowed`));
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
