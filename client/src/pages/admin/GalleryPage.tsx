@@ -188,7 +188,6 @@ export default function AdminGalleryPage() {
           ) : (
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {filtered.map(img => {
-                const isEditing = editing?.id === img._id;
                 return (
                   <div key={img._id} className="group relative overflow-hidden border border-white/[0.04] bg-zinc-900" style={{ borderRadius: '4px' }}>
                     <div className="aspect-square">
