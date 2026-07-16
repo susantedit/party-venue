@@ -15,10 +15,17 @@ export default function Footer() {
 
           {/* Brand */}
           <div>
-            <div className="mb-4">
-              <span className="font-serif text-lg font-bold tracking-[0.15em] text-white uppercase block">Shree Ganesh</span>
-              <span className="font-script text-gold text-sm leading-none">Party Venue & Catering</span>
-            </div>
+            <Link to="/" aria-label="Shree Ganesh Party Venue And Catering Service — go to home page" className="inline-block mb-4">
+              <img
+                src="/shreeganeshpartyvenue-without-bg.png"
+                alt="Shree Ganesh Party Venue And Catering Service"
+                width={120}
+                height={48}
+                loading="lazy"
+                decoding="async"
+                className="h-12 w-auto object-contain"
+              />
+            </Link>
             <p className="font-sans text-sm text-zinc-500 leading-relaxed">
               Premium event venue and catering service in Bhaktapur, Nepal. Weddings, receptions, birthdays, Bratabandha, Pasni, corporate events, and catering.
             </p>

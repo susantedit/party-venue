@@ -31,13 +31,18 @@ export default function Header() {
     }`}>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <Link to="/" aria-label="Shree Ganesh — go to home page"
-          className="flex flex-col items-start group min-h-[44px] justify-center"
+        <Link to="/" aria-label="Shree Ganesh Party Venue And Catering Service — go to home page"
+          className="flex items-center group min-h-[44px]"
           onClick={() => setMobileOpen(false)}>
-          <span className="font-serif text-lg font-bold tracking-[0.15em] text-white group-hover:text-gold transition-colors duration-150 uppercase">
-            Shree Ganesh
-          </span>
-          <span className="font-script text-gold text-sm leading-none -mt-0.5">Party Venue</span>
+          <img
+            src="/shreeganeshpartyvenue-without-bg.png"
+            alt="Shree Ganesh Party Venue And Catering Service"
+            width={140}
+            height={56}
+            loading="eager"
+            decoding="async"
+            className="h-12 w-auto object-contain transition-opacity duration-150 group-hover:opacity-85"
+          />
         </Link>
 
         {/* Desktop nav — Cinzel tracking */}

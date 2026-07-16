@@ -4,9 +4,12 @@
 <head>
   <meta charset="UTF-8" />
   <!-- Replace your old favicon link with this line -->
-
-<link rel="icon" type="image/png" href="/shreeganeshpartyvenue(withbg-of-white).png" />.
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/png" href="/shreeganeshpartyvenue(withbg-of-white).png" />
+<link rel="apple-touch-icon" href="/shreeganeshpartyvenue(withbg-of-white).png" />
+<!-- Default social preview image (overridden per-page by SEOHead) -->
+<meta property="og:image" content="https://shreeganeshpartyvenue.com/shreeganeshpartyvenue(withbg-of-white).png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- Cinzel (headings) + Cormorant Garamond (body) + Great Vibes (script accents) -->
@@ -25,13 +28,13 @@
       "@graph": [
         {
           "@type": "Organization",
-          "@id": "https://shreeganeshsharma.com/#organization",
-          "name": "Shree Ganesh Party Venue & Catering Service",
-          "url": "https://shreeganeshsharma.com",
-          "logo": "https://shreeganeshsharma.com/logo.png",
+          "@id": "https://shreeganeshpartyvenue.com/#organization",
+          "name": "Shree Ganesh Party Venue And Catering Service",
+          "url": "https://shreeganeshpartyvenue.com",
+          "logo": "https://shreeganeshpartyvenue.com/shreeganeshpartyvenue(withbg-of-white).png",
           "contactPoint": {
             "@type": "ContactPoint",
-            "telephone": "+977-9800000000",
+            "telephone": "+977 986-0117006",
             "contactType": "customer service",
             "availableLanguage": ["Nepali", "English"]
           },
@@ -42,13 +45,16 @@
         },
         {
           "@type": "WebSite",
-          "@id": "https://shreeganeshsharma.com/#website",
-          "url": "https://shreeganeshsharma.com",
-          "name": "Shree Ganesh Party Venue & Catering Service",
-          "publisher": { "@id": "https://shreeganeshsharma.com/#organization" },
+          "@id": "https://shreeganeshpartyvenue.com/#website",
+          "url": "https://shreeganeshpartyvenue.com/",
+          "name": "Shree Ganesh Party Venue And Catering Service",
+          "publisher": { "@id": "https://shreeganeshpartyvenue.com/#organization" },
           "potentialAction": {
             "@type": "SearchAction",
-            "target": "https://shreeganeshsharma.com/blog?search={search_term_string}",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://shreeganeshpartyvenue.com/blog?query={search_term_string}"
+            },
             "query-input": "required name=search_term_string"
           }
         }
