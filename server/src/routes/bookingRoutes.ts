@@ -8,7 +8,7 @@ import {
 } from '../controllers/bookingController';
 import { authenticate } from '../middleware/authMiddleware';
 import { authorize } from '../middleware/roleMiddleware';
-import { globalLimiter, bookingLimiter } from '../middleware/rateLimiter';
+import { bookingLimiter } from '../middleware/rateLimiter';
 
 const router = Router();
 
