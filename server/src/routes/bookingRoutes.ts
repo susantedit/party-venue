@@ -8,14 +8,14 @@ import {
 } from '../controllers/bookingController';
 import { authenticate } from '../middleware/authMiddleware';
 import { authorize } from '../middleware/roleMiddleware';
-import { globalLimiter } from '../middleware/rateLimiter';
+import { globalLimiter, bookingLimiter } from '../middleware/rateLimiter';
 
 const router = Router();
 
 const adminOnly = [authenticate, authorize(['super-admin', 'admin'])];
 
 // Public
-router.post('/', globalLimiter, createBooking);
+router.post('/', bookingLimiter, createBooking);
 
 // Admin only
 router.get('/', ...adminOnly, listBookings);

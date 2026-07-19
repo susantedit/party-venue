@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axiosInstance from '@/lib/axiosInstance';
 import { SEOHead } from '@/components/shared/SEOHead';
-import { Search, Filter, Phone, MessageSquare } from 'lucide-react';
-import type { Booking } from '@/types';
+import { Search, Filter, Phone, MessageSquare, Trash2, ChevronRight } from 'lucide-react';
+import type { Booking, BookingStatus } from '@/types';
 
 const STATUS_STYLES: Record<string, string> = {
   pending:   'bg-amber-500/10 text-amber-400 border border-amber-500/20',
@@ -14,10 +14,19 @@ const STATUS_STYLES: Record<string, string> = {
   cancelled: 'bg-red-500/10 text-red-400 border border-red-500/20',
 };
 
+// Next logical status for one-click advance; null = no further transitions
+const NEXT_STATUS: Record<BookingStatus, BookingStatus | null> = {
+  pending:   'contacted',
+  contacted: 'confirmed',
+  confirmed: 'completed',
+  completed: null,
+  cancelled: null,
+};
+
 function RowSkeleton() {
   return (
     <tr className="border-b border-white/[0.04]">
-      {Array.from({ length: 8 }).map((_, i) => (
+      {Array.from({ length: 9 }).map((_, i) => (
         <td key={i} className="px-4 py-3">
           <div className="h-3 bg-zinc-800 rounded animate-pulse w-16" />
         </td>
@@ -31,6 +40,8 @@ export default function BookingsPage() {
   const [status, setStatus] = useState('');
   const [search, setSearch] = useState('');
 
+  const qc = useQueryClient();
+
   const { data, isLoading } = useQuery({
     queryKey: ['bookings', page, status, search],
     queryFn: () =>
@@ -41,6 +52,19 @@ export default function BookingsPage() {
 
   const bookings: Booking[] = data?.data ?? [];
   const pagination = data?.pagination;
+
+  // Inline status advance mutation
+  const statusMutation = useMutation({
+    mutationFn: ({ id, newStatus }: { id: string; newStatus: BookingStatus }) =>
+      axiosInstance.patch(`/api/v1/bookings/${id}/status`, { status: newStatus }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['bookings'] }),
+  });
+
+  // Inline delete mutation
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => axiosInstance.delete(`/api/v1/bookings/${id}`),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['bookings'] }),
+  });
 
   return (
     <>
@@ -97,7 +121,7 @@ export default function BookingsPage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.06]">
-                    {['ID', 'Customer', 'Phone', 'Event', 'Date', 'Guests', 'Status', 'Actions'].map(h => (
+                    {['ID', 'Customer', 'Phone', 'Event', 'Date', 'Guests', 'Status', 'Source', 'Actions'].map(h => (
                       <th key={h} className="px-4 py-3 text-left text-[10px] uppercase tracking-[0.12em] text-zinc-600 font-semibold whitespace-nowrap">
                         {h}
                       </th>
@@ -124,10 +148,29 @@ export default function BookingsPage() {
                             </span>
                           </td>
                           <td className="px-4 py-3">
+                            {b.source && (
+                              <span className="bg-zinc-800 text-zinc-400 border border-white/[0.06] rounded px-1.5 py-0.5 text-[10px]">
+                                {b.source}
+                              </span>
+                            )}
+                          </td>
+                          <td className="px-4 py-3">
                             <div className="flex items-center gap-2">
                               <Link to={`/admin/bookings/${b._id}`} className="text-[11px] text-gold/70 hover:text-gold transition-colors font-medium">
                                 View
                               </Link>
+                              {/* One-click status advance */}
+                              {NEXT_STATUS[b.status as BookingStatus] && (
+                                <button
+                                  title={`Mark as ${NEXT_STATUS[b.status as BookingStatus]}`}
+                                  disabled={statusMutation.isPending}
+                                  onClick={() => statusMutation.mutate({ id: b._id, newStatus: NEXT_STATUS[b.status as BookingStatus]! })}
+                                  className="flex items-center gap-0.5 text-[10px] text-zinc-500 hover:text-amber-400 transition-colors disabled:opacity-30"
+                                >
+                                  <ChevronRight className="h-3 w-3" />
+                                  <span>{NEXT_STATUS[b.status as BookingStatus]}</span>
+                                </button>
+                              )}
                               <a
                                 href={`https://wa.me/977${b.phone.replace(/^0/, '').replace(/\D/g, '')}?text=${encodeURIComponent('Re: Booking ' + b.bookingId)}`}
                                 target="_blank" rel="noopener noreferrer" title="WhatsApp"
@@ -138,6 +181,15 @@ export default function BookingsPage() {
                               <a href={`tel:${b.phone}`} title="Call" className="text-zinc-600 hover:text-blue-400 transition-colors">
                                 <Phone className="h-3.5 w-3.5" />
                               </a>
+                              {/* Delete */}
+                              <button
+                                title="Delete booking"
+                                disabled={deleteMutation.isPending}
+                                onClick={() => window.confirm(`Delete booking ${b.bookingId}?`) && deleteMutation.mutate(b._id)}
+                                className="text-zinc-700 hover:text-red-400 transition-colors disabled:opacity-30 ml-auto"
+                              >
+                                <Trash2 className="h-3.5 w-3.5" />
+                              </button>
                             </div>
                           </td>
                         </tr>

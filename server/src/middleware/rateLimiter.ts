@@ -13,16 +13,29 @@ const rateLimitHandler = (_req: any, res: any) => {
 };
 
 /**
- * globalLimiter — applied to all public API endpoints.
- * 100 requests per 15 minutes per IP.
+ * globalLimiter — broad cap applied to the whole app in app.ts.
+ * Protects unlisted/public routes (health, sitemap, packages, gallery, etc.)
+ * 200 requests per 15 minutes per IP.
  */
 export const globalLimiter: RateLimitRequestHandler = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100,
+  windowMs: 15 * 60 * 1000,
+  max: 200,
   standardHeaders: true,
   legacyHeaders: false,
   handler: rateLimitHandler,
-  message: undefined, // use handler instead
+  message: undefined,
+});
+
+/**
+ * bookingLimiter — tight limit on the public booking creation endpoint.
+ * 10 requests per 30 minutes per IP — prevents fake booking spam.
+ */
+export const bookingLimiter: RateLimitRequestHandler = rateLimit({
+  windowMs: 30 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  handler: rateLimitHandler,
 });
 
 /**
@@ -42,7 +55,7 @@ export const authLimiter: RateLimitRequestHandler = rateLimit({
  * 5 requests per 10 minutes per IP.
  */
 export const inquiryLimiter: RateLimitRequestHandler = rateLimit({
-  windowMs: 10 * 60 * 1000, // 10 minutes
+  windowMs: 10 * 60 * 1000,
   max: 5,
   standardHeaders: true,
   legacyHeaders: false,
@@ -54,7 +67,7 @@ export const inquiryLimiter: RateLimitRequestHandler = rateLimit({
  * 20 requests per 1 hour per IP.
  */
 export const uploadLimiter: RateLimitRequestHandler = rateLimit({
-  windowMs: 60 * 60 * 1000, // 1 hour
+  windowMs: 60 * 60 * 1000,
   max: 20,
   standardHeaders: true,
   legacyHeaders: false,

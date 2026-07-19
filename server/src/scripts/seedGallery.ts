@@ -52,11 +52,12 @@ function uploadToCloudinary(buffer: Buffer, options: UploadApiOptions = {}) {
 const MONGO_URI = process.env.MONGODB_URI!;
 
 // ─── Image manifest ───────────────────────────────────────────────────────────
-// Path is relative to this script's location: server/src/scripts/
-// The assets folder is at: client/src/assets/imagesandvedioes/
+// When run via `npx tsx` from server/, process.cwd() = server/
+// So we navigate up one level to find the client assets folder.
+// This works regardless of __dirname resolution quirks in tsx.
 const ASSETS_DIR = path.resolve(
-  __dirname,
-  '../../../client/src/assets/imagesandvedioes',
+  process.cwd(),           // = d:\party venue\server
+  '../client/src/assets/imagesandvedioes',
 );
 
 interface ImageEntry {

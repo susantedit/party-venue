@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
@@ -16,7 +17,8 @@ interface FAQSectionProps {
   title?: string;
   subtitle?: string;
   limit?: number;
-  showSchema?: boolean; // inject FAQPage JSON-LD
+  showSchema?: boolean;
+  showMoreLink?: boolean; // show "See All FAQs →" button linking to /faq
 }
 
 export function FAQSection({
@@ -24,6 +26,7 @@ export function FAQSection({
   subtitle = 'Everything you need to know before booking your event.',
   limit,
   showSchema = false,
+  showMoreLink = false,
 }: FAQSectionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const shouldReduceMotion = useReducedMotion();
@@ -35,6 +38,7 @@ export function FAQSection({
   });
 
   const displayed = limit ? faqs.slice(0, limit) : faqs;
+  const hasMore = showMoreLink && limit != null && faqs.length > limit;
 
   // FAQPage JSON-LD schema
   const faqSchema = showSchema && faqs.length > 0 ? {
@@ -86,9 +90,9 @@ export function FAQSection({
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ 
-                      duration: shouldReduceMotion ? 0.08 : 0.2, 
-                      ease: 'easeOut' // Accordion expand timing recipe: 200ms ease-out
+                    transition={{
+                      duration: shouldReduceMotion ? 0.08 : 0.2,
+                      ease: 'easeOut',
                     }}
                   >
                     <div className="px-5 pb-5 text-sm text-zinc-400 leading-relaxed border-t border-white/5 pt-4">
@@ -100,6 +104,19 @@ export function FAQSection({
             </div>
           ))}
         </div>
+
+        {/* See more link */}
+        {hasMore && (
+          <div className="mt-10 text-center">
+            <Link
+              to="/faq"
+              className="inline-block font-serif tracking-[0.14em] uppercase text-xs px-8 py-3.5 border border-gold/40 hover:border-gold text-gold hover:bg-gold/5 transition-all duration-150"
+              style={{ borderRadius: '2px' }}
+            >
+              See All {faqs.length} FAQs →
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );

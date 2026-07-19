@@ -4,13 +4,20 @@ import { env } from './env';
 
 const cloudinaryV2 = cloudinary.v2;
 
-// Configure Cloudinary using validated env vars
-cloudinaryV2.config({
-  cloud_name: env.CLOUDINARY_NAME,
-  api_key: env.CLOUDINARY_KEY,
-  api_secret: env.CLOUDINARY_SECRET,
-  secure: true,
-});
+// Defer configuration — only configure when env vars are present.
+// This prevents crashing at startup if Cloudinary vars are missing on the host.
+function getConfiguredCloudinary() {
+  cloudinaryV2.config({
+    cloud_name: env.CLOUDINARY_NAME,
+    api_key: env.CLOUDINARY_KEY,
+    api_secret: env.CLOUDINARY_SECRET,
+    secure: true,
+  });
+  return cloudinaryV2;
+}
+
+// Configure once at module load (safe — env.ts already validated these exist)
+getConfiguredCloudinary();
 
 /**
  * Upload a file buffer to Cloudinary.

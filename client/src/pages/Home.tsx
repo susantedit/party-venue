@@ -408,7 +408,7 @@ export default function Home() {
 
       {/* ── FAQ ── */}
       <FAQSection title="Frequently Asked Questions"
-        subtitle="Everything you need to know before booking your event." limit={8} showSchema />
+        subtitle="Everything you need to know before booking your event." limit={10} showSchema showMoreLink />
 
       {/* ── BOTTOM CTA ── */}
       <section className="bg-[#0a0a0a] py-28 px-4 text-center border-t border-gold/10 relative">

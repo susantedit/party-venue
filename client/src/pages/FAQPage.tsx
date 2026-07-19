@@ -78,7 +78,7 @@ export default function FAQPage() {
             </div>
             <h1 className="font-serif text-4xl sm:text-5xl font-bold text-white tracking-widest uppercase mt-2">Frequently Asked Questions</h1>
           </div>
-          <FAQSection title="Venue FAQs" subtitle="Answers to common questions before you book." limit={12} showSchema />
+          <FAQSection title="Venue FAQs" subtitle="Answers to common questions before you book." showSchema />
         </div>
       </div>
     </>

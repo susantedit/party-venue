@@ -61,6 +61,7 @@ const FAQS = [
   { order: 27, question: 'How can I contact Shree Ganesh Party Venue?', answer: 'You can contact our team through the phone number, contact form on our website, or visit the venue directly to discuss your event requirements, pricing, and available dates.' },
 ];
 
+
 async function seed() {
   await mongoose.connect(MONGO_URI);
   console.log('✓ Connected to MongoDB\n');
@@ -89,3 +90,4 @@ seed().catch((err) => {
   console.error('✗ Failed:', err.message);
   process.exit(1);
 });
+

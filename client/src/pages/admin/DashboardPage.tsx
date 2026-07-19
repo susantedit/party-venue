@@ -18,6 +18,23 @@ interface DashboardData {
   revenueEstimate: number;
 }
 
+interface RecentBooking {
+  _id: string;
+  bookingId: string;
+  customerName: string;
+  eventType: string;
+  eventDate: string;
+  status: string;
+}
+
+const STATUS_STYLES: Record<string, string> = {
+  pending:   'bg-amber-500/10 text-amber-400 border border-amber-500/20',
+  contacted: 'bg-blue-500/10 text-blue-400 border border-blue-500/20',
+  confirmed: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20',
+  completed: 'bg-zinc-500/10 text-zinc-400 border border-zinc-500/20',
+  cancelled: 'bg-red-500/10 text-red-400 border border-red-500/20',
+};
+
 const statConfig = [
   {
     key: 'totalBookings',
@@ -107,15 +124,40 @@ function StatSkeleton() {
   );
 }
 
+function RecentBookingsSkeleton() {
+  return (
+    <>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <tr key={i} className="border-b border-white/[0.04]">
+          {Array.from({ length: 5 }).map((_, j) => (
+            <td key={j} className="px-4 py-3">
+              <div className="h-3 bg-zinc-800 rounded animate-pulse w-20" />
+            </td>
+          ))}
+        </tr>
+      ))}
+    </>
+  );
+}
+
 export default function DashboardPage() {
   const { data, isLoading } = useQuery<DashboardData>({
     queryKey: ['dashboard'],
     queryFn: () => axiosInstance.get('/api/v1/dashboard/overview').then(r => r.data.data),
   });
 
+  const { data: recentData, isLoading: recentLoading } = useQuery({
+    queryKey: ['bookings-recent'],
+    queryFn: () => axiosInstance.get('/api/v1/bookings', { params: { limit: 5, page: 1 } }).then(r => r.data),
+  });
+
+  const recentBookings: RecentBooking[] = recentData?.data ?? [];
+
   const today = new Date().toLocaleDateString('en-US', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
   });
+
+  const pendingCount = data?.pendingBookings ?? 0;
 
   return (
     <>
@@ -178,6 +220,76 @@ export default function DashboardPage() {
             </div>
           </div>
 
+          {/* ── Recent Bookings ── */}
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-[10px] text-zinc-600 uppercase tracking-[0.2em] font-semibold">Recent Bookings</p>
+              <Link
+                to="/admin/bookings"
+                className="text-[10px] text-gold/70 hover:text-gold transition-colors font-semibold uppercase tracking-wider flex items-center gap-1"
+              >
+                View all <ArrowRight className="h-3 w-3" />
+              </Link>
+            </div>
+
+            <div className="border border-white/[0.06] bg-[#111111] overflow-hidden" style={{ borderRadius: '4px' }}>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-white/[0.06]">
+                      {['ID', 'Customer', 'Event Type', 'Date', 'Status'].map(h => (
+                        <th key={h} className="px-4 py-3 text-left text-[10px] uppercase tracking-[0.12em] text-zinc-600 font-semibold whitespace-nowrap">
+                          {h}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {recentLoading ? (
+                      <RecentBookingsSkeleton />
+                    ) : recentBookings.length === 0 ? (
+                      <tr>
+                        <td colSpan={5} className="px-4 py-8 text-center text-sm text-zinc-600 font-sans">
+                          No bookings yet.
+                        </td>
+                      </tr>
+                    ) : (
+                      recentBookings.map(b => (
+                        <tr
+                          key={b._id}
+                          className="border-b border-white/[0.04] hover:bg-white/[0.02] transition-colors"
+                        >
+                          <td className="px-4 py-3">
+                            <Link
+                              to={`/admin/bookings/${b._id}`}
+                              className="font-mono text-[11px] text-zinc-400 hover:text-gold transition-colors"
+                            >
+                              {b.bookingId}
+                            </Link>
+                          </td>
+                          <td className="px-4 py-3 text-zinc-200 font-medium text-xs">
+                            <Link to={`/admin/bookings/${b._id}`} className="hover:text-white transition-colors">
+                              {b.customerName}
+                            </Link>
+                          </td>
+                          <td className="px-4 py-3 text-zinc-400 text-xs">{b.eventType}</td>
+                          <td className="px-4 py-3 text-zinc-400 text-xs whitespace-nowrap">
+                            {new Date(b.eventDate).toLocaleDateString()}
+                          </td>
+                          <td className="px-4 py-3">
+                            <span className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide ${STATUS_STYLES[b.status] ?? STATUS_STYLES.completed}`}>
+                              {b.status}
+                            </span>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
           {/* ── Quick Links ── */}
           <div>
             <p className="text-[10px] text-zinc-600 uppercase tracking-[0.2em] font-semibold mb-3">Quick Access</p>
@@ -205,7 +317,18 @@ export default function DashboardPage() {
           <div className="border border-gold/10 bg-gold/[0.03] px-5 py-4 flex items-start gap-4" style={{ borderRadius: '4px' }}>
             <span className="text-gold text-lg leading-none shrink-0 mt-0.5">✦</span>
             <p className="text-xs text-zinc-500 leading-relaxed">
-              <span className="text-zinc-300 font-semibold">Tip:</span> Confirm bookings promptly — customers get notified immediately and availability is blocked on the calendar.
+              <span className="text-zinc-300 font-semibold">Tip: </span>
+              {pendingCount > 0 ? (
+                <>
+                  You have{' '}
+                  <Link to="/admin/bookings" className="text-gold hover:underline font-semibold">
+                    {pendingCount} pending booking{pendingCount !== 1 ? 's' : ''}
+                  </Link>
+                  {' '}— confirm them before those dates get blocked.
+                </>
+              ) : (
+                'Confirm bookings promptly — customers get notified immediately and availability is blocked on the calendar.'
+              )}
             </p>
           </div>
 

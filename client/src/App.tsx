@@ -24,6 +24,7 @@ const Booking = lazy(() => import('./pages/Booking'));
 const Location = lazy(() => import('./pages/Location'));
 const FAQPage = lazy(() => import('./pages/FAQPage'));
 const NotFound = lazy(() => import('./pages/NotFound'));
+const OfflinePage = lazy(() => import('./pages/Offline'));
 
 // SEO landing pages
 const WeddingVenue = lazy(() => import('./pages/seo/WeddingVenuePage'));
@@ -105,6 +106,9 @@ function AppRoutes() {
                 <Route path="calendar" element={<AdminCalendar />} />
                 <Route path="faqs" element={<AdminFAQs />} />
               </Route>
+
+              {/* Offline */}
+              <Route path="/offline" element={<OfflinePage />} />
 
               {/* 404 */}
               <Route path="*" element={<PublicLayout><NotFound /></PublicLayout>} />

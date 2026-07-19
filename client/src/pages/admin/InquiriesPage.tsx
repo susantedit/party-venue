@@ -247,6 +247,11 @@ export default function AdminInquiriesPage() {
                       ✓ Mark Replied
                     </button>
                   )}
+                  {selected.status === 'replied' && (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium" style={{ borderRadius: '4px' }}>
+                      ✓ Replied
+                    </span>
+                  )}
                   <button
                     onClick={() => navigate(`/admin/bookings/new?name=${encodeURIComponent(selected.name)}&email=${encodeURIComponent(selected.email)}&phone=${encodeURIComponent(selected.phone ?? '')}`)}
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gold/10 border border-gold/20 text-gold text-xs font-medium hover:bg-gold/20 transition"

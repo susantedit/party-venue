@@ -56,7 +56,7 @@ export default function BookingForm({ prefilledPackageId }: BookingFormProps) {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
-  const [success, setSuccess] = useState('');
+  const [submittedData, setSubmittedData] = useState<{ bookingId: string; phone: string; email: string } | null>(null);
 
   const { status: avail, loading: availLoading } = useAvailability(form.eventDate, form.shift);
 
@@ -99,7 +99,7 @@ export default function BookingForm({ prefilledPackageId }: BookingFormProps) {
         decorationRequired: form.decorationRequired,
         notes: form.notes || undefined,
       });
-      setSuccess(`Booking submitted! Your ID: ${res.data.data.bookingId}. We'll contact you within 30 minutes.`);
+      setSubmittedData({ bookingId: res.data.data.bookingId, phone: form.phone, email: form.email });
       trackBookingFormSubmit('booking_page');
       setForm({ customerName: '', phone: '', email: '', eventType: EVENT_TYPES[0], eventDate: '', shift: 'Whole_Day', guestCount: '', packageId: '', cateringRequired: false, decorationRequired: false, notes: '' });
     } catch (err: unknown) {
@@ -110,14 +110,56 @@ export default function BookingForm({ prefilledPackageId }: BookingFormProps) {
     }
   }
 
-  if (success) return (
-    <div className="border border-gold/20 bg-gold/5 p-8 text-center">
-      <p className="font-serif text-xl text-white tracking-wider mb-2">✓ Booking Submitted!</p>
-      <p className="font-sans text-zinc-300 text-sm">{success}</p>
-      <button onClick={() => setSuccess('')}
-        className="mt-6 text-xs font-sans text-gold underline underline-offset-2">
-        Submit another booking
-      </button>
+  if (submittedData) return (
+    <div className="border border-gold/20 bg-[#0f0f0f] p-8 text-center space-y-5">
+      {/* Gold checkmark */}
+      <div className="inline-flex h-16 w-16 items-center justify-center rounded-full border border-gold/30 bg-gold/10 mx-auto">
+        <span className="text-gold text-3xl leading-none font-bold">✓</span>
+      </div>
+
+      {/* Heading */}
+      <div>
+        <h2 className="font-serif text-2xl font-bold text-white tracking-wider mb-1">Booking Submitted!</h2>
+        <p className="text-xs text-zinc-600 uppercase tracking-widest font-semibold">Request Received</p>
+      </div>
+
+      {/* Booking ID pill */}
+      <div className="inline-block border border-gold/20 bg-gold/5 px-4 py-2" style={{ borderRadius: '4px' }}>
+        <span className="font-mono text-sm text-gold tracking-wider">{submittedData.bookingId}</span>
+      </div>
+
+      {/* Contact info */}
+      <div className="space-y-2 text-sm text-zinc-400 font-sans">
+        <p>
+          We'll contact you within{' '}
+          <span className="text-zinc-200 font-semibold">30 minutes</span>
+          {' '}on{' '}
+          <span className="text-zinc-200 font-semibold">{submittedData.phone}</span>
+        </p>
+        <p>
+          Check your email at{' '}
+          <span className="text-zinc-200 font-semibold">{submittedData.email}</span>
+          {' '}for confirmation
+        </p>
+      </div>
+
+      {/* Actions */}
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+        <button
+          onClick={() => setSubmittedData(null)}
+          className="w-full sm:w-auto font-serif tracking-[0.14em] uppercase text-sm px-8 py-3 bg-gold hover:bg-gold/90 text-zinc-950 font-semibold transition-all duration-150 shadow-[0_0_20px_rgba(201,168,76,0.2)]"
+          style={{ borderRadius: '2px' }}
+        >
+          Book Another Event
+        </button>
+        <a
+          href="/"
+          className="w-full sm:w-auto font-sans text-xs text-zinc-500 hover:text-zinc-300 transition-colors text-center py-3 px-6 border border-white/[0.06] hover:border-white/[0.14]"
+          style={{ borderRadius: '2px' }}
+        >
+          Back to Home
+        </a>
+      </div>
     </div>
   );
 

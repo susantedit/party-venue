@@ -27,6 +27,7 @@ import googleReviewsRoutes from './routes/googleReviewsRoutes';
 
 // Error handler
 import { globalErrorHandler } from './middleware/errorMiddleware';
+import { globalLimiter } from './middleware/rateLimiter';
 
 const app: Application = express();
 
@@ -97,8 +98,11 @@ app.use(cors({
 
 // ─── Logging + parsing + sanitization ────────────────────────────────────────
 app.use(morgan('combined'));
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+// Global rate limit — applies to every route; specific routes add tighter limits on top
+app.use(globalLimiter);
+// Keep body limit tight — file uploads go through /api/v1/upload which has its own multer limit
+app.use(express.json({ limit: '50kb' }));
+app.use(express.urlencoded({ extended: true, limit: '50kb' }));
 app.use(mongoSanitize());
 app.use(xssClean());
 

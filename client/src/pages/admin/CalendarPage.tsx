@@ -6,7 +6,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-type DayStatus = 'available' | 'reserved' | 'booked';
+type DayStatus = 'available' | 'reserved' | 'booked' | 'contacted' | 'completed';
 
 const STATUS_CONFIG: Record<DayStatus, { dot: string; cell: string; label: string }> = {
   available: {
@@ -24,6 +24,24 @@ const STATUS_CONFIG: Record<DayStatus, { dot: string; cell: string; label: strin
     cell:  'text-red-400 bg-red-500/10 border-red-500/15 cursor-default',
     label: 'Booked',
   },
+  contacted: {
+    dot:   'bg-blue-400',
+    cell:  'text-blue-400 bg-blue-500/10 border-blue-500/15 hover:bg-blue-500/20 cursor-pointer',
+    label: 'Contacted',
+  },
+  completed: {
+    dot:   'bg-zinc-400',
+    cell:  'text-zinc-400 bg-zinc-500/10 border-zinc-500/15 cursor-default',
+    label: 'Completed',
+  },
+};
+
+const BOOKING_STATUS_STYLES: Record<string, string> = {
+  pending:   'bg-amber-500/10 text-amber-400',
+  contacted: 'bg-blue-500/10 text-blue-400',
+  confirmed: 'bg-red-500/10 text-red-400',
+  completed: 'bg-zinc-500/10 text-zinc-400',
+  cancelled: 'bg-zinc-800 text-zinc-600',
 };
 
 export default function AdminCalendarPage() {
@@ -54,7 +72,11 @@ export default function AdminCalendarPage() {
     const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     const booking = bookings?.find((b: any) => b.eventDate?.startsWith(dateStr));
     if (!booking) return 'available';
-    return booking.status === 'confirmed' ? 'booked' : 'reserved';
+    if (booking.status === 'confirmed') return 'booked';
+    if (booking.status === 'contacted') return 'contacted';
+    if (booking.status === 'completed') return 'completed';
+    if (booking.status === 'cancelled') return 'available'; // cancelled = slot freed
+    return 'reserved'; // pending
   };
 
   const getBookingInfo = (day: number) => {
@@ -154,9 +176,9 @@ export default function AdminCalendarPage() {
                       status === 'available' ? 'Click to block this date' :
                       status === 'reserved' ? 'Click to unblock this date' : undefined
                     }
-                    disabled={status === 'booked' || past}
+                    disabled={status === 'booked' || status === 'completed' || past}
                     onClick={() => {
-                      if (past || status === 'booked') return;
+                      if (past || status === 'booked' || status === 'contacted' || status === 'completed') return;
                       if (status === 'available' && confirm(`Block ${dateStr}?`)) {
                         blockMutation.mutate(dateStr);
                       } else if (status === 'reserved' && confirm(`Unblock ${dateStr}?`)) {
@@ -205,7 +227,7 @@ export default function AdminCalendarPage() {
                         <span className="text-zinc-300 font-medium">{b.customerName}</span>
                         <span className="text-zinc-600">{b.eventType}</span>
                         <span className={`ml-auto px-2 py-0.5 rounded-full text-[10px] ${
-                          b.status === 'confirmed' ? 'bg-red-500/10 text-red-400' : 'bg-amber-500/10 text-amber-400'
+                          BOOKING_STATUS_STYLES[b.status] ?? 'bg-zinc-500/10 text-zinc-400'
                         }`}>
                           {b.status}
                         </span>
