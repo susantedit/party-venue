@@ -43,7 +43,7 @@ export default function Location() {
               <h2 className="font-serif text-2xl font-bold text-white tracking-widest uppercase mb-6">Address & Contact</h2>
               <div className="space-y-4 font-sans text-zinc-400">
                 <p><strong className="text-white">Address:</strong> {BUSINESS_ADDRESS}</p>
-                <p><strong className="text-white">Phone:</strong> <a className="text-gold hover:opacity-80" href="tel:+9779860117006">{BUSINESS_PHONE}</a></p>
+                <p><strong className="text-white">Phone:</strong> <a className="text-gold hover:opacity-80" href="tel:+9779851337076">{BUSINESS_PHONE}</a></p>
                 <p><strong className="text-white">WhatsApp:</strong> <a className="text-gold hover:opacity-80" href={`https://wa.me/${WHATSAPP_NUMBER}`}>{WHATSAPP_NUMBER}</a></p>
                 <p><strong className="text-white">Hours:</strong> Any time as customers wish</p>
               </div>

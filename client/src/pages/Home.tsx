@@ -384,7 +384,7 @@ export default function Home() {
               <div className="space-y-3 border-t border-gold/10 pt-6 font-sans text-sm text-zinc-400">
                 <div>📍 <strong className="text-white">Address:</strong> {BUSINESS_ADDRESS}</div>
                 <div>📞 <strong className="text-white">Phone:</strong> {BUSINESS_PHONE}</div>
-                <div>✉️ <strong className="text-white">Email:</strong> shreeganeshsharma@gmail.com</div>
+                <div>✉️ <strong className="text-white">Email:</strong> nandanrajthala@gmail.com</div>
                 <div>⏰ <strong className="text-white">Hours:</strong> Any time as customers wish</div>
               </div>
               <div className="mt-6">

@@ -436,7 +436,7 @@ export default function MenuPage() {
                 Book & Discuss Menu
               </Link>
               <a
-                href="tel:+9779860117006"
+                href="tel:+9779851337076"
                 className="font-serif tracking-[0.14em] uppercase text-xs px-7 py-3 border border-gold/40 hover:border-gold text-gold hover:bg-gold/5 transition-all duration-150"
                 style={{ borderRadius: '2px' }}
               >

@@ -76,7 +76,7 @@ export default function Contact() {
                 <h2 className="font-serif text-2xl font-bold text-white tracking-wider uppercase mb-6">Our Details</h2>
                 <div className="space-y-5 font-sans text-zinc-400">
                   {[
-                    { icon: '📞', label: 'Phone', value: BUSINESS_PHONE, href: 'tel:+9779860117006' },
+                    { icon: '📞', label: 'Phone', value: BUSINESS_PHONE, href: 'tel:+9779851337076' },
                     { icon: '✉️', label: 'Email', value: BUSINESS_EMAIL, href: `mailto:${BUSINESS_EMAIL}` },
                     { icon: '📍', label: 'Address', value: BUSINESS_ADDRESS },
                     { icon: '⏰', label: 'Hours', value: 'Sun – Sat: 9:00 AM – 7:00 PM' },

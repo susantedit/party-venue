@@ -116,7 +116,7 @@ export default function Packages() {
             <p className="font-sans text-zinc-400 mb-5">
               Rates vary based on guest count and season. Get in touch <strong className="text-white">directly via phone</strong> to secure exclusive discounts and tailored pricing.
             </p>
-            <a href="tel:+9779860117006"
+            <a href="tel:+9779851337076"
               className="inline-block font-serif tracking-[0.14em] uppercase text-xs px-8 py-3 bg-gold hover:bg-gold/90 text-zinc-950 font-semibold transition-all duration-150 shadow-[0_0_16px_rgba(201,168,76,0.2)]"
               style={{ borderRadius: '2px' }}>
               📞 Call for Discount — {BUSINESS_PHONE}

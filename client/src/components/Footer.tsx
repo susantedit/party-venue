@@ -57,7 +57,7 @@ export default function Footer() {
             <h4 className="font-serif text-xs tracking-[0.2em] uppercase text-zinc-400 mb-5">Contact</h4>
             <ul className="space-y-3 font-sans text-sm text-zinc-500">
               <li>
-                <a href="tel:+9779860117006" onClick={() => trackPhoneClick('footer')} className="hover:text-gold transition-colors">{BUSINESS_PHONE}</a>
+                <a href="tel:+9779851337076" onClick={() => trackPhoneClick('footer')} className="hover:text-gold transition-colors">{BUSINESS_PHONE}</a>
               </li>
               <li>
                 <a href={`mailto:${BUSINESS_EMAIL}`} className="hover:text-gold transition-colors">{BUSINESS_EMAIL}</a>
@@ -74,7 +74,7 @@ export default function Footer() {
             <address className="not-italic mt-6 pt-5 border-t border-gold/10 font-sans text-sm text-zinc-500 leading-relaxed">
               <strong className="text-zinc-400 block mb-1">Shree Ganesh Party Venue And Catering Service</strong>
               {BUSINESS_ADDRESS}<br />
-              <a href="tel:+9779860117006" onClick={() => trackPhoneClick('footer')} className="hover:text-gold transition-colors">{BUSINESS_PHONE}</a>
+              <a href="tel:+9779851337076" onClick={() => trackPhoneClick('footer')} className="hover:text-gold transition-colors">{BUSINESS_PHONE}</a>
             </address>
           </div>
 
