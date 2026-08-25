@@ -29,6 +29,7 @@ export function SEOHead({
   const defaultDesc =
     'Shree Ganesh Party Venue And Catering Service in Bhaktapur, Nepal. Weddings, receptions, birthdays, Bratabandha, Pasni, corporate events, and catering.';
 
+  const activeCanonical = canonicalUrl || (typeof window !== 'undefined' ? `${SITE_URL}${window.location.pathname}` : SITE_URL);
   const resolvedImage = ogImage && ogImage !== '' ? ogImage : DEFAULT_OG_IMAGE;
   const resolvedImageAlt = ogImageAlt ?? fullTitle;
 
@@ -45,8 +46,12 @@ export function SEOHead({
       <meta name="description" content={description ?? defaultDesc} />
       {noIndex ? (
         <meta name="robots" content="noindex,nofollow" />
-      ) : null}
-      {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+      ) : (
+        <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+      )}
+      <link rel="canonical" href={activeCanonical} />
+      <link rel="alternate" hrefLang="en" href={activeCanonical} />
+      <link rel="alternate" hrefLang="x-default" href={activeCanonical} />
 
       {/* Open Graph */}
       <meta property="og:locale" content="en_US" />
@@ -54,7 +59,7 @@ export function SEOHead({
       <meta property="og:description" content={description ?? defaultDesc} />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content="Shree Ganesh Party Venue And Catering Service" />
-      {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+      <meta property="og:url" content={activeCanonical} />
       <meta property="og:image" content={resolvedImage} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />

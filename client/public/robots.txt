@@ -4,4 +4,4 @@ Disallow: /admin/
 Disallow: /api/
 Disallow: /private/
 
-Sitemap: https://shreeganeshpartyvenue.com/sitemap.xml
+Sitemap: https://shreeganeshpartyvenue.online/sitemap.xml

@@ -3,37 +3,36 @@
 
 <head>
   <meta charset="UTF-8" />
-  <!-- Replace your old favicon link with this line -->
-<link rel="icon" type="image/png" href="/shreeganeshpartyvenue(withbg-of-white).png" />
-<link rel="apple-touch-icon" href="/shreeganeshpartyvenue(withbg-of-white).png" />
-<!-- Default social preview image (overridden per-page by SEOHead) -->
-<meta property="og:image" content="https://shreeganeshpartyvenue.com/shreeganeshpartyvenue(withbg-of-white).png" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Preconnect for performance optimization -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!-- Cinzel (headings) + Cormorant Garamond (body) + Great Vibes (script accents) -->
   <link
     href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Great+Vibes&display=swap"
     rel="stylesheet" />
-  <meta name="robots" content="index,follow" />
+
+  <!-- Canonical domain & Default Social Cards -->
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+  <meta property="og:image" content="https://shreeganeshpartyvenue.online/shreeganeshpartyvenue(withbg-of-white).png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <title>Shree Ganesh Party Venue & Catering | Bhaktapur, Nepal</title>
 
-  <!-- GTM: replace GTM-XXXXXXX with your real container ID -->
-  <!-- <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-XXXXXXX');</script> -->
-
-  <!-- Organization + Website schema -->
+  <!-- Organization + WebSite + EventVenue Dual Schema Graph -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
           "@type": "Organization",
-          "@id": "https://shreeganeshpartyvenue.com/#organization",
+          "@id": "https://shreeganeshpartyvenue.online/#organization",
           "name": "Shree Ganesh Party Venue And Catering Service",
-          "url": "https://shreeganeshpartyvenue.com",
+          "url": "https://shreeganeshpartyvenue.online",
           "telephone": "+977 986-0117006",
-          "logo": "https://shreeganeshpartyvenue.com/shreeganeshpartyvenue(withbg-of-white).png",
+          "logo": "https://shreeganeshpartyvenue.online/favicon.svg",
           "contactPoint": {
             "@type": "ContactPoint",
             "telephone": "+977 986-0117006",
@@ -47,17 +46,76 @@
         },
         {
           "@type": "WebSite",
-          "@id": "https://shreeganeshpartyvenue.com/#website",
-          "url": "https://shreeganeshpartyvenue.com/",
+          "@id": "https://shreeganeshpartyvenue.online/#website",
+          "url": "https://shreeganeshpartyvenue.online/",
           "name": "Shree Ganesh Party Venue And Catering Service",
-          "publisher": { "@id": "https://shreeganeshpartyvenue.com/#organization" },
+          "publisher": { "@id": "https://shreeganeshpartyvenue.online/#organization" },
           "potentialAction": {
             "@type": "SearchAction",
             "target": {
               "@type": "EntryPoint",
-              "urlTemplate": "https://shreeganeshpartyvenue.com/blog?query={search_term_string}"
+              "urlTemplate": "https://shreeganeshpartyvenue.online/blog?query={search_term_string}"
             },
             "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": ["EventVenue", "CateringService", "LocalBusiness"],
+          "@id": "https://shreeganeshpartyvenue.online/#localbusiness",
+          "name": "Shree Ganesh Party Venue And Catering Service",
+          "url": "https://shreeganeshpartyvenue.online",
+          "telephone": "+977 986-0117006",
+          "priceRange": "$$",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Near Suryabinayak Ganesh Mandir",
+            "addressLocality": "Bhaktapur",
+            "postalCode": "44800",
+            "addressRegion": "Bagmati Province",
+            "addressCountry": "NP"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 27.6568562,
+            "longitude": 85.4217854
+          },
+          "areaServed": [
+            "Bhaktapur", "Suryabinayak", "Kathmandu Valley", "Kathmandu", "Lalitpur",
+            "Thimi", "Lokanthali", "Koteshwor", "Baneshwor", "Patan",
+            "Pokhara", "Chitwan", "Bagmati Province", "Nepal"
+          ],
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "95",
+            "bestRating": "5"
+          },
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Event Venue & Catering Packages",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Wedding Venue & Catering Package"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Traditional Ceremony Package (Bratabandha & Pasni)"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Corporate Event & Conference Package"
+                }
+              }
+            ]
           }
         }
       ]

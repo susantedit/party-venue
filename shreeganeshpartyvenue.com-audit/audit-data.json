@@ -1,0 +1,167 @@
+{
+  "summary": {
+    "health_score": 76,
+    "business_type": "Local Service & Event Venue / Catering",
+    "domain": "shreeganeshpartyvenue.com",
+    "top_findings": [
+      "2.17 MB uncompressed PNG asset (shreeganeshpartyvenue(withbg-of-white).png) used for og:image and logo, slowing down page loads and social card rendering",
+      "React SPA architecture relies on client-side JS for head tag rendering, reducing search engine visibility on Bing, Microsoft Copilot, and LLM crawlers",
+      "Missing IndexNow integration and key verification file for immediate Bing/Copilot content indexing",
+      "Missing llms.txt context file for AI Search / GEO (Generative Engine Optimization)",
+      "Sitemap missing route aliases (/wedding-venue-in-bhaktapur, /catering-service-in-bhaktapur) and has static lastmod dates"
+    ],
+    "quick_wins": [
+      "Convert 2.17MB PNG logo to optimized WebP/SVG format and fix parentheses in filename",
+      "Add public/llms.txt for AI Overviews and Copilot/ChatGPT discovery",
+      "Deploy IndexNow key in public/ folder for instant Bing indexing",
+      "Update sitemap.xml to include missing page aliases and dynamic lastmod timestamps",
+      "Add security headers (HSTS, X-Content-Type-Options) in Vercel/server config"
+    ]
+  },
+  "categories": [
+    {
+      "name": "Technical SEO",
+      "weight": 22,
+      "score": 75,
+      "what_works": [
+        "Robots.txt is properly configured allowing search engine crawlers and blocking /admin and /api",
+        "Canonical tags are set dynamically via SEOHead component on key pages",
+        "Clean routing structure with React Router and framer-motion transitions"
+      ],
+      "findings": [
+        {
+          "title": "SPA Client-Side Rendering Limits Non-JS Crawlers (Bing, AI Bots)",
+          "severity": "High",
+          "description": "The site is rendered entirely client-side. Non-JS or limited-JS crawlers (like Bingbot fallback or lightweight AI bots) only parse static HTML, missing dynamic page titles and meta descriptions.",
+          "recommendation": "Implement static prerendering (SSG/Vite-SSG) or Edge Prerendering for public landing pages."
+        },
+        {
+          "title": "Sitemap Missing Route Aliases & Dynamic Updates",
+          "severity": "Medium",
+          "description": "Route aliases (/wedding-venue-in-bhaktapur, /catering-service-in-bhaktapur) are defined in App.tsx but omitted from sitemap.xml. Lastmod dates are hardcoded to 2025-07-16.",
+          "recommendation": "Update sitemap.xml to include all indexable routes and automate lastmod updates."
+        }
+      ]
+    },
+    {
+      "name": "Bing & IndexNow",
+      "weight": 15,
+      "score": 60,
+      "what_works": [
+        "Robots.txt explicitly specifies sitemap location for Bingbot discovery"
+      ],
+      "findings": [
+        {
+          "title": "Missing IndexNow Protocol Implementation",
+          "severity": "High",
+          "description": "No IndexNow key hosted at public root. New packages, blog posts, or updates cannot be pushed instantly to Bing / Copilot index.",
+          "recommendation": "Generate 32-char hex IndexNow key file in public/ and submit key via IndexNow API."
+        }
+      ]
+    },
+    {
+      "name": "Content Quality & E-E-A-T",
+      "weight": 23,
+      "score": 82,
+      "what_works": [
+        "Verified capacity (700-800 guests) and 7 verified event types clearly communicated",
+        "Strong local authority with exact address near Suryabinayak Ganesh Mandir, Bhaktapur",
+        "Direct contact phone (+977 986-0117006) and WhatsApp integration"
+      ],
+      "findings": [
+        {
+          "title": "Client Verification Needed for Facilities & Packages",
+          "severity": "Medium",
+          "description": "Exact parking capacity, hall breakdown names, and structured package pricing require confirmed details to maximize E-E-A-T.",
+          "recommendation": "Add explicit parking capacity numbers and detailed hall features to About and Location pages."
+        }
+      ]
+    },
+    {
+      "name": "Schema & Structured Data",
+      "weight": 10,
+      "score": 80,
+      "what_works": [
+        "Organization and WebSite JSON-LD graph present in index.html",
+        "EventVenue schema with exact GeoCoordinates (27.6568562, 85.4217854) in Home.tsx"
+      ],
+      "findings": [
+        {
+          "title": "FAQPage Schema Rich Result Deprecation Notice",
+          "severity": "Info",
+          "description": "Google retired FAQ rich results for all sites on May 7, 2026. FAQPage schema won't trigger SERP drop-down features.",
+          "recommendation": "Retain FAQ content for user experience and GEO, but do not rely on FAQPage schema for SERP rich snippets."
+        },
+        {
+          "title": "Missing Dual CateringService / FoodEstablishment Schema",
+          "severity": "Medium",
+          "description": "Site offers both venue rental and catering services, but catering service schema graph is not attached to homepage.",
+          "recommendation": "Add CateringService schema to homepage and /catering-service-bhaktapur page."
+        }
+      ]
+    },
+    {
+      "name": "Performance & Core Web Vitals",
+      "weight": 10,
+      "score": 65,
+      "what_works": [
+        "Lazy loading implemented for all React route components",
+        "Vite build tool ensures modern code splitting"
+      ],
+      "findings": [
+        {
+          "title": "Heavy 2.17MB Uncompressed PNG Asset",
+          "severity": "Critical",
+          "description": "shreeganeshpartyvenue(withbg-of-white).png is 2.17 MB. Loaded as default og:image and favicon image.",
+          "recommendation": "Compress image to WebP/AVIF (<150KB) and rename to remove parenthesis characters."
+        }
+      ]
+    },
+    {
+      "name": "AI Search Readiness (GEO)",
+      "weight": 10,
+      "score": 60,
+      "what_works": [
+        "Clear entity name and location context across content"
+      ],
+      "findings": [
+        {
+          "title": "Missing public/llms.txt File",
+          "severity": "High",
+          "description": "AI engines (ChatGPT, Claude, Perplexity) look for /llms.txt for concise site documentation.",
+          "recommendation": "Create public/llms.txt summarizing venue specifications, capacity, contact info, and services."
+        }
+      ]
+    }
+  ],
+  "action_plan": {
+    "phases": [
+      {
+        "name": "Phase 1: Critical Fixes & Quick Wins",
+        "timeframe": "Week 1",
+        "items": [
+          "Compress 2.17MB PNG asset to WebP/SVG format and update og:image links",
+          "Create public/llms.txt for AI Search / GEO readiness",
+          "Generate and publish IndexNow key for instant Bing/Copilot indexing"
+        ]
+      },
+      {
+        "name": "Phase 2: Technical & Sitemap Optimization",
+        "timeframe": "Weeks 2-3",
+        "items": [
+          "Update public/sitemap.xml with missing alias routes and updated lastmod dates",
+          "Add CateringService and LocalBusiness schema graphs to service pages",
+          "Configure security headers in Vercel/server deployment"
+        ]
+      },
+      {
+        "name": "Phase 3: Content & E-E-A-T Expansion",
+        "timeframe": "Month 2",
+        "items": [
+          "Verify exact parking capacity and hall details with venue owner",
+          "Enhance location page with neighborhood access points and Suryabinayak landmarks"
+        ]
+      }
+    ]
+  }
+}
