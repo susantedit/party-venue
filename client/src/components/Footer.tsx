@@ -8,11 +8,6 @@ const quickLinks: [string, string][] = [
   ['/contact', 'Contact'], ['/location', 'Location'], ['/faq', 'FAQ'],
 ];
 
-  
-const serviceLinks: [string, string][] = [
-  ['/wedding-venue-bhaktapur', 'Wedding Venue in Bhaktapur'],
-  ['/catering-service-bhaktapur', 'Catering Service in Bhaktapur'],
-];
 
 export default function Footer() {
   return (

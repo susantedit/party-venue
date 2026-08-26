@@ -41,7 +41,7 @@ export type PackageCategory = 'silver' | 'gold' | 'platinum' | 'custom';
 export interface Package {
   _id: string;
   name: string;
-  slug: string;
+  slug?: string;
   description: string;
   category: PackageCategory;
   price: number;
@@ -49,7 +49,7 @@ export interface Package {
   features: string[];
   image?: string;
   isPopular: boolean;
-  isActive: boolean;
+  isActive?: boolean;
 }
 
 // ─── Gallery ──────────────────────────────────────────────────────────────────
