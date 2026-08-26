@@ -4,8 +4,8 @@ import { trackPhoneClick, trackWhatsAppClick } from '@/lib/analytics';
 
 const quickLinks: [string, string][] = [
   ['/', 'Home'], ['/about', 'About'], ['/services', 'Services'],
-  ['/gallery', 'Gallery'], ['/packages', 'Packages'], ['/menu', 'Menu'],
-  ['/contact', 'Contact'], ['/location', 'Location'], ['/faq', 'FAQ'],
+  ['/gallery', 'Gallery'], ['/menu', 'Menu'], ['/contact', 'Contact'],
+  ['/location', 'Location'], ['/faq', 'FAQ'],
 ];
 
 

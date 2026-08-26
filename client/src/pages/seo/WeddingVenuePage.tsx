@@ -99,11 +99,11 @@ export default function WeddingVenuePage() {
               Book Wedding Venue
             </Link>
             <Link
-              to="/packages"
+              to="/menu"
               className="font-serif tracking-[0.14em] uppercase text-xs px-8 py-3.5 border border-gold/40 hover:border-gold text-gold hover:bg-gold/5 transition-all duration-150"
               style={{ borderRadius: '2px' }}
             >
-              View Packages
+              View Menu
             </Link>
           </div>
         </div>

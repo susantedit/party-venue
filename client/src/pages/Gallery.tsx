@@ -8,6 +8,7 @@ import { Lightbox } from '@/components/shared/Lightbox';
 import { GALLERY_CATEGORIES } from '@/constants';
 import type { GalleryImage } from '@/types';
 import { trackGalleryEngagement } from '@/lib/analytics';
+import { LOCAL_PHOTOS } from '@/constants/localPhotos';
 
 const CATEGORY_LABELS: Record<string, string> = {
   all: 'All',
@@ -23,7 +24,7 @@ export default function Gallery() {
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const { data: images = [], isLoading } = useQuery({
+  const { data: apiImages = [], isLoading } = useQuery({
     queryKey: ['gallery', activeCategory],
     queryFn: () =>
       axiosInstance
@@ -32,6 +33,11 @@ export default function Gallery() {
         })
         .then((r) => r.data.data as GalleryImage[]),
   });
+
+  const localFiltered = LOCAL_PHOTOS.filter(
+    (img) => activeCategory === 'all' || img.category === activeCategory
+  );
+  const images = apiImages.length > 0 ? apiImages : localFiltered;
 
   const lightboxImages = images.map((img) => ({
     src: img.imageUrl,

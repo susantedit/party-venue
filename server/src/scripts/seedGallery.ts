@@ -105,6 +105,13 @@ const IMAGES: ImageEntry[] = [
     featured: false,
   },
   {
+    filename: '48png',
+    category: 'venue',
+    altText: 'Spacious celebration hall arrangement at Shree Ganesh Party Venue',
+    title: 'Hall Arrangement',
+    featured: true,
+  },
+  {
     filename: '5.jpg',
     category: 'catering',
     altText: 'Catering food buffet at Shree Ganesh Party Venue and Catering Service, Bhaktapur',

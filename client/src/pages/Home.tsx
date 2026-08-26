@@ -12,6 +12,7 @@ import { ReviewsSection } from '@/components/sections/ReviewsSection';
 import { GoogleReviews } from '@/components/sections/GoogleReviews';
 import { SEOHead } from '@/components/shared/SEOHead';
 import type { GalleryImage } from '@/types';
+import { LOCAL_PHOTOS } from '@/constants/localPhotos';
 import meatVideo from '@/assets/imagesandvedioes/meatmaking.mp4';
 import vegVideo from '@/assets/imagesandvedioes/vegies.mp4';
 import { BUSINESS_ADDRESS, BUSINESS_PHONE, SITE_URL } from '@/constants';
@@ -128,10 +129,14 @@ function AnimatedCounter({ value, label }: { value: string; label: string }) {
 export default function Home() {
   const shouldReduceMotion = useReducedMotion();
 
-  const { data: galleryData } = useQuery({
+  const { data: apiGallery } = useQuery({
     queryKey: ['featured-gallery'],
     queryFn: () => axiosInstance.get('/api/v1/gallery', { params: { featured: 'true' } }).then(r => r.data.data as GalleryImage[]),
   });
+
+  const galleryData = (apiGallery && apiGallery.length > 0)
+    ? apiGallery
+    : LOCAL_PHOTOS.filter((img) => img.featured);
 
   const enter = {
     initial: { opacity: 0, y: shouldReduceMotion ? 0 : 14 },
