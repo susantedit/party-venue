@@ -9,7 +9,7 @@ const values = [
 ];
 
 const highlights = [
-  { num: '700-800', label: 'Verified Capacity' },
+  { num: '700-1000', label: 'Verified Capacity' },
   { num: '7', label: 'Verified Event Types' },
   { num: '4', label: 'Booking Channels' },
   { num: 'Bhaktapur', label: 'Primary Location' },
@@ -41,12 +41,12 @@ export default function About() {
           </div>
 
           {/* Story paragraphs */}
-          <div className="space-y-6 font-sans text-lg text-zinc-400 leading-relaxed mb-16 max-w-3xl mx-auto">
+          <div className="space-y-6 font-sans text-lg text-zinc-300 leading-relaxed mb-16 max-w-3xl mx-auto border-l-2 border-gold/30 pl-6">
             <p>
               Shree Ganesh Party Venue And Catering Service is a Bhaktapur event venue and catering service near Suryabinayak Ganesh Mandir. We host weddings, receptions, birthdays, Bratabandha, Pasni, corporate events, and catering bookings.
             </p>
             <p>
-              Our verified capacity is 700-800 guests depending on the event setup. Exact package inclusions, seating layout, menu, and décor should be confirmed with the team before booking.
+              Our verified capacity is <strong className="text-gold font-semibold">700–1,000 guests</strong> depending on the event setup. Exact package inclusions, seating layout, menu, and décor should be confirmed with the team before booking.
             </p>
             <p>
               We focus on clear communication, practical event planning, and real local visibility so guests can find the venue easily from Bhaktapur and the wider Kathmandu Valley.
@@ -54,21 +54,21 @@ export default function About() {
           </div>
 
           {/* Stat row */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-px border border-gold/10 mb-16">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-px border border-gold/25 bg-gold/15 mb-16 rounded-sm overflow-hidden">
             {highlights.map(({ num, label }) => (
-              <div key={label} className="text-center p-7 bg-[rgba(255,255,255,0.02)]">
+              <div key={label} className="text-center p-7 bg-[#111111] hover:bg-[#161616] transition-colors">
                 <p className="font-serif text-4xl font-bold text-gold">{num}</p>
-                <p className="mt-1 text-xs font-sans font-semibold uppercase tracking-widest text-zinc-500">{label}</p>
+                <p className="mt-1 text-xs font-sans font-semibold tracking-wider text-zinc-400 uppercase">{label}</p>
               </div>
             ))}
           </div>
 
           {/* Values */}
-          <div className="grid gap-px sm:grid-cols-3 border border-gold/10 mb-14">
+          <div className="grid gap-px sm:grid-cols-3 border border-gold/25 bg-gold/15 mb-14 rounded-sm overflow-hidden">
             {values.map((v) => (
-              <div key={v.title} className="p-7 bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(201,168,76,0.04)] transition-colors duration-200">
+              <div key={v.title} className="p-7 bg-[#111111] hover:bg-[#161616] transition-colors duration-200">
                 <h2 className="font-serif text-base font-bold text-white tracking-wider uppercase mb-3">{v.title}</h2>
-                <p className="font-sans text-sm text-zinc-400 leading-relaxed">{v.desc}</p>
+                <p className="font-sans text-sm text-zinc-300 leading-relaxed">{v.desc}</p>
               </div>
             ))}
           </div>

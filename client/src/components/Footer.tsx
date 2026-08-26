@@ -40,7 +40,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-serif text-xs tracking-[0.2em] uppercase text-zinc-400 mb-5">Quick Links</h4>
+            <h3 className="font-serif text-xs tracking-[0.2em] uppercase text-zinc-400 mb-5">Quick Links</h3>
             <ul className="space-y-2.5">
               {quickLinks.map(([to, label]) => (
                 <li key={to}>
@@ -54,7 +54,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="font-serif text-xs tracking-[0.2em] uppercase text-zinc-400 mb-5">Contact</h4>
+            <h3 className="font-serif text-xs tracking-[0.2em] uppercase text-zinc-400 mb-5">Contact</h3>
             <ul className="space-y-3 font-sans text-sm text-zinc-500">
               <li>
                 <a href="tel:+9779851337076" onClick={() => trackPhoneClick('footer')} className="hover:text-gold transition-colors">{BUSINESS_PHONE}</a>
@@ -71,32 +71,23 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
-            <address className="not-italic mt-6 pt-5 border-t border-gold/10 font-sans text-sm text-zinc-500 leading-relaxed">
-              <strong className="text-zinc-400 block mb-1">Shree Ganesh Party Venue And Catering Service</strong>
-              {BUSINESS_ADDRESS}<br />
-              <a href="tel:+9779851337076" onClick={() => trackPhoneClick('footer')} className="hover:text-gold transition-colors">{BUSINESS_PHONE}</a>
-            </address>
           </div>
 
           {/* Services + Book CTA */}
           <div>
-            <h4 className="font-serif text-xs tracking-[0.2em] uppercase text-zinc-400 mb-5">Services</h4>
-            <ul className="space-y-2.5 mb-8">
-              {serviceLinks.map(([to, label]) => (
-                <li key={to}>
-                  <Link to={to} className="font-sans text-sm text-zinc-500 hover:text-gold transition-colors duration-150">
-                    {label}
-                  </Link>
-                </li>
-              ))}
+            <h3 className="font-serif text-xs tracking-[0.2em] uppercase text-zinc-400 mb-5">Services</h3>
+            <ul className="space-y-2.5 mb-6">
+              <li><Link to="/wedding-venue-bhaktapur" className="font-sans text-sm text-zinc-500 hover:text-gold transition-colors">Wedding & Reception Venue</Link></li>
+              <li><Link to="/catering-service-bhaktapur" className="font-sans text-sm text-zinc-500 hover:text-gold transition-colors">Catering Services</Link></li>
+              <li><Link to="/services" className="font-sans text-sm text-zinc-500 hover:text-gold transition-colors">Bratabandha & Pasni Ceremonies</Link></li>
+              <li><Link to="/services" className="font-sans text-sm text-zinc-500 hover:text-gold transition-colors">Birthday & Corporate Events</Link></li>
             </ul>
-            <h4 className="font-serif text-xs tracking-[0.2em] uppercase text-zinc-400 mb-5">Book Your Event</h4>
-            <p className="font-sans text-sm text-zinc-500 mb-5 leading-relaxed">
+            <h3 className="font-serif text-xs tracking-[0.2em] uppercase text-zinc-400 mb-3">Book Your Event</h3>
+            <p className="font-sans text-sm text-zinc-500 mb-4 leading-relaxed">
               Dates fill fast. Secure yours today — no payment required now.
             </p>
             <Link to="/booking"
-              className="inline-block font-serif tracking-[0.14em] uppercase text-xs px-6 py-3 bg-gold hover:bg-gold/90 text-zinc-950 font-semibold transition-all duration-150 shadow-[0_0_16px_rgba(201,168,76,0.15)]"
-              style={{ borderRadius: '2px' }}>
+              className="inline-block font-serif tracking-[0.14em] uppercase text-xs px-6 py-3 bg-gold hover:bg-gold/90 text-zinc-950 font-semibold transition-all duration-150 shadow-[0_0_16px_rgba(201,168,76,0.15)] rounded-sm">
               Book Now
             </Link>
           </div>

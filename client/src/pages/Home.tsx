@@ -68,7 +68,7 @@ const services: { title: string; icon: LucideIcon; desc: string }[] = [
 ];
 
 const stats = [
-  { value: '700-800', label: 'Verified Capacity' },
+  { value: '700-1000', label: 'Verified Capacity' },
   { value: '7', label: 'Verified Event Types' },
   { value: '4', label: 'Booking Channels' },
 ];
@@ -197,9 +197,9 @@ export default function Home() {
         </div>
 
         {/* scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-40">
-          <span className="text-xs font-sans tracking-widest text-zinc-500 uppercase">Scroll</span>
-          <div className="h-8 w-px bg-gradient-to-b from-zinc-500 to-transparent" />
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-80">
+          <span className="text-xs font-sans tracking-widest text-zinc-300 font-medium uppercase">Scroll</span>
+          <div className="h-6 w-0.5 bg-gradient-to-b from-gold to-transparent animate-pulse" />
         </div>
       </section>
 
@@ -210,7 +210,7 @@ export default function Home() {
             <SectionHeader script="See It Live" title="Our Kitchen in Action" />
           </motion.div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="relative w-full overflow-hidden border border-gold/15" style={{ aspectRatio: '16/9' }}>
+            <div className="relative w-full overflow-hidden border border-gold/20 rounded-sm" style={{ aspectRatio: '16/9' }}>
               <video
                 src={vegVideo}
                 autoPlay={!shouldReduceMotion}
@@ -221,12 +221,12 @@ export default function Home() {
                 className="absolute inset-0 w-full h-full object-cover"
                 aria-label="Vegetarian food preparation"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-              <span className="absolute bottom-4 left-4 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+              <span className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1.5 border border-gold/30 rounded-sm font-sans text-xs font-semibold tracking-wider text-white">
                 Vegetarian Delights
               </span>
             </div>
-            <div className="relative w-full overflow-hidden border border-gold/15" style={{ aspectRatio: '16/9' }}>
+            <div className="relative w-full overflow-hidden border border-gold/20 rounded-sm" style={{ aspectRatio: '16/9' }}>
               <video
                 src={meatVideo}
                 autoPlay={!shouldReduceMotion}
@@ -237,8 +237,8 @@ export default function Home() {
                 className="absolute inset-0 w-full h-full object-cover"
                 aria-label="Non-vegetarian food preparation"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-              <span className="absolute bottom-4 left-4 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+              <span className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1.5 border border-gold/30 rounded-sm font-sans text-xs font-semibold tracking-wider text-white">
                 Non-Vegetarian Specials
               </span>
             </div>

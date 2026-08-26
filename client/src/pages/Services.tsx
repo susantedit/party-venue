@@ -6,54 +6,70 @@ import {
 import { SEOHead } from '@/components/shared/SEOHead';
 import { SITE_URL } from '@/constants';
 
-const services: { icon: LucideIcon; title: string; desc: string; features: string[] }[] = [
+const services: { icon: LucideIcon; title: string; desc: string; features: string[]; linkUrl: string; linkLabel: string }[] = [
   {
     icon: Heart,
     title: 'Wedding Venue',
     desc: 'Wedding and reception venue planning for Bhaktapur couples with verified guest capacity and full event coordination.',
-    features: ['Verified capacity 700-800', 'Wedding setups', 'Reception setups', 'Bhaktapur location'],
+    features: ['Verified capacity 700-1000', 'Wedding setups', 'Reception setups', 'Bhaktapur location'],
+    linkUrl: '/wedding-venue-bhaktapur',
+    linkLabel: 'View Wedding Venue Details →',
   },
   {
     icon: PartyPopper,
     title: 'Reception',
     desc: 'Spectacular reception halls with multi-cuisine catering and experienced event coordinators managing everything seamlessly.',
     features: ['Live music setups', 'Multi-cuisine buffet', 'Cocktail arrangements', 'Photo backdrop'],
+    linkUrl: '/booking',
+    linkLabel: 'Inquire About Reception →',
   },
   {
     icon: Cake,
     title: 'Birthday Parties',
     desc: "From children's first birthdays to milestone celebrations — custom themes, catering, and event coordination tailored to your vision.",
     features: ['Custom themes', 'Birthday cakes', 'Entertainment', 'All age groups'],
+    linkUrl: '/booking',
+    linkLabel: 'Book Birthday Party →',
   },
   {
     icon: Sparkles,
     title: 'Bratabandha',
     desc: 'Sacred ceremony setups with priests, ritual arrangements, and authentic Newari and Hindu cultural décor.',
     features: ['Traditional setup', 'Priest coordination', 'Cultural décor', 'Family catering'],
+    linkUrl: '/booking',
+    linkLabel: 'Plan Bratabandha Ceremony →',
   },
   {
     icon: UtensilsCrossed,
     title: 'Pasni Ceremony',
     desc: "Authentic Newari Pasni arrangements — traditional food, rituals, and family gathering logistics all under one roof.",
     features: ['Traditional rituals', 'Newari cuisine', 'Family packages', 'Photography setup'],
+    linkUrl: '/booking',
+    linkLabel: 'Plan Pasni Ceremony →',
   },
   {
     icon: Building2,
     title: 'Corporate Events',
     desc: 'Conference rooms, seminar halls, and corporate dining for business meetings, product launches, and team events.',
     features: ['AV equipment', 'Conference rooms', 'Business catering', 'WiFi & projectors'],
+    linkUrl: '/booking',
+    linkLabel: 'Inquire Corporate Event →',
   },
   {
     icon: ChefHat,
     title: 'Catering Services',
     desc: 'Nepali, Newari, Indian, Chinese, and BBQ catering for weddings, receptions, birthdays, and corporate events in Bhaktapur.',
     features: ['Multi-cuisine menus', 'Custom menus', 'Event catering', 'Off-site available'],
+    linkUrl: '/catering-service-bhaktapur',
+    linkLabel: 'View Catering Details →',
   },
   {
     icon: Flower2,
     title: 'Decoration',
     desc: 'Professional decoration from floral arrangements to themed setups, lighting design to stage décor — we make your vision real.',
     features: ['Floral arrangements', 'Stage design', 'LED lighting', 'Custom themes'],
+    linkUrl: '/booking',
+    linkLabel: 'Inquire Decoration Setup →',
   },
 ];
 
@@ -90,34 +106,31 @@ export default function Services() {
           </div>
 
           {/* Services grid */}
-          <div className="grid gap-px sm:grid-cols-2 border border-gold/10 mb-16">
+          <div className="grid gap-px sm:grid-cols-2 border border-gold/15 bg-gold/10 mb-16 rounded-sm overflow-hidden">
             {services.map((s) => (
               <div key={s.title}
-                className="p-7 bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(201,168,76,0.04)] transition-colors duration-200">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="h-10 w-10 flex items-center justify-center border border-gold/20 bg-gold/5 text-gold shrink-0">
-                    <s.icon className="h-5 w-5" aria-hidden="true" />
+                className="p-7 bg-[#111111] hover:bg-[#161616] transition-colors duration-200 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="h-10 w-10 flex items-center justify-center border border-gold/20 bg-gold/5 text-gold shrink-0 rounded-sm">
+                      <s.icon className="h-5 w-5" aria-hidden="true" />
+                    </div>
+                    <h2 className="font-serif text-lg font-bold text-white tracking-wider uppercase">{s.title}</h2>
                   </div>
-                  <h2 className="font-serif text-lg font-bold text-white tracking-wider uppercase">{s.title}</h2>
+                  <p className="font-sans text-sm text-zinc-300 leading-relaxed mb-4">{s.desc}</p>
+                  <ul className="grid grid-cols-2 gap-1.5 mb-6">
+                    {s.features.map((f) => (
+                      <li key={f} className="flex items-center gap-1.5 text-xs font-sans text-zinc-400">
+                        <span className="text-gold shrink-0">✓</span> {f}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <p className="font-sans text-sm text-zinc-400 leading-relaxed mb-4">{s.desc}</p>
-                <ul className="grid grid-cols-2 gap-1.5 mb-4">
-                  {s.features.map((f) => (
-                    <li key={f} className="flex items-center gap-1.5 text-xs font-sans text-zinc-500">
-                      <span className="text-gold shrink-0">✓</span> {f}
-                    </li>
-                  ))}
-                </ul>
-                {s.title === 'Wedding Venue' && (
-                  <Link to="/wedding-venue-bhaktapur" className="inline-block text-xs font-sans text-gold hover:underline underline-offset-2 mt-1">
-                    View Wedding Venue Details →
+                <div>
+                  <Link to={s.linkUrl} className="inline-flex items-center gap-1 text-xs font-sans font-semibold text-gold hover:text-gold/80 hover:underline pt-2 border-t border-white/[0.06] w-full">
+                    {s.linkLabel}
                   </Link>
-                )}
-                {s.title === 'Catering Services' && (
-                  <Link to="/catering-service-bhaktapur" className="inline-block text-xs font-sans text-gold hover:underline underline-offset-2 mt-1">
-                    View Catering Service Details →
-                  </Link>
-                )}
+                </div>
               </div>
             ))}
           </div>

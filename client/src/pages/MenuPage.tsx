@@ -324,23 +324,23 @@ export default function MenuPage() {
             </div>
 
             {/* Desktop: sticky vertical nav */}
-            <nav className="hidden lg:block sticky top-24 border border-gold/10 overflow-hidden">
+            <nav className="hidden lg:block sticky top-24 border border-gold/15 bg-[#111111] overflow-hidden rounded-sm space-y-0.5 p-1">
               {TAB_LABELS.map(t => (
                 <button
                   key={t.index}
                   onClick={() => setActive(t.index)}
-                  className={`w-full text-left flex items-center gap-3 px-4 py-3 border-b border-white/[0.04] last:border-b-0 transition-all duration-150 ${
+                  className={`w-full text-left flex items-center gap-3 px-3.5 py-2.5 rounded-sm transition-all duration-150 ${
                     active === t.index
-                      ? 'bg-gold/10 border-l-2 border-l-gold text-white'
-                      : 'text-zinc-500 hover:text-zinc-200 hover:bg-white/[0.03]'
+                      ? 'bg-gold/15 border-l-2 border-l-gold text-white font-semibold'
+                      : 'text-zinc-400 hover:text-zinc-100 hover:bg-white/[0.04]'
                   }`}
                 >
-                  <span className={`shrink-0 text-[10px] font-mono w-5 text-right leading-none ${active === t.index ? 'text-gold' : 'text-zinc-700'}`}>
+                  <span className={`shrink-0 text-xs font-mono w-5 text-right leading-none ${active === t.index ? 'text-gold font-bold' : 'text-zinc-500'}`}>
                     {String(t.index + 1).padStart(2, '0')}
                   </span>
                   <div className="min-w-0">
-                    <p className="text-xs font-semibold leading-tight truncate">{t.enTitle}</p>
-                    <p className="text-[10px] text-zinc-600 leading-tight truncate">{t.npTitle}</p>
+                    <p className="text-xs font-medium leading-tight truncate">{t.enTitle}</p>
+                    <p className="text-xs text-zinc-400 leading-tight truncate mt-0.5">{t.npTitle}</p>
                   </div>
                 </button>
               ))}
@@ -350,68 +350,67 @@ export default function MenuPage() {
           {/* ── Right: items panel ── */}
           <div className="flex-1 min-w-0">
             {/* Section heading */}
-            <div className="border border-gold/15 bg-gold/[0.03] px-5 py-4 mb-4 flex items-center justify-between flex-wrap gap-2">
+            <div className="border border-gold/15 bg-gold/[0.03] px-5 py-4 mb-4 flex items-center justify-between flex-wrap gap-2 rounded-sm">
               <div>
-                <p className="text-[10px] text-gold/70 uppercase tracking-[0.2em] font-semibold mb-0.5">
+                <p className="text-xs text-gold/80 uppercase tracking-widest font-semibold mb-0.5">
                   {String(active + 1).padStart(2, '0')} / {String(SECTIONS.length).padStart(2, '0')}
                 </p>
                 <div className="flex items-baseline gap-3">
-                  <h2 className="font-serif text-2xl font-bold text-white tracking-widest uppercase">
+                  <h2 className="font-serif text-2xl font-bold text-white tracking-wider uppercase">
                     {section.enTitle}
                   </h2>
                   <span className="text-base text-gold/70 font-medium">{section.npTitle}</span>
                 </div>
               </div>
-              <span className="text-[11px] text-zinc-600">{section.items.length} items</span>
+              <span className="text-xs text-zinc-400 font-medium">{section.items.length} items</span>
             </div>
 
             {/* Items grid */}
-            <div className="grid gap-px sm:grid-cols-2 border border-white/[0.06]">
+            <div className="grid gap-px sm:grid-cols-2 border border-white/[0.08] bg-white/[0.04] rounded-sm overflow-hidden">
               {section.items.map((item, i) => (
                 <div
                   key={i}
                   className="flex items-start justify-between gap-3 px-5 py-4 bg-[#111111] hover:bg-[rgba(201,168,76,0.03)] transition-colors duration-150"
                 >
-                  <div className="flex items-start gap-3 min-w-0">
-                    <span className="shrink-0 text-[10px] font-mono text-zinc-700 mt-0.5 w-5 text-right">
+                  <div className="flex items-start gap-3 min-w-0 flex-1">
+                    <span className="shrink-0 text-xs font-mono text-zinc-500 mt-0.5 w-5 text-right font-medium">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <div className="min-w-0">
-                      {/* English name — primary */}
-                      <p className="text-sm font-medium text-zinc-100 leading-snug">{item.en}</p>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <p className="text-sm font-semibold text-zinc-100 leading-snug">{item.en}</p>
+                        {item.tag && (
+                          <span className={`shrink-0 border text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.2 rounded-xs ${TAG_STYLE[item.tag]}`}>
+                            {item.tag === 'Veg' ? '● VEG' : '● NON-VEG'}
+                          </span>
+                        )}
+                      </div>
                       {/* Nepali name — secondary */}
-                      <p className="text-xs text-zinc-600 mt-0.5 leading-snug">{item.np}</p>
+                      <p className="text-xs text-zinc-400 mt-1 leading-snug">{item.np}</p>
                     </div>
                   </div>
-                  {item.tag && (
-                    <span className={`shrink-0 mt-0.5 border text-[9px] font-bold tracking-widest uppercase px-1.5 py-0.5 ${TAG_STYLE[item.tag]}`}>
-                      {item.tag === 'Veg' ? '● VEG' : '● NON-VEG'}
-                    </span>
-                  )}
                 </div>
               ))}
             </div>
 
-            {/* Prev / Next nav */}
-            <div className="flex items-center justify-between mt-4 gap-3">
+            {/* Prev / Next nav — clustered in center */}
+            <div className="flex items-center justify-center gap-4 mt-6 border-t border-white/[0.08] pt-4">
               <button
                 onClick={() => setActive(a => Math.max(0, a - 1))}
                 disabled={active === 0}
-                className="flex items-center gap-2 border border-white/[0.06] bg-[#111111] px-4 py-2 text-xs text-zinc-500 hover:text-zinc-200 hover:border-white/[0.12] transition disabled:opacity-25"
-                style={{ borderRadius: '4px' }}
+                className="flex items-center gap-2 border border-gold/30 bg-[#111111] px-5 py-2.5 text-xs text-zinc-300 hover:text-gold hover:border-gold transition disabled:opacity-30 rounded-sm font-semibold"
               >
-                ← Previous
+                ← Previous Category
               </button>
-              <span className="text-[11px] text-zinc-700">
-                {active + 1} / {SECTIONS.length}
+              <span className="text-xs text-zinc-400 font-mono font-semibold px-2">
+                {active + 1} of {SECTIONS.length}
               </span>
               <button
                 onClick={() => setActive(a => Math.min(SECTIONS.length - 1, a + 1))}
                 disabled={active === SECTIONS.length - 1}
-                className="flex items-center gap-2 border border-white/[0.06] bg-[#111111] px-4 py-2 text-xs text-zinc-500 hover:text-zinc-200 hover:border-white/[0.12] transition disabled:opacity-25"
-                style={{ borderRadius: '4px' }}
+                className="flex items-center gap-2 border border-gold/30 bg-[#111111] px-5 py-2.5 text-xs text-zinc-300 hover:text-gold hover:border-gold transition disabled:opacity-30 rounded-sm font-semibold"
               >
-                Next →
+                Next Category →
               </button>
             </div>
           </div>

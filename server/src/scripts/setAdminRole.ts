@@ -12,7 +12,7 @@ const CLIENT_EMAIL = process.env.FIREBASE_CLIENT_EMAIL!;
 const PRIVATE_KEY = process.env.FIREBASE_PRIVATE_KEY!.replace(/\\n/g, '\n');
 
 // Admin email to promote
-const TARGET_EMAIL = 'susantedit@gmail.com';
+const TARGET_EMAIL = 'nandanrajthala@gmail.com';
 const TARGET_ROLE = 'super-admin';
 
 if (!getApps().length) {

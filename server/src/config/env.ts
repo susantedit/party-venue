@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+
 const envSchema = z.object({
   PORT: z.string().default('5000'),
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
@@ -9,7 +10,7 @@ const envSchema = z.object({
   CLOUDINARY_SECRET: z.string().min(1, 'CLOUDINARY_SECRET is required'),
   // Resend (replaces Nodemailer)
   RESEND_API_KEY: z.string().min(1, 'RESEND_API_KEY is required'),
-  EMAIL_FROM: z.string().default('Shree Ganesh Venue <noreply@shreeganeshsharma.com>'),
+  EMAIL_FROM: z.string().default('Shree Ganesh Venue <nandanrajthala@gmail.com>'),
   ADMIN_NOTIFICATION_EMAIL: z.string().email('ADMIN_NOTIFICATION_EMAIL must be valid'),
   FRONTEND_URL: z.string().url('FRONTEND_URL must be a valid URL'),
   FIREBASE_PROJECT_ID: z.string().min(1, 'FIREBASE_PROJECT_ID is required'),

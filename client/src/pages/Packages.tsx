@@ -32,11 +32,56 @@ function SectionHeader({ script, title, subtitle }: { script: string; title: str
   );
 }
 
+const FALLBACK_PACKAGES: Package[] = [
+  {
+    _id: 'silver-pkg',
+    name: 'Silver Celebration',
+    category: 'silver',
+    price: 150000,
+    capacity: 250,
+    description: 'Perfect for intimate gatherings, birthdays, and Pasni ceremonies.',
+    features: ['Hall access & seating', 'Standard floral décor', 'Sound system setup', 'Dedicated event staff'],
+    isPopular: false,
+  },
+  {
+    _id: 'gold-pkg',
+    name: 'Gold Wedding & Reception',
+    category: 'gold',
+    price: 320000,
+    capacity: 500,
+    description: 'Our most requested package for weddings, receptions, and large traditional ceremonies.',
+    features: ['Multi-hall venue access', 'Premium thematic lighting', 'Full multi-cuisine catering', 'Dedicated event manager'],
+    isPopular: true,
+  },
+  {
+    _id: 'platinum-pkg',
+    name: 'Platinum Grand Luxe',
+    category: 'platinum',
+    price: 550000,
+    capacity: 800,
+    description: 'Complete luxury setup for grand wedding receptions and high-capacity celebrations.',
+    features: ['Full venue exclusive access', 'Custom stage & hall floral setup', 'Live live-food counters & buffet', 'Bridal suite & DJ arrangements'],
+    isPopular: false,
+  },
+  {
+    _id: 'custom-pkg',
+    name: 'Custom Celebration',
+    category: 'custom',
+    price: 250000,
+    capacity: 1000,
+    description: 'Tailored specifically to your guest size, ceremony requirements, and budget.',
+    features: ['Flexible guest capacity up to 1000', 'Customized menu options', 'Choice of decoration style', 'Personalized event coordination'],
+    isPopular: false,
+  },
+];
+
 export default function Packages() {
-  const { data: packages = [], isLoading } = useQuery({
+  const { data: fetchedPackages = [], isLoading } = useQuery({
     queryKey: ['packages'],
     queryFn: () => axiosInstance.get('/api/v1/packages').then((r) => r.data.data as Package[]),
   });
+
+  const packages = fetchedPackages.length > 0 ? fetchedPackages : FALLBACK_PACKAGES;
 
   useEffect(() => {
     trackPackageView('packages_page');
@@ -55,54 +100,57 @@ export default function Packages() {
     <>
       <SEOHead
         title="Event Packages & Pricing | Shree Ganesh Party Venue"
-        description="Transparent package exploration for weddings and events."
+        description="Transparent package exploration for weddings, receptions, birthdays, Bratabandha, Pasni, and corporate events in Bhaktapur."
         canonicalUrl={`${SITE_URL}/packages`}
       />
-      <div className="bg-[#0a0a0a] pt-28 pb-20 px-4">
+      <div className="bg-[#0a0a0a] pt-28 pb-16 px-4">
         <div className="relative z-10 mx-auto max-w-6xl">
           <SectionHeader script="Pricing Tiers" title="Event Packages"
             subtitle="Choose the package that fits your celebration. All packages include venue, setup, and coordination." />
 
           {/* Package grid */}
           {isLoading ? (
-            <div className="grid gap-px sm:grid-cols-2 lg:grid-cols-4 border border-gold/10">
+            <div className="grid gap-px sm:grid-cols-2 lg:grid-cols-4 border border-gold/20 bg-gold/10 rounded-sm overflow-hidden">
               {Array.from({ length: 4 }).map((_, i) => <SkeletonLoader key={i} className="h-80" />)}
             </div>
           ) : (
-            <div className="grid gap-px sm:grid-cols-2 lg:grid-cols-4 border border-gold/10">
+            <div className="grid gap-px sm:grid-cols-2 lg:grid-cols-4 border border-gold/20 bg-gold/10 rounded-sm overflow-hidden">
               {packages.map((pkg) => (
                 <div key={pkg._id}
-                  className={`relative p-7 bg-[rgba(255,255,255,0.02)] flex flex-col transition-all duration-200 hover:bg-[rgba(201,168,76,0.04)] ${
-                    pkg.isPopular ? 'ring-1 ring-inset ring-gold/40' : ''
+                  className={`relative p-7 bg-[#111111] flex flex-col justify-between transition-all duration-200 hover:bg-[#161616] ${
+                    pkg.isPopular ? 'ring-1 ring-inset ring-gold' : ''
                   }`}>
                   {pkg.isPopular && (
-                    <span className="absolute top-4 right-4 text-[10px] font-serif tracking-[0.18em] uppercase bg-gold text-zinc-950 px-2 py-0.5 font-semibold">
+                    <span className="absolute top-4 right-4 text-[10px] font-serif tracking-widest uppercase bg-gold text-zinc-950 px-2 py-0.5 font-bold rounded-xs">
                       Popular
                     </span>
                   )}
-                  <h2 className="font-serif text-lg font-bold text-white tracking-wider uppercase capitalize mb-1">{pkg.name}</h2>
-                  <p className="text-xs font-sans text-zinc-500 uppercase tracking-widest capitalize mb-4">{pkg.category} Package</p>
-                  <p className="font-serif text-3xl font-bold text-gold mb-1">
-                    NPR {pkg.price.toLocaleString()}
-                  </p>
-                  <p className="text-xs font-sans text-zinc-500 mb-4">Up to {pkg.capacity} guests</p>
-                  <p className="text-sm font-sans text-zinc-400 leading-relaxed mb-5">{pkg.description}</p>
-                  <ul className="space-y-2 flex-1 mb-6">
-                    {pkg.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2 text-xs font-sans text-zinc-400">
-                        <span className="text-gold mt-0.5 flex-shrink-0">✓</span> {f}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link to={`/booking?package=${pkg._id}`}
-                    className={`block text-center font-serif tracking-[0.12em] uppercase text-xs py-2.5 transition-all duration-150 ${
-                      pkg.isPopular
-                        ? 'bg-gold text-zinc-950 hover:bg-gold/90 shadow-[0_0_16px_rgba(201,168,76,0.2)]'
-                        : 'border border-gold/40 text-gold hover:border-gold hover:bg-gold/5'
-                    }`}
-                    style={{ borderRadius: '2px' }}>
-                    Book This Package
-                  </Link>
+                  <div>
+                    <h2 className="font-serif text-lg font-bold text-white tracking-wider capitalize mb-1">{pkg.name}</h2>
+                    <p className="text-xs font-sans text-gold/80 tracking-wider capitalize mb-3 font-semibold">{pkg.category} Package</p>
+                    <p className="font-serif text-3xl font-bold text-gold mb-1">
+                      NPR {pkg.price.toLocaleString()}
+                    </p>
+                    <p className="text-xs font-sans text-zinc-400 mb-4">Up to {pkg.capacity} guests</p>
+                    <p className="text-sm font-sans text-zinc-300 leading-relaxed mb-5">{pkg.description}</p>
+                    <ul className="space-y-2 mb-6">
+                      {pkg.features.map((f) => (
+                        <li key={f} className="flex items-start gap-2 text-xs font-sans text-zinc-400">
+                          <span className="text-gold mt-0.5 flex-shrink-0">✓</span> {f}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <Link to={`/booking?package=${pkg._id}`}
+                      className={`block text-center font-serif tracking-wider uppercase text-xs py-3 rounded-sm transition-all duration-150 ${
+                        pkg.isPopular
+                          ? 'bg-gold text-zinc-950 hover:bg-gold/90 font-bold shadow-[0_0_16px_rgba(201,168,76,0.25)]'
+                          : 'border border-gold/40 text-gold hover:border-gold hover:bg-gold/5 font-semibold'
+                      }`}>
+                      Book Package
+                    </Link>
+                  </div>
                 </div>
               ))}
             </div>

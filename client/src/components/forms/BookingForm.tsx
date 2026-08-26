@@ -232,23 +232,23 @@ export default function BookingForm({ prefilledPackageId }: BookingFormProps) {
         <div>
           <label htmlFor="bf-guests" className={labelCls}>Number of Guests *</label>
           <input id="bf-guests" type="number" min="1" value={form.guestCount}
-            onChange={(e) => set('guestCount', e.target.value)} placeholder="e.g. 200" className={inputCls} aria-required="true"
+            onChange={(e) => set('guestCount', e.target.value)} placeholder="e.g. 200 (Capacity 700-1000)" className={inputCls} aria-required="true"
             aria-describedby={errors.guestCount ? 'bf-guests-err' : undefined} />
           {errors.guestCount && <p id="bf-guests-err" className="mt-1 text-xs text-red-400 font-sans" role="alert">{errors.guestCount}</p>}
         </div>
       </div>
 
       {/* Checkboxes */}
-      <div className="flex gap-6 font-sans text-sm text-zinc-300">
-        <label className="flex items-center gap-2 cursor-pointer">
+      <div className="flex flex-wrap gap-8 font-sans text-sm text-zinc-200 py-2 border-t border-b border-white/[0.06]">
+        <label className="flex items-center gap-3 cursor-pointer select-none">
           <input id="bf-catering" type="checkbox" checked={form.cateringRequired} onChange={(e) => set('cateringRequired', e.target.checked)}
-            className="accent-gold" />
-          Catering Required
+            className="h-4 w-4 accent-gold cursor-pointer" />
+          <span className="font-medium">Catering Service Required</span>
         </label>
-        <label className="flex items-center gap-2 cursor-pointer">
+        <label className="flex items-center gap-3 cursor-pointer select-none">
           <input id="bf-decoration" type="checkbox" checked={form.decorationRequired} onChange={(e) => set('decorationRequired', e.target.checked)}
-            className="accent-gold" />
-          Decoration Required
+            className="h-4 w-4 accent-gold cursor-pointer" />
+          <span className="font-medium">Decoration &amp; Stage Setup Required</span>
         </label>
       </div>
 
