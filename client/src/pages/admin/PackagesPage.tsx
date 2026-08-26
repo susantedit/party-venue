@@ -82,7 +82,7 @@ export default function AdminPackagesPage() {
       category: pkg.category as typeof CATEGORIES[number],
       price: String(pkg.price), capacity: String(pkg.capacity),
       features: pkg.features.join('\n'),
-      isPopular: pkg.isPopular, isActive: pkg.isActive,
+      isPopular: pkg.isPopular, isActive: pkg.isActive ?? true,
     });
     setShowForm(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
