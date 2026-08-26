@@ -49,27 +49,40 @@ export default function AdminGalleryPage() {
   });
 
   const uploadMutation = useMutation({
-    mutationFn: (form: FormData) => axiosInstance.post('/api/v1/gallery', form),
+    mutationFn: async (files: File[]) => {
+      if (files.length === 1) {
+        const form = new FormData();
+        form.append('image', files[0]);
+        form.append('category', uploadCategory || 'venue');
+        if (uploadAltText.trim()) form.append('altText', uploadAltText.trim());
+        return axiosInstance.post('/api/v1/gallery', form);
+      } else {
+        const form = new FormData();
+        files.forEach(f => form.append('images', f));
+        form.append('category', uploadCategory || 'venue');
+        return axiosInstance.post('/api/v1/gallery/bulk', form);
+      }
+    },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-gallery'] }); setUploadAltText(''); },
   });
 
   const onDrop = useCallback((files: File[]) => {
-    files.forEach(file => {
-      const form = new FormData();
-      form.append('image', file);
-      form.append('category', uploadCategory);
-      if (uploadAltText.trim()) form.append('altText', uploadAltText.trim());
-      uploadMutation.mutate(form);
-    });
-  }, [uploadMutation, uploadCategory, uploadAltText]);
+    if (files.length > 0) {
+      uploadMutation.mutate(files);
+    }
+  }, [uploadMutation]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: { 'image/jpeg': [], 'image/png': [], 'image/webp': [] },
+    accept: { 'image/*': [] },
     maxSize: 10 * 1024 * 1024,
   });
 
   const filtered = filterCat ? (data ?? []).filter(i => i.category === filterCat) : (data ?? []);
+
+  const uploadErrorMessage = uploadMutation.error
+    ? ((uploadMutation.error as any)?.response?.data?.message ?? uploadMutation.error?.message ?? 'Upload failed.')
+    : null;
 
   return (
     <>
@@ -139,11 +152,11 @@ export default function AdminGalleryPage() {
               <p className="text-xs text-zinc-600">
                 {isDragActive
                   ? <span className="text-gold">Drop images here…</span>
-                  : 'Drag & drop or click to upload · JPG, PNG, WebP · max 10 MB'
+                  : 'Drag & drop or click to upload · JPG, PNG, WebP, AVIF · max 10 MB per file'
                 }
               </p>
               {uploadMutation.isPending && <p className="mt-2 text-xs text-gold animate-pulse">Uploading…</p>}
-              {uploadMutation.isError && <p className="mt-2 text-xs text-red-400">Upload failed. Check file type and size.</p>}
+              {uploadErrorMessage && <p className="mt-2 text-xs text-red-400">Upload error: {uploadErrorMessage}</p>}
             </div>
           </div>
 

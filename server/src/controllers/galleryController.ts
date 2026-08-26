@@ -27,6 +27,18 @@ export async function uploadImage(req: Request, res: Response, next: NextFunctio
   } catch (err) { next(err); }
 }
 
+export async function updateImage(req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    const { category, title, altText, featured } = req.body;
+    const updated = await galleryService.updateImage(
+      String(req.params.id),
+      { category, title, altText, featured },
+      req.user?.uid ?? 'unknown',
+    );
+    sendSuccess(res, updated, 'Image updated');
+  } catch (err) { next(err); }
+}
+
 export async function deleteImage(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     await galleryService.deleteImage(String(req.params.id), req.user?.uid ?? 'unknown');

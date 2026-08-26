@@ -49,10 +49,10 @@ const FAQ_SCHEMA = {
     },
     {
       '@type': 'Question',
-      name: 'What is the price range?',
+      name: 'How is pricing determined?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Our standard menu package starts from NPR 1,200 per plate (VAT included). Prices vary by event type and menu selection.',
+        text: 'Pricing depends on event size, guest count, menu selections, and custom negotiation. Call the venue directly for customized quotes and the best rates.',
       },
     },
   ],

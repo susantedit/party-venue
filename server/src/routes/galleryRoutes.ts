@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { listGallery, uploadImage, deleteImage, bulkUpload } from '../controllers/galleryController';
+import { listGallery, uploadImage, updateImage, deleteImage, bulkUpload } from '../controllers/galleryController';
 import { authenticate } from '../middleware/authMiddleware';
 import { authorize } from '../middleware/roleMiddleware';
 import { globalLimiter, uploadLimiter } from '../middleware/rateLimiter';
@@ -11,6 +11,7 @@ const adminOnly = [authenticate, authorize(['super-admin', 'admin', 'editor'])];
 router.get('/', globalLimiter, listGallery);
 router.post('/', uploadLimiter, ...adminOnly, upload.single('image'), handleMulterError, uploadImage);
 router.post('/bulk', uploadLimiter, ...adminOnly, upload.array('images', 20), handleMulterError, bulkUpload);
+router.put('/:id', ...adminOnly, updateImage);
 router.delete('/:id', ...adminOnly, deleteImage);
 
 export default router;

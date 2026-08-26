@@ -53,7 +53,12 @@ export function uploadToCloudinary(
  * Delete an image from Cloudinary by its public_id.
  */
 export async function deleteFromCloudinary(publicId: string): Promise<void> {
-  await cloudinaryV2.uploader.destroy(publicId);
+  if (!publicId) return;
+  try {
+    await cloudinaryV2.uploader.destroy(publicId);
+  } catch (err: any) {
+    console.warn(`[Cloudinary] Could not destroy image ${publicId}:`, err?.message ?? err);
+  }
 }
 
 export { cloudinaryV2 as cloudinary };

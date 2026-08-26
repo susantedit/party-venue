@@ -90,14 +90,14 @@ export default function AdminPackagesPage() {
 
   function handleSave() {
     setError('');
-    if (!form.name.trim() || !form.description.trim() || !form.price || !form.capacity) {
-      setError('Name, description, price, and capacity are required.'); return;
+    if (!form.name.trim() || !form.description.trim() || !form.capacity) {
+      setError('Name, description, and capacity are required.'); return;
     }
     const features = form.features.split('\n').map(f => f.trim()).filter(Boolean);
     if (features.length === 0) { setError('At least one feature is required.'); return; }
     saveMutation.mutate({
       name: form.name.trim(), description: form.description.trim(),
-      category: form.category, price: Number(form.price),
+      category: form.category, price: form.price ? Number(form.price) : 0,
       capacity: Number(form.capacity), features,
       isPopular: form.isPopular, isActive: form.isActive,
     });
@@ -241,8 +241,10 @@ export default function AdminPackagesPage() {
                   <p className="text-xs text-zinc-500 mb-3 leading-relaxed line-clamp-2">{pkg.description}</p>
                   <div className="flex items-end justify-between">
                     <div>
-                      <p className="font-serif text-xl font-bold text-gold">NPR {pkg.price.toLocaleString()}</p>
-                      <p className="flex items-center gap-1 text-[11px] text-zinc-600 mt-0.5"><Users className="h-3 w-3" /> {pkg.capacity} guests</p>
+                      <p className="font-serif text-sm font-bold text-gold">
+                        {pkg.price > 0 ? `NPR ${pkg.price.toLocaleString()}` : 'Custom Negotiable Rate'}
+                      </p>
+                      <p className="flex items-center gap-1 text-[11px] text-zinc-600 mt-0.5"><Users className="h-3 w-3" /> Up to {pkg.capacity} guests</p>
                     </div>
                   </div>
                   {pkg.features && pkg.features.length > 0 && (

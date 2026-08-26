@@ -8,10 +8,11 @@ export async function uploadImage(
   file: Express.Multer.File,
   category: string,
   meta: { title?: string; altText?: string; featured?: boolean },
-  _adminUid: string,) {
-  if (!(GALLERY_CATEGORIES as readonly string[]).includes(category)) {
-    throw new AppError(400, `Invalid category. Allowed: ${GALLERY_CATEGORIES.join(', ')}`);
-  }
+  _adminUid: string,
+) {
+  const targetCategory = (GALLERY_CATEGORIES as readonly string[]).includes(category)
+    ? category
+    : 'venue';
 
   // Secondary MIME validation via magic bytes
   if (!validateMagicBytes(file.buffer, file.mimetype)) {
@@ -26,7 +27,7 @@ export async function uploadImage(
   const image = await GalleryModel.create({
     imageUrl: result.secure_url,
     cloudinaryId: result.public_id,
-    category,
+    category: targetCategory,
     title: meta.title,
     altText: meta.altText,
     featured: meta.featured ?? false,
@@ -41,11 +42,30 @@ export async function listGallery(category?: string) {
   return GalleryModel.find(filter).sort({ createdAt: -1 }).lean();
 }
 
+export async function updateImage(
+  id: string,
+  data: { category?: string; title?: string; altText?: string; featured?: boolean },
+  adminUid: string,
+) {
+  const image = await GalleryModel.findById(id);
+  if (!image) throw new AppError(404, 'Gallery image not found');
+
+  if (data.category && !(GALLERY_CATEGORIES as readonly string[]).includes(data.category)) {
+    throw new AppError(400, `Invalid category. Allowed: ${GALLERY_CATEGORIES.join(', ')}`);
+  }
+
+  const updated = await GalleryModel.findByIdAndUpdate(id, { $set: data }, { new: true });
+  logAuditEvent('gallery.updated', adminUid, 'Gallery', id);
+  return updated;
+}
+
 export async function deleteImage(id: string, adminUid: string) {
   const image = await GalleryModel.findById(id);
   if (!image) throw new AppError(404, 'Gallery image not found');
 
-  await deleteFromCloudinary(image.cloudinaryId);
+  if (image.cloudinaryId) {
+    await deleteFromCloudinary(image.cloudinaryId);
+  }
   await GalleryModel.findByIdAndDelete(id);
   logAuditEvent('gallery.deleted', adminUid, 'Gallery', id);
 }

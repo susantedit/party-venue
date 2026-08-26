@@ -2,42 +2,40 @@ import multer, { FileFilterCallback } from 'multer';
 import { Request, Response, NextFunction } from 'express';
 import { MulterError } from 'multer';
 
-// Allowed MIME types — checked against file.mimetype (NOT extension)
-const ALLOWED_MIME_TYPES = new Set([
-  'image/jpeg',
-  'image/jpg',
-  'image/png',
-  'image/webp',
-]);
+// Allowed MIME types — accept all standard image types
+const ALLOWED_MIME_PREFIX = 'image/';
 
-// Magic byte signatures for secondary buffer validation
+// Magic byte signatures for buffer validation
 export const MAGIC_BYTES: Record<string, Buffer[]> = {
   'image/jpeg': [Buffer.from([0xff, 0xd8, 0xff])],
   'image/jpg': [Buffer.from([0xff, 0xd8, 0xff])],
   'image/png': [Buffer.from([0x89, 0x50, 0x4e, 0x47])],
   'image/webp': [Buffer.from([0x52, 0x49, 0x46, 0x46])], // RIFF....WEBP
+  'image/gif': [Buffer.from([0x47, 0x49, 0x46])], // GIF
+  'image/bmp': [Buffer.from([0x42, 0x4d])], // BM
 };
 
 /**
- * Validates buffer magic bytes to prevent MIME-type spoofing.
- * Call before sending to Cloudinary in the service layer.
+ * Validates buffer magic bytes to prevent non-image spoofing.
+ * Soft validation — returns true if no signature exists for given MIME type or matches.
  */
 export function validateMagicBytes(buffer: Buffer, mimeType: string): boolean {
-  const signatures = MAGIC_BYTES[mimeType];
-  if (!signatures) return false;
+  if (!buffer || buffer.length === 0) return false;
+  const signatures = MAGIC_BYTES[mimeType.toLowerCase()];
+  if (!signatures || signatures.length === 0) return true; // allow unknown image subtypes
   return signatures.some((sig) => buffer.subarray(0, sig.length).equals(sig));
 }
 
-// Multer file filter — checks MIME type from file.mimetype
+// Multer file filter — checks MIME type starts with image/
 const fileFilter = (
   _req: Request,
   file: Express.Multer.File,
   cb: FileFilterCallback,
 ): void => {
-  if (ALLOWED_MIME_TYPES.has(file.mimetype)) {
+  if (file.mimetype && file.mimetype.startsWith(ALLOWED_MIME_PREFIX)) {
     cb(null, true);
   } else {
-    const error: any = new Error('Unsupported file type');
+    const error: any = new Error('Unsupported file type. Please upload an image file (JPG, PNG, WebP, etc.).');
     error.statusCode = 422;
     cb(error, false);
   }
