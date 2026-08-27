@@ -28,6 +28,7 @@ const OfflinePage = lazy(() => import('./pages/Offline'));
 // SEO landing pages
 const WeddingVenue = lazy(() => import('./pages/seo/WeddingVenuePage'));
 const CateringPage = lazy(() => import('./pages/seo/CateringPage'));
+const PartyVenue = lazy(() => import('./pages/seo/PartyVenuePage'));
 
 // Lazy-loaded admin pages
 const AdminLogin = lazy(() => import('./pages/admin/LoginPage'));
@@ -81,6 +82,11 @@ function AppRoutes() {
               <Route path="/faq" element={<PublicLayout><FAQPage /></PublicLayout>} />
 
               {/* SEO landing pages */}
+              <Route path="/party-venue-in-bhaktapur" element={<PublicLayout><PartyVenue /></PublicLayout>} />
+              <Route path="/party-venue-bhaktapur" element={<PublicLayout><PartyVenue /></PublicLayout>} />
+              <Route path="/party-venue-near-suryabinayak-bhaktapur" element={<PublicLayout><PartyVenue /></PublicLayout>} />
+              <Route path="/party-palace-in-bhaktapur" element={<PublicLayout><PartyVenue /></PublicLayout>} />
+              <Route path="/party-palace-bhaktapur" element={<PublicLayout><PartyVenue /></PublicLayout>} />
               <Route path="/wedding-venue-bhaktapur" element={<PublicLayout><WeddingVenue /></PublicLayout>} />
               <Route path="/wedding-venue-in-bhaktapur" element={<PublicLayout><WeddingVenue /></PublicLayout>} />
               <Route path="/catering-service-bhaktapur" element={<PublicLayout><CateringPage /></PublicLayout>} />

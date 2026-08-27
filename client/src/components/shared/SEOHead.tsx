@@ -1,11 +1,12 @@
 import { Helmet } from 'react-helmet-async';
 import { SITE_URL } from '@/constants';
 
-const DEFAULT_OG_IMAGE = `${SITE_URL}/shreeganeshpartyvenue(withbg-of-white).png`;
+const DEFAULT_OG_IMAGE = `${SITE_URL}/favicon.png`;
 
 interface SEOHeadProps {
   title: string;
   description?: string;
+  keywords?: string;
   ogImage?: string;
   ogImageAlt?: string;
   canonicalUrl?: string;
@@ -16,6 +17,7 @@ interface SEOHeadProps {
 export function SEOHead({
   title,
   description,
+  keywords,
   ogImage,
   ogImageAlt,
   canonicalUrl,
@@ -27,7 +29,10 @@ export function SEOHead({
     : `${title} | Shree Ganesh Party Venue And Catering Service`;
 
   const defaultDesc =
-    'Shree Ganesh Party Venue And Catering Service in Bhaktapur, Nepal. Weddings, receptions, birthdays, Bratabandha, Pasni, corporate events, and catering.';
+    'Shree Ganesh Party Venue And Catering Service is the premier party venue near Suryabinayak Ganesh Mandir, Bhaktapur. Capacity 700-1000 guests for weddings, receptions, bratabandha, pasni & events in Bhaktapur.';
+
+  const defaultKeywords =
+    'party venue near suryabinayak bhaktapur, party venue in bhaktapur, party palace in bhaktapur, party venue near suryabinayak, shree ganesh party venue, wedding venue in bhaktapur, catering service in bhaktapur, party palace bhaktapur';
 
   const activeCanonical = canonicalUrl || (typeof window !== 'undefined' ? `${SITE_URL}${window.location.pathname}` : SITE_URL);
   const resolvedImage = ogImage && ogImage !== '' ? ogImage : DEFAULT_OG_IMAGE;
@@ -44,11 +49,16 @@ export function SEOHead({
     <Helmet>
       <title>{fullTitle}</title>
       <meta name="description" content={description ?? defaultDesc} />
+      <meta name="keywords" content={keywords ?? defaultKeywords} />
       {noIndex ? (
         <meta name="robots" content="noindex,nofollow" />
       ) : (
         <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
       )}
+      <meta name="geo.region" content="NP-P3" />
+      <meta name="geo.placename" content="Suryabinayak, Bhaktapur, Nepal" />
+      <meta name="geo.position" content="27.6568562;85.4217854" />
+      <meta name="ICBM" content="27.6568562, 85.4217854" />
       <link rel="canonical" href={activeCanonical} />
       <link rel="alternate" hrefLang="en" href={activeCanonical} />
       <link rel="alternate" hrefLang="x-default" href={activeCanonical} />

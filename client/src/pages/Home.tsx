@@ -19,9 +19,18 @@ import { BUSINESS_ADDRESS, BUSINESS_PHONE, SITE_URL } from '@/constants';
 
 const LOCAL_BUSINESS_SCHEMA = {
   '@context': 'https://schema.org',
-  '@type': 'EventVenue',
+  '@type': ['EventVenue', 'CateringService', 'LocalBusiness'],
   '@id': `${SITE_URL}/#venue`,
   name: 'Shree Ganesh Party Venue And Catering Service',
+  alternateName: [
+    'Shree Ganesh Party Venue',
+    'Shree Ganesh Party Palace',
+    'Party Venue Near Suryabinayak Bhaktapur',
+    'Party Venue in Bhaktapur',
+    'Party Palace in Bhaktapur',
+    'Shree Ganesh Party Venue Bhaktapur',
+  ],
+  description: 'Shree Ganesh Party Venue And Catering Service is the top-rated party venue and party palace near Suryabinayak Ganesh Mandir, Bhaktapur. Offering verified capacity for 700-1000 guests, live multi-cuisine catering, and dedicated free parking for 250+ vehicles.',
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Near Suryabinayak Ganesh Mandir',
@@ -36,9 +45,22 @@ const LOCAL_BUSINESS_SCHEMA = {
     longitude: 85.4217854,
   },
   telephone: BUSINESS_PHONE,
+  priceRange: '$$',
+  currenciesAccepted: 'NPR',
+  paymentAccepted: 'Cash, Fonepay, eSewa, Khalti, Bank Transfer, ConnectIPS',
+  openingHours: 'Mo,Tu,We,Th,Fr,Sa,Su 06:00-23:00',
   url: SITE_URL,
-  areaServed: ['Bhaktapur', 'Suryabinayak', 'Kathmandu Valley', 'Kathmandu', 'Lalitpur'],
+  areaServed: [
+    'Bhaktapur', 'Suryabinayak', 'Katunje', 'Jagati', 'Sallaghari', 'Kamalbinayak',
+    'Thimi', 'Lokanthali', 'Koteshwor', 'Kathmandu Valley', 'Kathmandu', 'Lalitpur', 'Nepal'
+  ],
   hasMap: 'https://www.google.com/maps/place/Shree+Ganesh+Party+Venue+And+Catering+Service/@27.6568496,85.4216766',
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.9',
+    reviewCount: '95',
+    bestRating: '5',
+  },
 };
 
 const WEBSITE_SCHEMA = {
@@ -148,8 +170,9 @@ export default function Home() {
   return (
     <>
       <SEOHead
-        title="Shree Ganesh Party Venue And Catering Service in Bhaktapur, Nepal"
-        description="Party palace, wedding venue, reception venue, birthday party and catering in Bhaktapur near Suryabinayak Ganesh Mandir."
+        title="Shree Ganesh Party Venue | Best Party Venue Near Suryabinayak, Bhaktapur"
+        description="Shree Ganesh Party Venue & Catering Service is the premier party venue near Suryabinayak Ganesh Mandir, Bhaktapur. Capacity 700–1000 guests for weddings, receptions, bratabandha, pasni, birthday parties & corporate events in Bhaktapur & Kathmandu Valley."
+        keywords="party venue near suryabinayak bhaktapur, party venue in bhaktapur, party palace in bhaktapur, party venue near suryabinayak, party palace near suryabinayak, shree ganesh party venue, wedding venue in bhaktapur, catering service in bhaktapur, best party palace bhaktapur, event venue bhaktapur"
         canonicalUrl={SITE_URL}
         schema={[LOCAL_BUSINESS_SCHEMA, WEBSITE_SCHEMA]}
       />
@@ -280,6 +303,11 @@ export default function Home() {
             ))}
           </div>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <Link to="/party-venue-in-bhaktapur"
+              className="font-serif tracking-[0.14em] uppercase text-xs px-6 py-3 border border-gold/40 hover:border-gold text-gold hover:bg-gold/5 transition-all duration-150"
+              style={{ borderRadius: '2px' }}>
+              Party Venue in Bhaktapur
+            </Link>
             <Link to="/wedding-venue-bhaktapur"
               className="font-serif tracking-[0.14em] uppercase text-xs px-6 py-3 border border-gold/40 hover:border-gold text-gold hover:bg-gold/5 transition-all duration-150"
               style={{ borderRadius: '2px' }}>

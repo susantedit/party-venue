@@ -70,8 +70,9 @@ export default function Footer() {
 
           {/* Services + Book CTA */}
           <div>
-            <h3 className="font-serif text-xs tracking-[0.2em] uppercase text-zinc-400 mb-5">Services</h3>
+            <h3 className="font-serif text-xs tracking-[0.2em] uppercase text-zinc-400 mb-5">Services & Venues</h3>
             <ul className="space-y-2.5 mb-6">
+              <li><Link to="/party-venue-in-bhaktapur" className="font-sans text-sm text-zinc-500 hover:text-gold transition-colors">Party Venue in Bhaktapur</Link></li>
               <li><Link to="/wedding-venue-bhaktapur" className="font-sans text-sm text-zinc-500 hover:text-gold transition-colors">Wedding & Reception Venue</Link></li>
               <li><Link to="/catering-service-bhaktapur" className="font-sans text-sm text-zinc-500 hover:text-gold transition-colors">Catering Services</Link></li>
               <li><Link to="/services" className="font-sans text-sm text-zinc-500 hover:text-gold transition-colors">Bratabandha & Pasni Ceremonies</Link></li>

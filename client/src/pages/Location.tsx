@@ -16,8 +16,9 @@ export default function Location() {
   return (
     <>
       <SEOHead
-        title="Venue Location in Suryabinayak, Bhaktapur | Shree Ganesh Party Venue"
-        description="Find the venue, map, address, phone, and directions before booking."
+        title="Party Venue Location Near Suryabinayak, Bhaktapur | Shree Ganesh Party Venue"
+        description="Visit Shree Ganesh Party Venue near Suryabinayak Ganesh Mandir, Bhaktapur. View Google map, road directions from Arniko Highway, address & contact phone numbers."
+        keywords="party venue near suryabinayak bhaktapur, party venue location bhaktapur, party palace suryabinayak, shree ganesh party venue directions, wedding venue location bhaktapur"
         canonicalUrl={`${SITE_URL}/location`}
         schema={BREADCRUMB_SCHEMA}
       />
