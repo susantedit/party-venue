@@ -3,7 +3,7 @@ import img2Webp from '@/assets/imagesandvedioes/2.webp';
 import img2Png from '@/assets/imagesandvedioes/2.png';
 import img3Png from '@/assets/imagesandvedioes/3.png';
 import img4Png from '@/assets/imagesandvedioes/4.png';
-import img48Png from '@/assets/imagesandvedioes/48png';
+import img48Png from '@/assets/imagesandvedioes/48.png';
 import img5Jpg from '@/assets/imagesandvedioes/5.jpg';
 import img6Jpg from '@/assets/imagesandvedioes/6.jpg';
 import img7Jpg from '@/assets/imagesandvedioes/7.jpg';

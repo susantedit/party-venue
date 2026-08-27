@@ -59,7 +59,7 @@ export interface GalleryImage {
   _id: string;
   title?: string;
   imageUrl: string;
-  cloudinaryId: string;
+  cloudinaryId?: string;
   category: GalleryCategory;
   altText?: string;
   featured: boolean;
